@@ -112,9 +112,37 @@ Está diseñada como **app móvil**, con patrón tipo mapa nativo:
 - La vista **★ Favoritos** filtra y muestra solo los sitios marcados, **de cualquier
   categoría**, sobre el mapa y en la lista.
 
-> ⚠️ Los favoritos son **POR DISPOSITIVO/NAVEGADOR**: viven en el `localStorage` de ese
-> navegador y **no se sincronizan** entre dispositivos ni entre navegadores. Sincronizarlos
-> requeriría **cuentas de usuario + backend**, que esta app (estática) no tiene.
+> ⚠️ Sin cuenta, los favoritos son **POR DISPOSITIVO/NAVEGADOR** (`localStorage`). Con una
+> cuenta (ver Supabase, abajo) se **sincronizan en la nube** entre dispositivos.
+
+## Cuentas y descuentos (Supabase, opcional)
+
+Estas funciones añaden un backend ligero **opcional** (Supabase). **Si no lo configuras, la
+app sigue funcionando igual**: favoritos por dispositivo y ofertas de solo lectura desde
+`data/descuentos.json`.
+
+Qué aportan:
+- **Cuentas** con **enlace mágico por email** (sin contraseñas). Botón de cuenta arriba a la derecha.
+- **Favoritos en la nube**: al iniciar sesión, tus favoritos locales se suben y se sincronizan
+  entre dispositivos.
+- **Ofertas** (pestaña "Ofertas"): locales con descuentos. Navegables sin cuenta; con sesión
+  puedes **guardarlas** (★) y filtrarlas con el chip **"★ Guardados"**.
+
+### Puesta en marcha de Supabase
+1. Crea un proyecto gratis en [supabase.com](https://supabase.com).
+2. **SQL Editor → New query →** pega `supabase/schema.sql` **→ Run** (crea tablas + RLS).
+3. **Authentication → Providers → Email:** deja activado el inicio por enlace mágico. En
+   **Authentication → URL Configuration** pon tu **Site URL** (la de GitHub Pages) para que el
+   enlace redirija bien.
+4. **Project Settings → API:** copia **Project URL** y **anon public** y pégalas en **`config.js`**.
+5. **Ofertas:** créalas en **Table editor → `discounts`** (o sigue usando `data/descuentos.json`).
+
+> 🔐 **Seguridad:** la **anon key** es **pública y segura** para el navegador (la protege RLS:
+> cada usuario solo accede a SUS datos). **Nunca** pongas la `service_role` key en el cliente.
+> Las ofertas son de **lectura pública**; su escritura queda para el panel/`service_role`.
+>
+> ⚖️ **RGPD:** al haber cuentas y datos personales (email, favoritos guardados) necesitas
+> **política de privacidad** y, si añades analítica, **consentimiento de cookies**.
 
 ## Anuncios (git-based, serverless)
 

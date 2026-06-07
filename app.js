@@ -19,6 +19,10 @@ const state = {
   markers: {},
   favs: loadFavs(),
   openNow: false,      // filtro "abierto ahora"
+  discounts: [],       // ofertas (Supabase o data/descuentos.json)
+  saved: new Set(),    // descuentos guardados (en la nube, si hay sesión)
+  savedOnly: false,    // filtro "★ Guardados"
+  user: null,          // usuario de Supabase (null = no logueado)
   layer: L.layerGroup(),
   bannerTimer: null,
 };
@@ -80,9 +84,14 @@ function saveFavs() {
 }
 function isFav(id) { return state.favs.has(id); }
 function toggleFav(id) {
-  if (state.favs.has(id)) state.favs.delete(id); else state.favs.add(id);
+  const adding = !state.favs.has(id);
+  if (adding) state.favs.add(id); else state.favs.delete(id);
   saveFavs();
   updateFavBadge();
+  // Si hay sesión, sincroniza el cambio con la nube (no bloquea la UI).
+  if (state.user && window.Cloud) {
+    (adding ? Cloud.addFavorite(id) : Cloud.removeFavorite(id));
+  }
   if (state.view === 'favoritos') renderView('favoritos');
   else refreshHearts();
 }
@@ -166,6 +175,12 @@ function renderView(view) {
 
   document.querySelectorAll('.tab').forEach((b) =>
     b.classList.toggle('is-active', b.dataset.cat === view));
+
+  // Chips de la cabecera según la vista.
+  document.getElementById('open-toggle').hidden = (view === 'descuentos');
+  document.getElementById('saved-toggle').hidden = (view !== 'descuentos');
+
+  if (view === 'descuentos') { renderDiscounts(); return; }
 
   document.getElementById('panel-title').textContent = isFavView ? '★ Favoritos' : CATEGORIES[view].label;
 
@@ -332,6 +347,181 @@ function renderSponsored(view, list) {
 }
 
 // ---------------------------------------------------------------------------
+// Descuentos / Ofertas
+// ---------------------------------------------------------------------------
+const DISCOUNT_COLOR = '#d4a017';
+
+function isSaved(id) { return state.saved.has(id); }
+
+function discountCardHTML(d) {
+  const saved = isSaved(d.id);
+  const label = d.discount_label ? `<span class="disc-badge">${escapeHTML(d.discount_label)}</span>` : '';
+  const code = d.code ? `<button class="disc-code" type="button" data-code="${escapeHTML(d.code)}" title="Copiar código">${escapeHTML(d.code)} ⧉</button>` : '';
+  const link = d.link_url ? `<a class="disc-link" href="${escapeHTML(d.link_url)}" target="_blank" rel="noopener">Ver más</a>` : '';
+  const terms = d.terms ? `<div class="disc-terms">${escapeHTML(d.terms)}</div>` : '';
+  return (
+    `<div class="disc-main">` +
+      `<div class="disc-top">${label}<div class="disc-title">${escapeHTML(d.title)}</div></div>` +
+      `<div class="disc-biz">${escapeHTML(d.business || '')}</div>` +
+      (d.description ? `<div class="disc-desc">${escapeHTML(d.description)}</div>` : '') +
+      terms +
+      `<div class="disc-actions">${code}${link}</div>` +
+    `</div>` +
+    `<button class="save-btn${saved ? ' is-saved' : ''}" type="button" data-id="${escapeHTML(d.id)}" ` +
+      `aria-pressed="${saved}" aria-label="${saved ? 'Quitar de guardados' : 'Guardar oferta'}">${saved ? '★' : '☆'}</button>`
+  );
+}
+
+function renderDiscounts() {
+  document.getElementById('panel-title').textContent = 'Ofertas';
+  const updatedEl = document.getElementById('updated');
+
+  state.layer.clearLayers();
+  state.markers = {};
+  const list = document.getElementById('ranking-list');
+  list.innerHTML = '';
+
+  let items = state.discounts.slice();
+  if (state.savedOnly) items = items.filter((d) => isSaved(d.id));
+
+  updatedEl.textContent = state.user
+    ? `Sesión iniciada · ${state.saved.size} guardadas`
+    : 'Inicia sesión para guardar tus ofertas';
+
+  if (items.length === 0) {
+    const li = document.createElement('li');
+    li.className = 'empty-state';
+    if (state.savedOnly) {
+      li.textContent = state.user
+        ? 'No has guardado ninguna oferta todavía. Toca la ★ de una oferta.'
+        : 'Inicia sesión (botón de cuenta, arriba) para guardar y ver tus ofertas.';
+    } else {
+      li.textContent = 'Aún no hay ofertas disponibles.';
+    }
+    list.appendChild(li);
+    renderBanner('descuentos');
+    return;
+  }
+
+  const latlngs = [];
+  items.forEach((d, i) => {
+    // Pin en el mapa si la oferta tiene ubicación.
+    if (typeof d.lat === 'number' && typeof d.lng === 'number') {
+      const latlng = [d.lat, d.lng];
+      latlngs.push(latlng);
+      const marker = L.circleMarker(latlng, {
+        radius: 13, color: '#fff', weight: 2, fillColor: DISCOUNT_COLOR, fillOpacity: 0.9,
+      });
+      marker.bindPopup(
+        `<div class="popup-name">${escapeHTML(d.business || d.title)}</div>` +
+        `<div class="popup-meta">${escapeHTML(d.discount_label || '')} · ${escapeHTML(d.title)}</div>`
+      );
+      marker.addTo(state.layer);
+      L.marker(latlng, {
+        icon: L.divIcon({ className: 'bubble-label', html: `<span style="width:26px">%</span>`, iconSize: [26, 0], iconAnchor: [13, 6] }),
+        interactive: false, keyboard: false,
+      }).addTo(state.layer);
+      const idx = latlngs.length;
+      marker.on('click', () => marker.openPopup());
+      state.markers[idx] = marker;
+    }
+    const li = document.createElement('li');
+    li.className = 'rank-item disc-item';
+    li.innerHTML = discountCardHTML(d);
+    list.appendChild(li);
+  });
+
+  if (latlngs.length) {
+    map.fitBounds(L.latLngBounds(latlngs), { paddingTopLeft: [26, 70], paddingBottomRight: [26, 240], maxZoom: 16 });
+  }
+  renderBanner('descuentos');
+}
+
+function toggleSave(id) {
+  if (!state.user) { openAuthModal('Inicia sesión para guardar tus ofertas favoritas.'); return; }
+  const adding = !state.saved.has(id);
+  if (adding) state.saved.add(id); else state.saved.delete(id);
+  if (window.Cloud) (adding ? Cloud.saveDiscount(id) : Cloud.unsaveDiscount(id));
+  if (state.view === 'descuentos') renderDiscounts();
+}
+
+// ---------------------------------------------------------------------------
+// Cuenta / autenticación (Supabase, opcional)
+// ---------------------------------------------------------------------------
+function updateAccountBtn() {
+  const btn = document.getElementById('account-btn');
+  btn.classList.toggle('is-logged', !!state.user);
+}
+
+function openAuthModal(message) {
+  const body = document.getElementById('auth-body');
+  if (!window.Cloud || !Cloud.enabled) {
+    body.innerHTML =
+      `<h3 id="auth-title">Cuentas no configuradas</h3>` +
+      `<p class="auth-msg">El inicio de sesión todavía no está activo. Cuando se configure Supabase ` +
+      `podrás guardar tus favoritos y ofertas en la nube y sincronizarlos entre dispositivos.</p>`;
+  } else if (state.user) {
+    body.innerHTML =
+      `<h3 id="auth-title">Tu cuenta</h3>` +
+      `<p class="auth-msg">Sesión iniciada como <b>${escapeHTML(state.user.email || '')}</b>.</p>` +
+      `<button class="auth-btn" id="auth-signout" type="button">Cerrar sesión</button>`;
+    document.getElementById('auth-signout').addEventListener('click', async () => {
+      await Cloud.signOut();
+      closeAuthModal();
+    });
+  } else {
+    body.innerHTML =
+      `<h3 id="auth-title">Entrar / Crear cuenta</h3>` +
+      (message ? `<p class="auth-msg">${escapeHTML(message)}</p>` : '') +
+      `<p class="auth-msg">Te enviamos un <b>enlace mágico</b> a tu email. Sin contraseñas.</p>` +
+      `<form id="auth-form"><input type="email" id="auth-email" placeholder="tu@email.com" required autocomplete="email" inputmode="email" />` +
+      `<button class="auth-btn" type="submit">Enviar enlace</button></form>` +
+      `<p class="auth-feedback" id="auth-feedback" hidden></p>`;
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const fb = document.getElementById('auth-feedback');
+      if (!email) return;
+      fb.hidden = false; fb.textContent = 'Enviando…';
+      const { error } = await Cloud.signInWithEmail(email);
+      fb.textContent = error
+        ? 'No se pudo enviar: ' + (error.message || 'inténtalo de nuevo')
+        : '✅ Revisa tu email y abre el enlace para entrar.';
+    });
+  }
+  document.getElementById('auth-modal').hidden = false;
+}
+function closeAuthModal() { document.getElementById('auth-modal').hidden = true; }
+
+async function onUserChange(user) {
+  state.user = user || null;
+  updateAccountBtn();
+  if (state.user && window.Cloud) {
+    try {
+      await Cloud.mergeFavorites([...state.favs]);      // sube los locales una vez
+      const cloud = await Cloud.fetchFavorites();
+      if (cloud) {
+        state.favs = new Set([...state.favs, ...cloud]); // unión local + nube
+        saveFavs();
+        updateFavBadge();
+      }
+      state.saved = new Set(await Cloud.fetchSaved());
+    } catch (e) { console.warn('sync de sesión', e); }
+  } else {
+    state.saved = new Set();
+  }
+  renderView(state.view);
+}
+
+async function initCloud() {
+  updateAccountBtn();
+  if (!window.Cloud || !Cloud.enabled) return;
+  await Cloud.init();
+  Cloud.onAuth((user) => { onUserChange(user); });
+  if (Cloud.user) await onUserChange(Cloud.user);
+}
+
+// ---------------------------------------------------------------------------
 // Hoja inferior deslizable (bottom sheet)
 // ---------------------------------------------------------------------------
 const sheet = document.getElementById('sheet');
@@ -403,21 +593,42 @@ async function loadAll() {
       const ads = await loadJSON('data/ads.json', { ads: [] });
       state.ads = Array.isArray(ads.ads) ? ads.ads : [];
     })(),
+    loadDiscounts(),
   ]);
   updateFavBadge();
   renderView(state.view);
   computeSheetBounds();
 }
 
+// Ofertas: de Supabase si está configurado; si no, de data/descuentos.json.
+async function loadDiscounts() {
+  let list = null;
+  if (window.Cloud && Cloud.enabled) {
+    try { await Cloud.init(); list = await Cloud.fetchDiscounts(); } catch (e) { /* degrada */ }
+  }
+  if (!list) {
+    const j = await loadJSON('data/descuentos.json', { discounts: [] });
+    list = Array.isArray(j.discounts) ? j.discounts : [];
+  }
+  state.discounts = list.filter((d) => d && d.active !== false);
+}
+
 // ---------------------------------------------------------------------------
 // Eventos
 // ---------------------------------------------------------------------------
+// Delegación: corazón de favoritos, estrella de guardar oferta y copiar código.
 document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.fav-btn');
-  if (!btn) return;
-  e.preventDefault();
-  e.stopPropagation();
-  toggleFav(btn.dataset.id);
+  const fav = e.target.closest('.fav-btn');
+  if (fav) { e.preventDefault(); e.stopPropagation(); toggleFav(fav.dataset.id); return; }
+  const save = e.target.closest('.save-btn');
+  if (save) { e.preventDefault(); e.stopPropagation(); toggleSave(save.dataset.id); return; }
+  const code = e.target.closest('.disc-code');
+  if (code) {
+    e.preventDefault(); e.stopPropagation();
+    if (navigator.clipboard) navigator.clipboard.writeText(code.dataset.code).catch(() => {});
+    const prev = code.textContent; code.textContent = '¡Copiado!';
+    setTimeout(() => { code.textContent = prev; }, 1200);
+  }
 });
 document.querySelectorAll('.tab').forEach((btn) => {
   btn.addEventListener('click', () => renderView(btn.dataset.cat));
@@ -432,11 +643,28 @@ openToggle.addEventListener('click', () => {
   renderView(state.view);
 });
 
+// Filtro "★ Guardados" (vista Ofertas)
+const savedToggle = document.getElementById('saved-toggle');
+savedToggle.addEventListener('click', () => {
+  state.savedOnly = !state.savedOnly;
+  savedToggle.classList.toggle('is-on', state.savedOnly);
+  savedToggle.setAttribute('aria-pressed', String(state.savedOnly));
+  renderDiscounts();
+});
+
+// Cuenta / acceso
+document.getElementById('account-btn').addEventListener('click', () => openAuthModal());
+document.getElementById('auth-close').addEventListener('click', closeAuthModal);
+document.getElementById('auth-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'auth-modal') closeAuthModal(); // toca fuera = cerrar
+});
+
 // Init
 updateFavBadge();
 computeSheetBounds();
 setTimeout(() => map.invalidateSize(), 60);
 loadAll();
+initCloud();
 
 // PWA: service worker
 if ('serviceWorker' in navigator) {

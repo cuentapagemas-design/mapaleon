@@ -2,12 +2,14 @@
    Sube CACHE_VERSION cuando cambien los assets para forzar actualización. */
 'use strict';
 
-const CACHE = 'leon-top20-v2';
+const CACHE = 'leon-top20-v3';
 const SHELL = [
   './',
   './index.html',
   './app.js',
   './style.css',
+  './config.js',
+  './cloud.js',
   './manifest.webmanifest',
   './favicon.svg',
   './icon-192.png',
@@ -16,6 +18,7 @@ const SHELL = [
   './data/comida.json',
   './data/visitar.json',
   './data/ads.json',
+  './data/descuentos.json',
 ];
 
 self.addEventListener('install', (e) => {

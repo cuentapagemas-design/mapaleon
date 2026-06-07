@@ -1,0 +1,61 @@
+{
+  "updatedAt": "2026-06-07T00:00:00.000Z",
+  "discounts": [
+    {
+      "id": "demo-1",
+      "title": "2x1 en pinchos",
+      "business": "La Bicha",
+      "description": "De lunes a jueves, en barra.",
+      "terms": "No acumulable con otras ofertas. Una por persona.",
+      "category": "tapeo",
+      "discount_label": "2x1",
+      "code": "LEON2X1",
+      "link_url": "",
+      "lat": 42.5982,
+      "lng": -5.5731,
+      "active": true
+    },
+    {
+      "id": "demo-2",
+      "title": "-20% en el menú de cena",
+      "business": "Restaurante Pablo",
+      "description": "Reservando antes de las 21:00.",
+      "terms": "De domingo a jueves. Aforo limitado.",
+      "category": "comida",
+      "discount_label": "-20%",
+      "code": "CENA20",
+      "link_url": "",
+      "lat": 42.5942,
+      "lng": -5.5712,
+      "active": true
+    },
+    {
+      "id": "demo-3",
+      "title": "Entrada reducida al museo",
+      "business": "MUSAC",
+      "description": "Presentando la oferta en taquilla.",
+      "terms": "Válido para una persona.",
+      "category": "visitar",
+      "discount_label": "-30%",
+      "code": "",
+      "link_url": "",
+      "lat": 42.6060,
+      "lng": -5.5681,
+      "active": true
+    },
+    {
+      "id": "demo-4",
+      "title": "Café gratis con tu tapa",
+      "business": "Camarote Madrid",
+      "description": "Por las mañanas, con cualquier consumición.",
+      "terms": "Hasta las 13:00.",
+      "category": "tapeo",
+      "discount_label": "Gratis",
+      "code": "CAFE0",
+      "link_url": "",
+      "lat": 42.5990,
+      "lng": -5.5705,
+      "active": true
+    }
+  ]
+}
