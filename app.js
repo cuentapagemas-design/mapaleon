@@ -450,6 +450,7 @@ function toggleSave(id) {
 // ---------------------------------------------------------------------------
 function updateAccountBtn() {
   const btn = document.getElementById('account-btn');
+  if (!btn) return; // botón de cuenta desactivado de momento
   btn.classList.toggle('is-logged', !!state.user);
 }
 
@@ -593,7 +594,7 @@ async function loadAll() {
       const ads = await loadJSON('data/ads.json', { ads: [] });
       state.ads = Array.isArray(ads.ads) ? ads.ads : [];
     })(),
-    loadDiscounts(),
+    // loadDiscounts(),  // Ofertas desactivadas de momento (pruebas sin BD)
   ]);
   updateFavBadge();
   renderView(state.view);
@@ -652,19 +653,23 @@ savedToggle.addEventListener('click', () => {
   renderDiscounts();
 });
 
-// Cuenta / acceso
-document.getElementById('account-btn').addEventListener('click', () => openAuthModal());
-document.getElementById('auth-close').addEventListener('click', closeAuthModal);
-document.getElementById('auth-modal').addEventListener('click', (e) => {
-  if (e.target.id === 'auth-modal') closeAuthModal(); // toca fuera = cerrar
-});
+// Cuenta / acceso (desactivado de momento: los elementos pueden no existir)
+const accountBtn = document.getElementById('account-btn');
+if (accountBtn) {
+  accountBtn.addEventListener('click', () => openAuthModal());
+  document.getElementById('auth-close').addEventListener('click', closeAuthModal);
+  document.getElementById('auth-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'auth-modal') closeAuthModal(); // toca fuera = cerrar
+  });
+}
 
 // Init
 updateFavBadge();
 computeSheetBounds();
 setTimeout(() => map.invalidateSize(), 60);
 loadAll();
-initCloud();
+// Cuentas/nube desactivadas de momento (pruebas sin BD); reactivar con Ofertas.
+// initCloud();
 
 // PWA: service worker
 if ('serviceWorker' in navigator) {
