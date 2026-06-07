@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · Anuncios — León TOP 20</title>
+  <style>
+    :root { --ink:#25221d; --muted:#6c6760; --bg:#f6f4ef; --accent:#b3123b; --line:#e4dfd5; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+    header { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,.1); padding:.8rem 1.2rem; }
+    header h1 { margin:0; font-size:1.15rem; }
+    header p { margin:.2rem 0 0; font-size:.8rem; color:var(--muted); }
+    main { max-width:1080px; margin:0 auto; padding:1rem 1.2rem 4rem; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; margin-bottom:1rem; }
+    .card h2 { margin:0 0 .7rem; font-size:1rem; }
+    label { display:block; font-size:.8rem; font-weight:600; margin:.6rem 0 .2rem; }
+    input[type=text], input[type=url], input[type=number], input[type=password], input[type=datetime-local], textarea, select {
+      width:100%; padding:.5rem .6rem; border:1px solid var(--line); border-radius:8px; font:inherit; background:#fff;
+    }
+    textarea { min-height:60px; resize:vertical; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:.8rem; }
+    .row3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.8rem; }
+    .checks { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; }
+    .checks label { display:inline-flex; align-items:center; gap:.35rem; margin:0; font-weight:500; }
+    .checks input { width:auto; }
+    button { font:inherit; font-weight:600; border:none; border-radius:8px; padding:.55rem .9rem; cursor:pointer; }
+    .btn-primary { background:var(--accent); color:#fff; }
+    .btn-ghost { background:#ece8e0; color:var(--ink); }
+    .btn-danger { background:#fff; color:var(--accent); border:1px solid var(--accent); }
+    .btn-row { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.9rem; }
+    .ad-list { list-style:none; margin:0; padding:0; }
+    .ad-list li { display:flex; align-items:center; gap:.6rem; padding:.5rem .2rem; border-bottom:1px solid var(--line); }
+    .ad-list .meta { flex:1; min-width:0; }
+    .ad-list .meta b { font-size:.92rem; }
+    .ad-list .meta small { display:block; color:var(--muted); font-size:.75rem; }
+    .pill { font-size:.65rem; font-weight:700; text-transform:uppercase; border-radius:999px; padding:.1rem .45rem; }
+    .pill.on { background:#e3f4e7; color:#1c7a37; }
+    .pill.off { background:#f1e3e3; color:#a33; }
+    .status { font-size:.82rem; padding:.5rem .7rem; border-radius:8px; margin-top:.6rem; display:none; }
+    .status.show { display:block; }
+    .status.ok { background:#e3f4e7; color:#155f2a; }
+    .status.err { background:#fbe3e3; color:#8a1a1a; }
+    .status.info { background:#e6eef7; color:#234; }
+    .hint { font-size:.75rem; color:var(--muted); margin-top:.25rem; }
+    /* Vista previa */
+    .preview-banner { display:flex; align-items:center; gap:.7rem; padding:.55rem .8rem; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .preview-banner .tag { font-size:.6rem; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:.05rem .3rem; }
+    .preview-banner img { width:48px; height:48px; object-fit:cover; border-radius:8px; }
+    .preview-banner .t { font-weight:700; font-size:.92rem; }
+    .preview-banner .b { font-size:.8rem; color:var(--muted); }
+    .preview-list { padding:.5rem .7rem; border:1px solid var(--line); border-radius:10px; background:#fbf6e9; }
+    .preview-list .t { font-weight:700; font-size:.92rem; }
+    .preview-list .spon { font-size:.62rem; font-weight:700; text-transform:uppercase; color:#fff; background:#e6a700; border-radius:4px; padding:.05rem .35rem; }
+    .preview-list .b { font-size:.8rem; color:var(--muted); }
+    /* Gate de contraseña */
+    #gate { position:fixed; inset:0; background:rgba(40,36,30,.96); display:flex; align-items:center; justify-content:center; z-index:9999; }
+    #gate[hidden] { display:none; }
+    #gate .box { background:#fff; padding:1.5rem; border-radius:12px; width:min(92vw,340px); text-align:center; }
+    #gate input { margin:.8rem 0; }
+    code { background:#f0ece2; padding:.05rem .3rem; border-radius:4px; font-size:.85em; }
+  </style>
+</head>
+<body>
+  <!-- Gate de contraseña: SOLO fricción visual. La seguridad real es el PAT (ver README). -->
+  <div id="gate" hidden>
+    <div class="box">
+      <h2>Acceso al panel</h2>
+      <p style="font-size:.82rem;color:#6c6760">Esto no es seguridad: solo evita aperturas accidentales.</p>
+      <input type="password" id="gate-pass" placeholder="Contraseña" autocomplete="off" />
+      <button class="btn-primary" id="gate-go" style="width:100%">Entrar</button>
+      <p id="gate-err" style="color:#b3123b;font-size:.8rem;display:none">Contraseña incorrecta.</p>
+    </div>
+  </div>
+
+  <header>
+    <h1>Back-office de anuncios · León TOP 20</h1>
+    <p>Edita <code>data/ads.json</code> y publícalo vía API de GitHub. Sin servidor. El ranking diario no toca este fichero.</p>
+  </header>
+
+  <main>
+    <!-- Configuración / credenciales -->
+    <section class="card">
+      <h2>1 · Conexión</h2>
+      <div class="row3">
+        <div><label for="owner">Owner</label><input type="text" id="owner" /></div>
+        <div><label for="repo">Repositorio</label><input type="text" id="repo" /></div>
+        <div><label for="branch">Rama</label><input type="text" id="branch" /></div>
+      </div>
+      <label for="pat">Personal Access Token (fino, Contents: Read/Write de ESTE repo)</label>
+      <input type="password" id="pat" placeholder="github_pat_…" autocomplete="off" />
+      <p class="hint">El PAT se guarda solo en <b>sessionStorage</b> (se borra al cerrar la pestaña). Nunca en el código ni en localStorage.</p>
+      <div class="btn-row">
+        <button class="btn-ghost" id="btn-load">Cargar anuncios actuales</button>
+        <button class="btn-ghost" id="btn-forget">Olvidar PAT</button>
+      </div>
+      <div class="status" id="conn-status"></div>
+    </section>
+
+    <!-- Lista de anuncios -->
+    <section class="card">
+      <h2>2 · Anuncios <span id="count" style="color:#6c6760;font-weight:400"></span></h2>
+      <ul class="ad-list" id="ad-list"></ul>
+      <div class="btn-row"><button class="btn-ghost" id="btn-new">+ Nuevo anuncio</button></div>
+    </section>
+
+    <!-- Editor + vista previa -->
+    <section class="card" id="editor" hidden>
+      <h2 id="editor-title">Editar anuncio</h2>
+      <div class="row">
+        <div><label for="f-title">Título *</label><input type="text" id="f-title" /></div>
+        <div><label for="f-id">ID (se autogenera si lo dejas vacío)</label><input type="text" id="f-id" /></div>
+      </div>
+      <label for="f-body">Texto</label>
+      <textarea id="f-body"></textarea>
+      <div class="row">
+        <div><label for="f-image">imageUrl</label><input type="url" id="f-image" placeholder="https://…" /></div>
+        <div><label for="f-link">linkUrl * (incluye UTM)</label><input type="url" id="f-link" placeholder="https://…?utm_source=leon-top20&utm_medium=banner&utm_campaign=…" /></div>
+      </div>
+      <div class="row3">
+        <div>
+          <label for="f-placement">Placement</label>
+          <select id="f-placement">
+            <option value="banner">banner (slot inferior)</option>
+            <option value="list">list (patrocinado en la lista)</option>
+          </select>
+        </div>
+        <div><label for="f-weight">Weight (prioridad)</label><input type="number" id="f-weight" min="0" step="1" value="1" /></div>
+        <div>
+          <label>Estado</label>
+          <div class="checks" style="margin-top:.5rem"><label><input type="checkbox" id="f-active" checked /> Activo</label></div>
+        </div>
+      </div>
+      <label>Categorías (vacío = todas)</label>
+      <div class="checks">
+        <label><input type="checkbox" class="f-cat" value="tapeo" /> Tapear</label>
+        <label><input type="checkbox" class="f-cat" value="comida" /> Cenar</label>
+        <label><input type="checkbox" class="f-cat" value="visitar" /> Visitar</label>
+      </div>
+      <div class="row">
+        <div><label for="f-start">Inicio (opcional)</label><input type="datetime-local" id="f-start" /></div>
+        <div><label for="f-end">Fin (opcional)</label><input type="datetime-local" id="f-end" /></div>
+      </div>
+
+      <label style="margin-top:1rem">Vista previa en vivo</label>
+      <div id="preview"></div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="btn-save">Guardar en la lista</button>
+        <button class="btn-ghost" id="btn-cancel">Cancelar</button>
+      </div>
+    </section>
+
+    <!-- Publicar -->
+    <section class="card">
+      <h2>3 · Publicar</h2>
+      <p class="hint">Hace GET del <code>sha</code> actual de <code>data/ads.json</code> y luego PUT con el JSON en base64. GitHub Pages tarda ~1 min en propagar el cambio.</p>
+      <div class="btn-row"><button class="btn-primary" id="btn-publish">Publicar en GitHub</button></div>
+      <div class="status" id="pub-status"></div>
+    </section>
+  </main>
+
+  <script>
+  'use strict';
+  // ---- Contraseña de fricción (NO es seguridad; cámbiala o ponla vacía para desactivar) ----
+  const ADMIN_PASSCODE = 'leon-admin';
+
+  const DEFAULTS = { owner: 'cuentapagemas-design', repo: 'mapaleon', branch: 'main' };
+  const CFG_KEY = 'leon-admin-cfg';
+  const PAT_KEY = 'leon-admin-pat';   // sessionStorage SOLO
+
+  let ads = [];        // anuncios en memoria
+  let fileSha = null;  // sha del data/ads.json cargado
+  let editIndex = -1;  // índice en edición (-1 = nuevo)
+
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- Gate ----------
+  function initGate() {
+    if (!ADMIN_PASSCODE) return;
+    if (sessionStorage.getItem('leon-admin-ok') === '1') return;
+    $('gate').hidden = false;
+    const go = () => {
+      if ($('gate-pass').value === ADMIN_PASSCODE) {
+        sessionStorage.setItem('leon-admin-ok', '1');
+        $('gate').hidden = true;
+      } else { $('gate-err').style.display = 'block'; }
+    };
+    $('gate-go').addEventListener('click', go);
+    $('gate-pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+  }
+
+  // ---------- Config / PAT ----------
+  function loadCfg() {
+    let cfg = DEFAULTS;
+    try { cfg = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(CFG_KEY) || '{}') }; } catch {}
+    $('owner').value = cfg.owner; $('repo').value = cfg.repo; $('branch').value = cfg.branch;
+    $('pat').value = sessionStorage.getItem(PAT_KEY) || '';
+  }
+  function saveCfg() {
+    localStorage.setItem(CFG_KEY, JSON.stringify({
+      owner: $('owner').value.trim(), repo: $('repo').value.trim(), branch: $('branch').value.trim(),
+    }));
+    const pat = $('pat').value.trim();
+    if (pat) sessionStorage.setItem(PAT_KEY, pat);
+  }
+  function getCfg() {
+    return { owner: $('owner').value.trim(), repo: $('repo').value.trim(), branch: $('branch').value.trim(), pat: $('pat').value.trim() };
+  }
+
+  // ---------- base64 UTF-8 ----------
+  const b64encode = (str) => btoa(unescape(encodeURIComponent(str)));
+  const b64decode = (str) => decodeURIComponent(escape(atob(str.replace(/\n/g, ''))));
+
+  // ---------- datetime-local <-> ISO ----------
+  function isoToLocal(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    const off = d.getTimezoneOffset() * 60000;
+    return new Date(d - off).toISOString().slice(0, 16);
+  }
+  const localToIso = (v) => (v ? new Date(v).toISOString() : null);
+
+  // ---------- GitHub API ----------
+  function apiUrl(cfg) {
+    return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/data/ads.json`;
+  }
+  async function ghGet(cfg) {
+    const res = await fetch(`${apiUrl(cfg)}?ref=${encodeURIComponent(cfg.branch)}`, {
+      headers: { Authorization: `Bearer ${cfg.pat}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+    });
+    if (res.status === 404) return { sha: null, json: { updatedAt: null, ads: [] } };
+    if (!res.ok) throw new Error(`GET ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    const data = await res.json();
+    return { sha: data.sha, json: JSON.parse(b64decode(data.content)) };
+  }
+  async function ghPut(cfg, contentStr, sha) {
+    const body = {
+      message: 'ads: actualiza anuncios desde el back-office',
+      content: b64encode(contentStr),
+      branch: cfg.branch,
+    };
+    if (sha) body.sha = sha;
+    const res = await fetch(apiUrl(cfg), {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${cfg.pat}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) throw new Error(`PUT ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    return res.json();
+  }
+
+  function status(el, kind, msg) {
+    el.className = `status show ${kind}`;
+    el.textContent = msg;
+  }
+
+  // ---------- Render lista ----------
+  function renderList() {
+    const ul = $('ad-list');
+    ul.innerHTML = '';
+    $('count').textContent = ads.length ? `(${ads.length})` : '(vacío)';
+    if (!ads.length) {
+      ul.innerHTML = '<li style="color:#6c6760">No hay anuncios. Crea uno con “+ Nuevo anuncio”.</li>';
+      return;
+    }
+    ads.forEach((ad, i) => {
+      const li = document.createElement('li');
+      const cats = (ad.categories && ad.categories.length) ? ad.categories.join(', ') : 'todas';
+      li.innerHTML =
+        `<span class="pill ${ad.active ? 'on' : 'off'}">${ad.active ? 'activo' : 'inactivo'}</span>` +
+        `<span class="meta"><b></b><small></small></span>`;
+      li.querySelector('b').textContent = `${ad.title || '(sin título)'} · ${ad.placement}`;
+      li.querySelector('small').textContent = `peso ${ad.weight ?? 1} · categorías: ${cats}`;
+      const edit = document.createElement('button'); edit.className = 'btn-ghost'; edit.textContent = 'Editar';
+      edit.onclick = () => openEditor(i);
+      const del = document.createElement('button'); del.className = 'btn-danger'; del.textContent = 'Borrar';
+      del.onclick = () => { if (confirm('¿Borrar este anuncio?')) { ads.splice(i, 1); renderList(); } };
+      li.append(edit, del);
+      ul.appendChild(li);
+    });
+  }
+
+  // ---------- Editor ----------
+  function openEditor(i) {
+    editIndex = i;
+    const ad = i >= 0 ? ads[i] : { placement: 'banner', weight: 1, active: true, categories: [] };
+    $('editor-title').textContent = i >= 0 ? 'Editar anuncio' : 'Nuevo anuncio';
+    $('f-title').value = ad.title || '';
+    $('f-id').value = ad.id || '';
+    $('f-body').value = ad.body || '';
+    $('f-image').value = ad.imageUrl || '';
+    $('f-link').value = ad.linkUrl || '';
+    $('f-placement').value = ad.placement || 'banner';
+    $('f-weight').value = ad.weight ?? 1;
+    $('f-active').checked = ad.active !== false;
+    document.querySelectorAll('.f-cat').forEach((c) => { c.checked = (ad.categories || []).includes(c.value); });
+    $('f-start').value = isoToLocal(ad.start);
+    $('f-end').value = isoToLocal(ad.end);
+    $('editor').hidden = false;
+    updatePreview();
+    $('editor').scrollIntoView({ behavior: 'smooth' });
+  }
+  function slug(s) {
+    return (s || 'anuncio').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+  }
+  function readForm() {
+    const cats = [...document.querySelectorAll('.f-cat:checked')].map((c) => c.value);
+    return {
+      id: $('f-id').value.trim() || `${slug($('f-title').value)}-${Date.now().toString(36)}`,
+      title: $('f-title').value.trim(),
+      body: $('f-body').value.trim(),
+      imageUrl: $('f-image').value.trim(),
+      linkUrl: $('f-link').value.trim(),
+      placement: $('f-placement').value,
+      categories: cats,
+      weight: Number($('f-weight').value) || 0,
+      start: localToIso($('f-start').value),
+      end: localToIso($('f-end').value),
+      active: $('f-active').checked,
+    };
+  }
+  function saveForm() {
+    const ad = readForm();
+    if (!ad.title) { alert('El título es obligatorio.'); return; }
+    if (!ad.linkUrl) { alert('linkUrl es obligatorio.'); return; }
+    if (editIndex >= 0) ads[editIndex] = ad; else ads.push(ad);
+    $('editor').hidden = true;
+    renderList();
+  }
+  function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function updatePreview() {
+    const ad = readForm();
+    const p = $('preview');
+    if (ad.placement === 'list') {
+      p.innerHTML = `<div class="preview-list"><div class="t">${escapeHTML(ad.title || 'Título')} <span class="spon">Patrocinado</span></div><div class="b">${escapeHTML(ad.body || '')}</div></div>`;
+    } else {
+      const img = ad.imageUrl ? `<img src="${escapeHTML(ad.imageUrl)}" alt="">` : '';
+      p.innerHTML = `<div class="preview-banner"><span class="tag">Publicidad</span>${img}<div><div class="t">${escapeHTML(ad.title || 'Título')}</div><div class="b">${escapeHTML(ad.body || '')}</div></div></div>`;
+    }
+  }
+
+  // ---------- Acciones ----------
+  async function doLoad() {
+    saveCfg();
+    const cfg = getCfg();
+    if (!cfg.pat) { status($('conn-status'), 'err', 'Pega un PAT primero.'); return; }
+    status($('conn-status'), 'info', 'Cargando…');
+    try {
+      const { sha, json } = await ghGet(cfg);
+      fileSha = sha;
+      ads = Array.isArray(json.ads) ? json.ads : [];
+      renderList();
+      status($('conn-status'), 'ok', `Cargados ${ads.length} anuncios.` + (sha ? '' : ' (el fichero aún no existe; se creará al publicar)'));
+    } catch (e) {
+      status($('conn-status'), 'err', String(e.message || e));
+    }
+  }
+  async function doPublish() {
+    saveCfg();
+    const cfg = getCfg();
+    if (!cfg.pat) { status($('pub-status'), 'err', 'Pega un PAT primero.'); return; }
+    status($('pub-status'), 'info', 'Publicando…');
+    try {
+      // Releemos el sha más reciente justo antes de escribir (evita conflictos).
+      const cur = await ghGet(cfg);
+      const payload = { updatedAt: new Date().toISOString(), ads };
+      await ghPut(cfg, JSON.stringify(payload, null, 2) + '\n', cur.sha);
+      fileSha = null;
+      status($('pub-status'), 'ok', '✅ Publicado. GitHub Pages tarda ~1 minuto en propagar el cambio.');
+    } catch (e) {
+      status($('pub-status'), 'err', String(e.message || e));
+    }
+  }
+
+  // ---------- Init ----------
+  initGate();
+  loadCfg();
+  renderList();
+  $('btn-load').onclick = doLoad;
+  $('btn-publish').onclick = doPublish;
+  $('btn-new').onclick = () => openEditor(-1);
+  $('btn-save').onclick = saveForm;
+  $('btn-cancel').onclick = () => { $('editor').hidden = true; };
+  $('btn-forget').onclick = () => { sessionStorage.removeItem(PAT_KEY); $('pat').value = ''; status($('conn-status'), 'info', 'PAT borrado de esta sesión.'); };
+  // Vista previa en vivo.
+  ['f-title','f-body','f-image','f-link','f-placement'].forEach((id) => {
+    $(id).addEventListener('input', updatePreview);
+    $(id).addEventListener('change', updatePreview);
+  });
+  </script>
+</body>
+</html>

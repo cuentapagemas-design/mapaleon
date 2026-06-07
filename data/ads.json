@@ -1,0 +1,18 @@
+{
+  "updatedAt": "2026-06-07T00:00:00.000Z",
+  "ads": [
+    {
+      "id": "demo-banner",
+      "title": "¿Tu negocio en León? Anúnciate aquí",
+      "body": "Llega a quien busca dónde tapear, cenar y visitar.",
+      "imageUrl": "",
+      "linkUrl": "https://github.com/cuentapagemas-design/mapaleon?utm_source=leon-top20&utm_medium=banner&utm_campaign=demo",
+      "placement": "banner",
+      "categories": [],
+      "weight": 1,
+      "start": null,
+      "end": null,
+      "active": true
+    }
+  ]
+}

@@ -55,13 +55,67 @@ node scripts/build-ranking.mjs --selftest
 - 3 capas: **Tapear** (dorado), **Cenar** (carmesí), **Visitar** (teal). Por defecto Tapear.
 - Burbujas `L.circleMarker`: el **radio escala con el puesto** (el nº1 es el más grande) y
   cada burbuja lleva su **número de ranking** encima.
-- **Popup**: nombre, ★ valoración, nº de reseñas y "Puesto #N en [categoría]".
+- **Popup**: nombre, ★ valoración, nº de reseñas, "Puesto #N en [categoría]" y corazón de favorito.
 - **Panel** con la lista del TOP 20; al tocar un item, centra y abre su burbuja.
 - Muestra "Actualizado: {generatedAt}" y atribución a Google + OpenStreetMap/CARTO.
-- Sin `localStorage` ni gamificación.
+- Sin gamificación.
 
 > Los ficheros de `/data` incluidos en el repo son **datos de muestra** para que la web
 > funcione desde el primer momento. El cron diario los sustituye por datos reales.
+
+## Favoritos (por dispositivo)
+
+- Un **corazón** ♡ en el popup de cada burbuja y en cada item de la lista permite guardar sitios.
+- Se persisten en `localStorage` con la clave **`leon-favs-v1`** (array de place id).
+- La vista **★ Favoritos** filtra y muestra solo los sitios marcados, **de cualquier
+  categoría**, sobre el mapa y en la lista.
+
+> ⚠️ Los favoritos son **POR DISPOSITIVO/NAVEGADOR**: viven en el `localStorage` de ese
+> navegador y **no se sincronizan** entre dispositivos ni entre navegadores. Sincronizarlos
+> requeriría **cuentas de usuario + backend**, que esta app (estática) no tiene.
+
+## Anuncios (git-based, serverless)
+
+Los anuncios viven en **`data/ads.json`** (ruta independiente del ranking: **el cron no lo
+toca**). Esquema:
+
+```jsonc
+{ "updatedAt": "ISO", "ads": [{
+    "id", "title", "body", "imageUrl", "linkUrl",   // linkUrl con parámetros UTM
+    "placement": "banner" | "list",                 // banner inferior o item patrocinado en la lista
+    "categories": ["tapeo","comida","visitar"],     // capas donde aparece; vacío = todas
+    "weight": 1,                                     // prioridad en la rotación
+    "start": "ISO|null", "end": "ISO|null",          // programación (solo en fechas)
+    "active": true
+}]}
+```
+
+**Front-end público** (`app.js`):
+- Slot **banner** fijo (zona inferior del mapa) que **rota** entre los anuncios activos y en
+  fecha, ponderando por `weight`. Si no hay ninguno elegible, **no se muestra hueco**.
+- Item **"Patrocinado"** fijado arriba de la lista cuando hay un anuncio `placement: "list"`
+  para la categoría activa.
+- Los clics abren `linkUrl` en **pestaña nueva**. No hay tracking propio: la medición se hace
+  por **UTM** en el destino.
+
+### Back-office `/admin.html`
+
+Página aparte y **serverless** para crear / editar / borrar anuncios con **vista previa en vivo**:
+1. Configura **owner**, **repo** y **rama** (precargados a `cuentapagemas-design/mapaleon` / `main`).
+2. Pega un **PAT fino** (ver seguridad abajo) y pulsa **Cargar anuncios actuales**.
+3. Edita la lista. Al **Publicar**, el panel hace `GET` del `sha` actual de `data/ads.json` y
+   luego `PUT` a la Contents API (`PUT /repos/{owner}/{repo}/contents/data/ads.json`) con el
+   JSON en **base64**.
+4. Tras publicar, **GitHub Pages tarda ~1 min** en propagar el cambio.
+
+> 🔐 **Seguridad de los anuncios**
+> - El **PAT** se guarda **solo en `sessionStorage`** (se borra al cerrar la pestaña).
+>   **Nunca** en el código ni en `localStorage`.
+> - Usa un **PAT fino (fine-grained)** con permiso **Contents: Read and write** restringido
+>   **a ESTE repositorio**. Esa es la **seguridad real**.
+> - La página tiene una **contraseña en JS** (`ADMIN_PASSCODE`) como **mera fricción visual**
+>   para evitar aperturas accidentales — **NO es seguridad** (cualquiera puede leerla en el
+>   código). Cámbiala o ponla a `''` para desactivarla.
 
 ## Puesta en marcha
 

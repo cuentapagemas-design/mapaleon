@@ -2,6 +2,7 @@
   --tapeo: #d4a017;   /* dorado */
   --comida: #b3123b;  /* carmesí */
   --visitar: #1aa7a0; /* teal */
+  --fav: #e6a700;     /* dorado favoritos */
   --bg: #f6f4ef;
   --ink: #25221d;
   --muted: #6c6760;
@@ -64,9 +65,10 @@ html, body {
 }
 .layer-btn:hover { background: #e2ddd2; }
 
-.layer-btn[data-cat="tapeo"].is-active   { background: var(--tapeo);  color: #fff; }
-.layer-btn[data-cat="comida"].is-active  { background: var(--comida); color: #fff; }
-.layer-btn[data-cat="visitar"].is-active { background: var(--visitar); color: #fff; }
+.layer-btn[data-cat="tapeo"].is-active     { background: var(--tapeo);  color: #fff; }
+.layer-btn[data-cat="comida"].is-active    { background: var(--comida); color: #fff; }
+.layer-btn[data-cat="visitar"].is-active   { background: var(--visitar); color: #fff; }
+.layer-btn[data-cat="favoritos"].is-active { background: var(--fav);    color: #fff; }
 
 /* ---------- Layout ---------- */
 #main {
@@ -75,9 +77,14 @@ html, body {
   min-height: 0;
 }
 
-#map {
+#map-wrap {
   flex: 1;
+  position: relative;
   min-height: 0;
+}
+#map {
+  position: absolute;
+  inset: 0;
   background: #dfe7e3;
 }
 
@@ -108,7 +115,7 @@ html, body {
 
 .rank-item {
   display: grid;
-  grid-template-columns: 2rem 1fr auto;
+  grid-template-columns: 2rem 1fr auto auto;
   align-items: center;
   gap: 0.6rem;
   padding: 0.5rem 1rem;
@@ -154,10 +161,95 @@ html, body {
 
 /* ---------- Popup ---------- */
 .leaflet-popup-content { margin: 0.7rem 0.9rem; }
-.popup-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+.popup-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+.popup-name { font-weight: 700; font-size: 1rem; }
 .popup-meta { font-size: 0.85rem; color: var(--ink); }
 .popup-rank { margin-top: 0.3rem; font-size: 0.82rem; color: var(--muted); }
 .star { color: #e6a700; }
+
+/* ---------- Corazón de favoritos ---------- */
+.fav-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 0.1rem 0.2rem;
+  color: #c9c3b8;
+  transition: transform 0.1s, color 0.15s;
+}
+.fav-btn:hover { transform: scale(1.15); color: var(--fav); }
+.fav-btn.is-fav { color: var(--fav); }
+.popup-head .fav-btn { margin-left: auto; }
+
+/* Etiqueta de categoría en la vista Favoritos */
+.cat-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: #efeadf;
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  vertical-align: middle;
+}
+
+.empty-state { padding: 1rem; color: var(--muted); font-size: 0.9rem; line-height: 1.4; }
+
+/* ---------- Item patrocinado en la lista ---------- */
+.rank-item.sponsored { background: #fbf6e9; border-left-color: var(--fav); }
+.rank-item.sponsored:hover { background: #f7efd9; }
+.spon-tag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #fff;
+  background: var(--fav);
+  border-radius: 4px;
+  padding: 0.08rem 0.35rem;
+  vertical-align: middle;
+}
+
+/* ---------- Banner de anuncio ---------- */
+#ad-banner {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 500;
+  background: var(--panel-bg);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.ad-banner-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.ad-tag {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--muted);
+  border: 1px solid #ddd6c9;
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+  white-space: nowrap;
+}
+.ad-img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; flex: none; }
+.ad-text { display: flex; flex-direction: column; min-width: 0; }
+.ad-title { font-weight: 700; font-size: 0.92rem; line-height: 1.2; }
+.ad-body {
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* ---------- Responsive: panel abajo en móvil ---------- */
 @media (max-width: 720px) {

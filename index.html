@@ -23,11 +23,16 @@
         <button class="layer-btn is-active" data-cat="tapeo" type="button">Tapear</button>
         <button class="layer-btn" data-cat="comida" type="button">Cenar</button>
         <button class="layer-btn" data-cat="visitar" type="button">Visitar</button>
+        <button class="layer-btn" data-cat="favoritos" type="button" id="fav-btn">★ Favoritos</button>
       </nav>
     </header>
 
     <main id="main">
-      <div id="map" role="application" aria-label="Mapa de León"></div>
+      <div id="map-wrap">
+        <div id="map" role="application" aria-label="Mapa de León"></div>
+        <!-- Slot de anuncio tipo banner (se rellena desde data/ads.json; oculto si no hay) -->
+        <div id="ad-banner" hidden aria-label="Publicidad"></div>
+      </div>
 
       <aside id="panel" aria-label="Lista del TOP 20">
         <div id="panel-head">
@@ -39,6 +44,7 @@
           Datos de lugares: Google. Mapa base: ©
           <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>,
           teselas © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>.
+          · <a href="admin.html">Admin</a>
         </footer>
       </aside>
     </main>
