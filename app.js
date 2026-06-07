@@ -18,9 +18,53 @@ const state = {
   ads: [],
   markers: {},
   favs: loadFavs(),
+  openNow: false,      // filtro "abierto ahora"
   layer: L.layerGroup(),
   bannerTimer: null,
 };
+
+const WEEK_MIN = 7 * 24 * 60; // 10080
+
+// ---------------------------------------------------------------------------
+// "Abierto ahora": se calcula en el cliente a partir del horario que el cron
+// dejó en cada item (item.hours + item.tz). Cero peticiones a Google por usuario.
+// ---------------------------------------------------------------------------
+function nowWeekMin(tz) {
+  // Hora local del sitio = epoch + su desfase UTC; leemos los campos en UTC.
+  const ms = Date.now() + (typeof tz === 'number' ? tz : 0) * 60000;
+  const d = new Date(ms);
+  return d.getUTCDay() * 1440 + d.getUTCHours() * 60 + d.getUTCMinutes();
+}
+function openInfo(item) {
+  const hours = item.hours;
+  if (!Array.isArray(hours) || hours.length === 0) return { known: false, open: false };
+  const w = nowWeekMin(item.tz);
+  for (const [s, e] of hours) {
+    if ((w >= s && w < e) || (w + WEEK_MIN >= s && w + WEEK_MIN < e)) {
+      return { known: true, open: true, closesAt: e % 1440 };
+    }
+  }
+  let best = Infinity, opensAt = null;
+  for (const [s] of hours) {
+    let d = s - w; if (d < 0) d += WEEK_MIN;
+    if (d < best) { best = d; opensAt = s % 1440; }
+  }
+  return { known: true, open: false, opensAt };
+}
+function hm(min) {
+  const h = Math.floor(min / 60) % 24, m = min % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+function statusHTML(item) {
+  const info = openInfo(item);
+  if (!info.known) return '';
+  if (info.open) {
+    return `<span class="st st-open">● Abierto</span>` +
+      (info.closesAt != null ? ` · cierra ${hm(info.closesAt)}` : '');
+  }
+  return `<span class="st st-closed">● Cerrado</span>` +
+    (info.opensAt != null ? ` · abre ${hm(info.opensAt)}` : '');
+}
 
 // ---------------------------------------------------------------------------
 // Favoritos (localStorage, por dispositivo)
@@ -91,8 +135,10 @@ function heartHTML(id) {
 }
 function popupHTML(entry) {
   const it = entry.item;
+  const st = statusHTML(it);
   return `<div class="popup-head"><div class="popup-name">${escapeHTML(it.name)}</div>${heartHTML(it.id)}</div>` +
     `<div class="popup-meta">${starsText(it.rating)} · ${it.reviews.toLocaleString('es-ES')} reseñas</div>` +
+    (st ? `<div class="popup-status">${st}</div>` : '') +
     `<div class="popup-rank">Puesto #${it.rank} en ${entry.catLabel}</div>`;
 }
 
@@ -140,13 +186,22 @@ function renderView(view) {
   list.innerHTML = '';
   renderSponsored(view, list);
 
-  const entries = entriesForView(view);
+  let entries = entriesForView(view);
+  const hadEntries = entries.length > 0;
+  if (state.openNow) entries = entries.filter((e) => openInfo(e.item).open);
+
   if (entries.length === 0) {
     const li = document.createElement('li');
     li.className = 'empty-state';
-    li.textContent = isFavView
-      ? 'No tienes favoritos todavía. Toca el corazón ♡ de un sitio para guardarlo aquí.'
-      : 'Sin datos todavía. El ranking se genera a diario mediante GitHub Actions.';
+    if (state.openNow && hadEntries) {
+      li.textContent = isFavView
+        ? 'Ninguno de tus favoritos está abierto ahora mismo.'
+        : 'Ningún sitio de esta categoría está abierto ahora mismo.';
+    } else {
+      li.textContent = isFavView
+        ? 'No tienes favoritos todavía. Toca el corazón ♡ de un sitio para guardarlo aquí.'
+        : 'Sin datos todavía. El ranking se genera a diario mediante GitHub Actions.';
+    }
     list.appendChild(li);
     renderBanner(view);
     return;
@@ -186,10 +241,12 @@ function renderView(view) {
     li.style.setProperty('--cat-color', color);
     li.dataset.pos = String(pos);
     const catTag = isFavView ? `<span class="cat-tag">${catLabel}</span>` : '';
+    const st = statusHTML(item);
     li.innerHTML =
       `<div class="rank-num">${pos}</div>` +
       `<div><div class="rank-name">${escapeHTML(item.name)} ${catTag}</div>` +
-      `<div class="rank-meta">${starsText(item.rating)} · ${item.reviews.toLocaleString('es-ES')} reseñas</div></div>` +
+      `<div class="rank-meta">${starsText(item.rating)} · ${item.reviews.toLocaleString('es-ES')} reseñas</div>` +
+      (st ? `<div class="rank-status">${st}</div>` : '') + `</div>` +
       `<div class="rank-score">${item.score.toFixed(2)}</div>` +
       heartHTML(item.id);
     li.addEventListener('click', (e) => {
@@ -301,6 +358,7 @@ function setSheet(s) { sheetState = s; applySheet(true); }
 function toggleSheet() { setSheet(sheetState === 'full' ? 'peek' : 'full'); }
 
 function onPointerDown(e) {
+  if (e.target.closest('.open-chip')) return; // el chip no arrastra la hoja
   dragging = true;
   startPointerY = e.clientY;
   startY = liveY;
@@ -363,6 +421,15 @@ document.addEventListener('click', (e) => {
 });
 document.querySelectorAll('.tab').forEach((btn) => {
   btn.addEventListener('click', () => renderView(btn.dataset.cat));
+});
+
+// Filtro "Abierto ahora"
+const openToggle = document.getElementById('open-toggle');
+openToggle.addEventListener('click', () => {
+  state.openNow = !state.openNow;
+  openToggle.classList.toggle('is-on', state.openNow);
+  openToggle.setAttribute('aria-pressed', String(state.openNow));
+  renderView(state.view);
 });
 
 // Init

@@ -134,13 +134,32 @@ html, body {
   padding: 0.1rem 1rem 0.5rem;
   touch-action: none;
   /* Marca de agua sutil del león */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%23f1eaf7' fill-rule='evenodd'%3E%3Cpath d='M6 42 L15 36 C12 27 19 19 28 21 L31 11 L37 19 L43 10 L47 19 L55 14 L54 26 C61 31 62 41 56 47 C64 50 67 60 62 68 C70 64 74 51 70 45 C75 47 78 55 73 63 C83 61 85 46 76 40 C80 33 78 23 69 23 C73 32 70 39 63 40 C66 33 60 28 53 31 C57 38 55 47 48 50 C57 53 62 64 61 78 L67 80 L62 102 L71 104 L60 108 L57 88 C55 82 49 79 45 80 L46 98 L38 100 L41 82 C36 78 33 71 33 63 C29 68 22 69 18 64 L27 62 C21 58 20 49 26 45 C20 46 13 42 15 36 Z M27 30 a2.1 2.1 0 1 1 0.1 0 Z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%23f1eaf7' fill-rule='evenodd'%3E%3Cpath d='M6 42 L15 36 C12 27 19 19 28 21 L31 11 L37 19 L43 10 L47 19 L55 14 L54 26 C61 31 62 41 56 47 C64 50 67 60 62 68 C70 64 74 51 70 45 C75 47 78 55 73 63 C83 61 85 46 76 40 C80 33 78 23 69 23 C73 32 70 39 63 40 C66 33 60 28 53 31 C57 38 55 47 48 50 C57 55 63 66 64 82 C70 88 71 98 69 106 L77 109 L75 113 L63 110 C62 102 61 94 57 90 C54 92 51 93 48 92 C49 99 48 106 44 111 L52 114 L49 117 L39 112 C40 105 39 98 37 92 C35 86 34 77 34 66 C30 71 22 72 18 67 L27 64 C21 60 20 50 26 46 C20 47 13 43 15 36 Z M27 30 a2.1 2.1 0 1 1 0.1 0 Z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 6px top -4px;
   background-size: auto 64px;
 }
 #sheet-head h2 { margin: 0; font-size: 1.15rem; }
 #updated { margin: 0.1rem 0 0; font-size: 0.74rem; color: var(--muted); }
+
+.head-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.open-chip {
+  border: 1px solid var(--line); background: #fff; color: var(--muted);
+  font: inherit; font-size: 0.72rem; font-weight: 600; cursor: pointer;
+  border-radius: 999px; padding: 0.25rem 0.6rem;
+  display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
+  touch-action: manipulation;
+}
+.open-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #bdb7ac; }
+.open-chip.is-on { background: #e3f4e7; color: #1c7a37; border-color: #bfe6c9; }
+.open-chip.is-on .dot { background: #2e9e4d; }
+
+/* Estado abierto/cerrado */
+.rank-status { font-size: 0.74rem; margin-top: 1px; color: var(--muted); }
+.popup-status { font-size: 0.82rem; margin-top: 0.15rem; color: var(--muted); }
+.st { font-weight: 700; }
+.st-open { color: #2e9e4d; }
+.st-closed { color: #c2492f; }
 
 #ranking-list {
   list-style: none;

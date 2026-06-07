@@ -48,6 +48,26 @@ concreta de una categoría aún no cumple el test. Puedes validar la matemática
 node scripts/build-ranking.mjs --selftest
 ```
 
+## "Abierto ahora" (sin peticiones extra)
+
+Filtro tipo Google para ver solo lo que está **abierto en este momento**, resuelto **sin
+peticiones por usuario**:
+- El **cron** pide el horario una vez al día (campos `places.regularOpeningHours` y
+  `places.utcOffsetMinutes` en el mismo `searchText`, **no** hay llamadas extra) y guarda en
+  cada item un horario **compacto**: `tz` (desfase UTC) y `hours` = intervalos en "minutos de
+  la semana" (`[[inicio,fin], …]`; 24 h = `[[0,10080]]`; `null` = desconocido).
+- El **navegador** calcula abierto/cerrado comparando la hora actual con esos intervalos. Por
+  eso el coste de API es fijo (~9 peticiones/día) aunque haya miles de usuarios.
+- En la app: chip **"Abierto ahora"** en la cabecera de la hoja (filtra lista y mapa) y una
+  etiqueta **● Abierto · cierra HH:MM** / **● Cerrado · abre HH:MM** en cada sitio y en su popup.
+
+> 💶 **Coste:** pedir el horario sube el `searchText` al SKU *Enterprise* de Places API (New),
+> más caro **por petición**, pero el **número de peticiones no cambia** (sigue siendo el cron
+> diario). Mantén el tope de cuota diaria en Google Cloud.
+
+Esquema de cada item del ranking:
+`{ rank, id, name, lat, lng, rating, reviews, score, tz, hours }`.
+
 ## Identidad visual (León)
 
 La estética es moderna pero con guiños a la ciudad, sin recargar:

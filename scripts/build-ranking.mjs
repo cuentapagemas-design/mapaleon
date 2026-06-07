@@ -113,6 +113,8 @@ const FIELD_MASK = [
   'places.userRatingCount',
   'places.formattedAddress',
   'places.primaryType',
+  'places.regularOpeningHours', // horario semanal (para el filtro "abierto ahora")
+  'places.utcOffsetMinutes',    // desfase UTC del sitio (para calcular su hora local)
   'nextPageToken',
 ].join(',');
 
@@ -169,6 +171,36 @@ function inBBox(lat, lng) {
   );
 }
 
+const WEEK_MIN = 7 * 24 * 60; // 10080
+
+/**
+ * Convierte regularOpeningHours de Places API (New) en intervalos compactos
+ * en "minutos de la semana" (día*1440 + hora*60 + min; día 0 = domingo).
+ * Devuelve { tz, hours } donde:
+ *   - hours = null            → horario desconocido
+ *   - hours = [[ini,fin], …]  → intervalos (fin puede superar 10080 si cruza medianoche)
+ *   - 24h se representa como [[0, 10080]]
+ * Así el navegador solo compara la hora actual con estos intervalos (sin más API).
+ */
+function parseHours(place) {
+  const tz = typeof place.utcOffsetMinutes === 'number' ? place.utcOffsetMinutes : null;
+  const roh = place.regularOpeningHours;
+  if (!roh || !Array.isArray(roh.periods) || roh.periods.length === 0) {
+    return { tz, hours: null };
+  }
+  const intervals = [];
+  for (const p of roh.periods) {
+    if (!p || !p.open) continue;
+    // 24 horas: un periodo "open" sin "close".
+    if (!p.close) return { tz, hours: [[0, WEEK_MIN]] };
+    const start = p.open.day * 1440 + (p.open.hour || 0) * 60 + (p.open.minute || 0);
+    let end = p.close.day * 1440 + (p.close.hour || 0) * 60 + (p.close.minute || 0);
+    if (end <= start) end += WEEK_MIN; // cruza medianoche / fin de semana
+    intervals.push([start, end]);
+  }
+  return { tz, hours: intervals.length ? intervals : null };
+}
+
 /**
  * Construye el ranking de una categoría a partir de su pool de places.
  * @returns {{ generatedAt: string, items: Array<object> }}
@@ -192,6 +224,7 @@ function buildCategory(rawPlaces) {
     if (typeof rating !== 'number' || typeof reviews !== 'number') continue;
     if (reviews < MIN_REVIEWS) continue;
     if (!inBBox(lat, lng)) continue;
+    const { tz, hours } = parseHours(p);
     pool.push({
       id: p.id,
       name: p.displayName?.text ?? '(sin nombre)',
@@ -199,6 +232,8 @@ function buildCategory(rawPlaces) {
       lng,
       rating,
       reviews,
+      tz,
+      hours,
     });
   }
 
@@ -236,6 +271,8 @@ function buildCategory(rawPlaces) {
       rating: x.rating,
       reviews: x.reviews,
       score: Number(x.score.toFixed(4)),
+      tz: x.tz,
+      hours: x.hours,
     }));
 
   return { generatedAt: new Date().toISOString(), items: ranked };
