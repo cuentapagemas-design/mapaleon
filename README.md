@@ -59,19 +59,30 @@ La estética es moderna pero con guiños a la ciudad, sin recargar:
 - Wordmark "León" en serif (aire de heritage) sobre fondo piedra/marfil. Navegación con
   pastillas de categoría de alto contraste para que sea intuitiva.
 
-## Front-end
+## App móvil (PWA)
 
-- Teselas **CARTO Voyager** (sin key), Leaflet 1.9 desde CDN.
-- Centrado en León (`42.5987, -5.5671`), `fitBounds` a los puntos cargados.
-- 3 capas: **Tapear** (dorado), **Cenar** (carmesí), **Visitar** (teal). Por defecto Tapear.
+Está diseñada como **app móvil**, con patrón tipo mapa nativo:
+- **Mapa a pantalla completa** (teselas CARTO Voyager sin key, Leaflet 1.9).
+- **Hoja inferior deslizable** (bottom sheet) con la lista del TOP 20: arrástrala o toca el
+  asa para desplegar/contraer. Al tocar un sitio, baja la hoja y centra su burbuja.
+- **Barra de categorías inferior** (al alcance del pulgar): Tapear · Cenar · Visitar · Favoritos.
+- En **escritorio** se muestra centrada como un teléfono (no hay versión de escritorio aparte).
+
+**Instalable (PWA):** incluye `manifest.webmanifest`, iconos e `sw.js` (service worker).
+- En móvil: menú del navegador → **"Añadir a pantalla de inicio"**; se abre a pantalla
+  completa como una app.
+- El service worker cachea el *app shell* y los `/data/*.json` para arranque rápido y un
+  **offline básico** (las teselas del mapa siguen necesitando red).
+- Requiere **HTTPS** (GitHub Pages lo da). Las rutas son **relativas**, así funciona bajo
+  el subpath `usuario.github.io/repo/`.
+
+**Detalles de la lista/mapa:**
 - Burbujas `L.circleMarker`: el **radio escala con el puesto** (el nº1 es el más grande) y
-  cada burbuja lleva su **número de ranking** encima.
+  cada burbuja lleva su **número** encima.
 - **Popup**: nombre, ★ valoración, nº de reseñas, "Puesto #N en [categoría]" y corazón de favorito.
-- **Panel** con la lista del TOP 20; al tocar un item, centra y abre su burbuja.
-- Muestra "Actualizado: {generatedAt}" y atribución a Google + OpenStreetMap/CARTO.
-- Sin gamificación.
+- "Actualizado: {generatedAt}" y atribución a Google + OpenStreetMap/CARTO en la hoja. Sin gamificación.
 
-> Los ficheros de `/data` incluidos en el repo son **datos de muestra** para que la web
+> Los ficheros de `/data` incluidos en el repo son **datos de muestra** para que la app
 > funcione desde el primer momento. El cron diario los sustituye por datos reales.
 
 ## Favoritos (por dispositivo)

@@ -1,5 +1,5 @@
-/* León TOP 20 — front-end. Solo LEE /data/*.json.
-   Favoritos: en localStorage (por dispositivo). Anuncios: desde data/ads.json. */
+/* León TOP 20 — app móvil. Solo LEE /data/*.json.
+   Favoritos en localStorage (por dispositivo). Anuncios desde data/ads.json. */
 'use strict';
 
 const CATEGORIES = {
@@ -9,17 +9,15 @@ const CATEGORIES = {
 };
 
 const FAVS_KEY = 'leon-favs-v1';
-const FAV_COLOR = '#e6a700';
 const LEON_CENTER = [42.5987, -5.5671];
 const BANNER_ROTATE_MS = 7000;
 
-// Estado.
 const state = {
-  view: 'tapeo',       // 'tapeo' | 'comida' | 'visitar' | 'favoritos'
-  data: {},            // cat -> { generatedAt, items }
-  ads: [],             // lista de anuncios (data/ads.json)
-  markers: {},         // pos -> circleMarker
-  favs: loadFavs(),    // Set de place id
+  view: 'tapeo',
+  data: {},
+  ads: [],
+  markers: {},
+  favs: loadFavs(),
   layer: L.layerGroup(),
   bannerTimer: null,
 };
@@ -31,30 +29,24 @@ function loadFavs() {
   try {
     const a = JSON.parse(localStorage.getItem(FAVS_KEY) || '[]');
     return new Set(Array.isArray(a) ? a : []);
-  } catch {
-    return new Set();
-  }
+  } catch { return new Set(); }
 }
 function saveFavs() {
-  try {
-    localStorage.setItem(FAVS_KEY, JSON.stringify([...state.favs]));
-  } catch { /* almacenamiento no disponible: degradación silenciosa */ }
+  try { localStorage.setItem(FAVS_KEY, JSON.stringify([...state.favs])); } catch { /* noop */ }
 }
 function isFav(id) { return state.favs.has(id); }
 function toggleFav(id) {
-  if (state.favs.has(id)) state.favs.delete(id);
-  else state.favs.add(id);
+  if (state.favs.has(id)) state.favs.delete(id); else state.favs.add(id);
   saveFavs();
-  updateFavButton();
-  if (state.view === 'favoritos') {
-    renderView('favoritos');   // re-render: la lista cambia
-  } else {
-    refreshHearts();           // solo actualiza los corazones visibles
-  }
+  updateFavBadge();
+  if (state.view === 'favoritos') renderView('favoritos');
+  else refreshHearts();
 }
-function updateFavButton() {
+function updateFavBadge() {
   const n = state.favs.size;
-  document.getElementById('fav-btn').textContent = n ? `★ Favoritos (${n})` : '★ Favoritos';
+  const b = document.getElementById('fav-badge');
+  if (n > 0) { b.hidden = false; b.textContent = n > 99 ? '99+' : String(n); }
+  else b.hidden = true;
 }
 function refreshHearts() {
   document.querySelectorAll('.fav-btn[data-id]').forEach((b) => {
@@ -67,114 +59,88 @@ function refreshHearts() {
 }
 
 // ---------------------------------------------------------------------------
-// Mapa base CARTO Voyager (sin key)
+// Mapa
 // ---------------------------------------------------------------------------
-const map = L.map('map', { center: LEON_CENTER, zoom: 14, zoomControl: true });
+const map = L.map('map', {
+  center: LEON_CENTER, zoom: 14,
+  zoomControl: false, attributionControl: false,
+});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: 'abcd',
-  maxZoom: 20,
+  subdomains: 'abcd', maxZoom: 20,
 }).addTo(map);
 state.layer.addTo(map);
+// Sin botones de zoom: en móvil se usa el pellizco (pinch-to-zoom).
 
 // ---------------------------------------------------------------------------
 // Utilidades de render
 // ---------------------------------------------------------------------------
 function radiusForPos(pos, total) {
-  const maxR = 26, minR = 10;
+  const maxR = 24, minR = 9;
   if (total <= 1) return maxR;
   return maxR - ((pos - 1) / (total - 1)) * (maxR - minR);
 }
-function starsText(rating) {
-  return `<span class="star">★</span> ${rating.toFixed(1)}`;
-}
+function starsText(rating) { return `<span class="star">★</span> ${rating.toFixed(1)}`; }
 function escapeHTML(s) {
   return String(s).replace(/[&<>"']/g, (c) =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
-  );
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 function heartHTML(id) {
   const on = isFav(id);
-  return (
-    `<button class="fav-btn${on ? ' is-fav' : ''}" type="button" data-id="${escapeHTML(id)}" ` +
-    `aria-pressed="${on}" aria-label="${on ? 'Quitar de favoritos' : 'Añadir a favoritos'}">` +
-    `${on ? '♥' : '♡'}</button>`
-  );
+  return `<button class="fav-btn${on ? ' is-fav' : ''}" type="button" data-id="${escapeHTML(id)}" ` +
+    `aria-pressed="${on}" aria-label="${on ? 'Quitar de favoritos' : 'Añadir a favoritos'}">${on ? '♥' : '♡'}</button>`;
 }
 function popupHTML(entry) {
   const it = entry.item;
-  return (
-    `<div class="popup-head"><div class="popup-name">${escapeHTML(it.name)}</div>${heartHTML(it.id)}</div>` +
+  return `<div class="popup-head"><div class="popup-name">${escapeHTML(it.name)}</div>${heartHTML(it.id)}</div>` +
     `<div class="popup-meta">${starsText(it.rating)} · ${it.reviews.toLocaleString('es-ES')} reseñas</div>` +
-    `<div class="popup-rank">Puesto #${it.rank} en ${entry.catLabel}</div>`
-  );
+    `<div class="popup-rank">Puesto #${it.rank} en ${entry.catLabel}</div>`;
 }
 
-// Devuelve las "entradas" {item, color, catLabel, cat} a pintar para una vista.
 function entriesForView(view) {
   if (CATEGORIES[view]) {
     const { color, label } = CATEGORIES[view];
     const items = (state.data[view] && state.data[view].items) || [];
     return items.map((item) => ({ item, color, catLabel: label, cat: view }));
   }
-  // favoritos: agrega los marcados de todas las categorías, ordenados por score.
   const out = [];
   for (const [cat, cfg] of Object.entries(CATEGORIES)) {
     const items = (state.data[cat] && state.data[cat].items) || [];
-    for (const item of items) {
-      if (isFav(item.id)) out.push({ item, color: cfg.color, catLabel: cfg.label, cat });
-    }
+    for (const item of items) if (isFav(item.id)) out.push({ item, color: cfg.color, catLabel: cfg.label, cat });
   }
   out.sort((a, b) => b.item.score - a.item.score);
   return out;
 }
 
 // ---------------------------------------------------------------------------
-// Render principal de una vista
+// Render de una vista
 // ---------------------------------------------------------------------------
 function renderView(view) {
   state.view = view;
   const isFavView = view === 'favoritos';
 
-  // Botones.
-  document.querySelectorAll('.layer-btn').forEach((b) =>
-    b.classList.toggle('is-active', b.dataset.cat === view)
-  );
+  document.querySelectorAll('.tab').forEach((b) =>
+    b.classList.toggle('is-active', b.dataset.cat === view));
 
-  // Cabecera del panel.
-  document.getElementById('panel-title').textContent = isFavView
-    ? '★ Favoritos'
-    : CATEGORIES[view].label;
+  document.getElementById('panel-title').textContent = isFavView ? '★ Favoritos' : CATEGORIES[view].label;
 
   const updatedEl = document.getElementById('updated');
   if (isFavView) {
     const n = state.favs.size;
-    updatedEl.textContent = n
-      ? `${n} ${n === 1 ? 'sitio guardado' : 'sitios guardados'} en este dispositivo`
-      : '';
+    updatedEl.textContent = n ? `${n} ${n === 1 ? 'sitio guardado' : 'sitios guardados'} en este dispositivo` : '';
   } else {
     const payload = state.data[view];
-    if (payload && payload.generatedAt) {
-      updatedEl.textContent = 'Actualizado: ' + new Date(payload.generatedAt).toLocaleString('es-ES', {
-        dateStyle: 'long', timeStyle: 'short',
-      });
-    } else {
-      updatedEl.textContent = '';
-    }
+    updatedEl.textContent = payload && payload.generatedAt
+      ? 'Actualizado: ' + new Date(payload.generatedAt).toLocaleString('es-ES', { dateStyle: 'long', timeStyle: 'short' })
+      : '';
   }
 
-  // Limpia mapa y lista.
   state.layer.clearLayers();
   state.markers = {};
   const list = document.getElementById('ranking-list');
   list.innerHTML = '';
-
-  // Anuncio "Patrocinado" fijado arriba de la lista (placement "list").
   renderSponsored(view, list);
 
   const entries = entriesForView(view);
-
   if (entries.length === 0) {
     const li = document.createElement('li');
     li.className = 'empty-state';
@@ -197,31 +163,23 @@ function renderView(view) {
     latlngs.push(latlng);
 
     const marker = L.circleMarker(latlng, {
-      radius: r,
-      color: '#ffffff',
-      weight: 2,
-      fillColor: color,
-      fillOpacity: 0.85,
+      radius: r, color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.85,
     });
     marker.bindPopup(popupHTML(entry));
     marker.on('click', () => selectPos(pos, false));
     marker.addTo(state.layer);
 
-    // Número encima de la burbuja (posición en la vista actual).
     L.marker(latlng, {
       icon: L.divIcon({
         className: 'bubble-label',
         html: `<span style="width:${r * 2}px">${pos}</span>`,
-        iconSize: [r * 2, 0],
-        iconAnchor: [r, 6],
+        iconSize: [r * 2, 0], iconAnchor: [r, 6],
       }),
-      interactive: false,
-      keyboard: false,
+      interactive: false, keyboard: false,
     }).addTo(state.layer);
 
     state.markers[pos] = marker;
 
-    // Item de la lista.
     const li = document.createElement('li');
     li.className = 'rank-item';
     li.style.color = color;
@@ -235,36 +193,38 @@ function renderView(view) {
       `<div class="rank-score">${item.score.toFixed(2)}</div>` +
       heartHTML(item.id);
     li.addEventListener('click', (e) => {
-      if (e.target.closest('.fav-btn')) return; // el corazón se gestiona aparte
+      if (e.target.closest('.fav-btn')) return;
       selectPos(pos, true);
     });
     list.appendChild(li);
   });
 
   if (latlngs.length) {
-    map.fitBounds(L.latLngBounds(latlngs), { padding: [40, 40], maxZoom: 16 });
+    map.fitBounds(L.latLngBounds(latlngs), {
+      paddingTopLeft: [26, 70],
+      paddingBottomRight: [26, 240],
+      maxZoom: 16,
+    });
   }
-
   renderBanner(view);
 }
 
-// Centra y abre la burbuja de una posición; resalta su fila.
-function selectPos(pos, pan) {
+function selectPos(pos, fromList) {
   const marker = state.markers[pos];
   if (!marker) return;
-  if (pan) map.panTo(marker.getLatLng());
+  if (fromList) setSheet('peek');          // baja la hoja para ver el mapa
+  map.panTo(marker.getLatLng());
   marker.openPopup();
   document.querySelectorAll('.rank-item').forEach((el) =>
-    el.classList.toggle('is-selected', el.dataset.pos === String(pos))
-  );
+    el.classList.toggle('is-selected', el.dataset.pos === String(pos)));
 }
 
 // ---------------------------------------------------------------------------
-// Anuncios (data/ads.json) — degradación limpia si no hay activos
+// Anuncios
 // ---------------------------------------------------------------------------
 function adApplies(ad, view) {
   const cats = ad.categories;
-  if (!Array.isArray(cats) || cats.length === 0) return true; // vacío = todas
+  if (!Array.isArray(cats) || cats.length === 0) return true;
   return cats.includes(view);
 }
 function adLive(ad, now) {
@@ -275,49 +235,31 @@ function adLive(ad, now) {
 }
 function eligibleAds(placement, view) {
   const now = Date.now();
-  return state.ads.filter(
-    (a) => a && a.placement === placement && adLive(a, now) && adApplies(a, view)
-  );
+  return state.ads.filter((a) => a && a.placement === placement && adLive(a, now) && adApplies(a, view));
 }
 function weightedPick(ads) {
   const total = ads.reduce((s, a) => s + Math.max(0, Number(a.weight) || 0), 0);
   if (total <= 0) return ads[Math.floor(Math.random() * ads.length)];
   let r = Math.random() * total;
-  for (const a of ads) {
-    r -= Math.max(0, Number(a.weight) || 0);
-    if (r <= 0) return a;
-  }
+  for (const a of ads) { r -= Math.max(0, Number(a.weight) || 0); if (r <= 0) return a; }
   return ads[ads.length - 1];
 }
-
 function bannerHTML(ad) {
-  const img = ad.imageUrl
-    ? `<img class="ad-img" src="${escapeHTML(ad.imageUrl)}" alt="" loading="lazy">`
-    : '';
-  return (
-    `<a class="ad-banner-link" href="${escapeHTML(ad.linkUrl)}" target="_blank" rel="noopener nofollow sponsored">` +
+  const img = ad.imageUrl ? `<img class="ad-img" src="${escapeHTML(ad.imageUrl)}" alt="" loading="lazy">` : '';
+  return `<a class="ad-banner-link" href="${escapeHTML(ad.linkUrl)}" target="_blank" rel="noopener nofollow sponsored">` +
     `<span class="ad-tag">Publicidad</span>${img}` +
     `<span class="ad-text"><span class="ad-title">${escapeHTML(ad.title)}</span>` +
-    `<span class="ad-body">${escapeHTML(ad.body || '')}</span></span></a>`
-  );
+    `<span class="ad-body">${escapeHTML(ad.body || '')}</span></span></a>`;
 }
-
 function renderBanner(view) {
   if (state.bannerTimer) { clearInterval(state.bannerTimer); state.bannerTimer = null; }
   const el = document.getElementById('ad-banner');
   const ads = eligibleAds('banner', view);
-  if (ads.length === 0) {            // sin anuncios → sin hueco
-    el.hidden = true;
-    el.innerHTML = '';
-    return;
-  }
+  if (ads.length === 0) { el.hidden = true; el.innerHTML = ''; return; }
   const show = () => { el.innerHTML = bannerHTML(weightedPick(ads)); el.hidden = false; };
   show();
-  if (ads.length > 1) {
-    state.bannerTimer = setInterval(show, BANNER_ROTATE_MS); // rotación ponderada por weight
-  }
+  if (ads.length > 1) state.bannerTimer = setInterval(show, BANNER_ROTATE_MS);
 }
-
 function renderSponsored(view, list) {
   const ads = eligibleAds('list', view);
   if (ads.length === 0) return;
@@ -327,11 +269,62 @@ function renderSponsored(view, list) {
   li.innerHTML =
     `<div class="rank-num">★</div>` +
     `<div><div class="rank-name">${escapeHTML(ad.title)} <span class="spon-tag">Patrocinado</span></div>` +
-    `<div class="rank-meta">${escapeHTML(ad.body || '')}</div></div>` +
-    `<div></div><div></div>`;
+    `<div class="rank-meta">${escapeHTML(ad.body || '')}</div></div><div></div><div></div>`;
   li.addEventListener('click', () => window.open(ad.linkUrl, '_blank', 'noopener'));
   list.appendChild(li);
 }
+
+// ---------------------------------------------------------------------------
+// Hoja inferior deslizable (bottom sheet)
+// ---------------------------------------------------------------------------
+const sheet = document.getElementById('sheet');
+const sheetHandle = document.getElementById('sheet-handle');
+const sheetHead = document.getElementById('sheet-head');
+let sheetState = 'peek';
+let peekY = 0, fullY = 0, liveY = 0, dragging = false, startPointerY = 0, startY = 0;
+
+function computeSheetBounds() {
+  const h = sheet.offsetHeight;
+  const peekVisible = sheetHandle.offsetHeight + sheetHead.offsetHeight + 6;
+  peekY = Math.max(0, h - peekVisible);
+  fullY = 0;
+  applySheet(false);
+}
+function applySheet(animate) {
+  sheet.classList.toggle('dragging', !animate);
+  liveY = sheetState === 'full' ? fullY : peekY;
+  sheet.style.setProperty('--sheet-y', liveY + 'px');
+  sheet.dataset.state = sheetState;
+  document.getElementById('app').dataset.sheet = sheetState; // CSS oculta el banner si 'full'
+}
+function setSheet(s) { sheetState = s; applySheet(true); }
+function toggleSheet() { setSheet(sheetState === 'full' ? 'peek' : 'full'); }
+
+function onPointerDown(e) {
+  dragging = true;
+  startPointerY = e.clientY;
+  startY = liveY;
+  sheet.classList.add('dragging');
+  try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* noop */ }
+}
+function onPointerMove(e) {
+  if (!dragging) return;
+  liveY = Math.max(fullY, Math.min(peekY, startY + (e.clientY - startPointerY)));
+  sheet.style.setProperty('--sheet-y', liveY + 'px');
+}
+function onPointerUp(e) {
+  if (!dragging) return;
+  dragging = false;
+  const moved = Math.abs(e.clientY - startPointerY);
+  if (moved < 6) { toggleSheet(); return; }   // toque = alternar
+  sheetState = liveY < (peekY + fullY) / 2 ? 'full' : 'peek';
+  applySheet(true);
+}
+[sheetHandle, sheetHead].forEach((el) => el.addEventListener('pointerdown', onPointerDown));
+window.addEventListener('pointermove', onPointerMove);
+window.addEventListener('pointerup', onPointerUp);
+window.addEventListener('pointercancel', onPointerUp);
+window.addEventListener('resize', () => { computeSheetBounds(); map.invalidateSize(); });
 
 // ---------------------------------------------------------------------------
 // Carga de datos
@@ -341,12 +334,8 @@ async function loadJSON(file, fallback) {
     const res = await fetch(file, { cache: 'no-cache' });
     if (!res.ok) throw new Error(res.status);
     return await res.json();
-  } catch (e) {
-    console.warn(`No se pudo cargar ${file}:`, e);
-    return fallback;
-  }
+  } catch (e) { console.warn(`No se pudo cargar ${file}:`, e); return fallback; }
 }
-
 async function loadAll() {
   await Promise.all([
     ...Object.entries(CATEGORIES).map(async ([cat, cfg]) => {
@@ -357,14 +346,14 @@ async function loadAll() {
       state.ads = Array.isArray(ads.ads) ? ads.ads : [];
     })(),
   ]);
-  updateFavButton();
+  updateFavBadge();
   renderView(state.view);
+  computeSheetBounds();
 }
 
 // ---------------------------------------------------------------------------
 // Eventos
 // ---------------------------------------------------------------------------
-// Corazón (delegado): funciona tanto en popups como en la lista.
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.fav-btn');
   if (!btn) return;
@@ -372,11 +361,17 @@ document.addEventListener('click', (e) => {
   e.stopPropagation();
   toggleFav(btn.dataset.id);
 });
-
-// Botones de capa / vista.
-document.querySelectorAll('.layer-btn').forEach((btn) => {
+document.querySelectorAll('.tab').forEach((btn) => {
   btn.addEventListener('click', () => renderView(btn.dataset.cat));
 });
 
-updateFavButton();
+// Init
+updateFavBadge();
+computeSheetBounds();
+setTimeout(() => map.invalidateSize(), 60);
 loadAll();
+
+// PWA: service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
