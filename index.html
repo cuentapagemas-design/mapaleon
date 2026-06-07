@@ -54,12 +54,22 @@
       <div id="sheet-head">
         <div class="head-top">
           <h2 id="panel-title">Tapear</h2>
-          <button id="open-toggle" class="open-chip" type="button" aria-pressed="false">
-            <span class="dot"></span>Abierto ahora
-          </button>
-          <button id="saved-toggle" class="open-chip" type="button" aria-pressed="false" hidden>
-            ★ Guardados
-          </button>
+          <span id="result-count" class="result-count"></span>
+        </div>
+        <input id="search-input" class="search-input" type="search" placeholder="Buscar por nombre…" autocomplete="off" />
+        <div class="controls-row">
+          <select id="sort-select" class="sort-select" aria-label="Ordenar">
+            <option value="ranking">Ranking</option>
+            <option value="rating">Mejor valorados</option>
+            <option value="reviews">Más reseñas</option>
+            <option value="az">A–Z</option>
+          </select>
+          <button id="open-toggle" class="fchip" type="button" aria-pressed="false"><span class="dot"></span>Abierto</button>
+          <button class="fchip price-chip" data-price="1" type="button" aria-pressed="false">€</button>
+          <button class="fchip price-chip" data-price="2" type="button" aria-pressed="false">€€</button>
+          <button class="fchip price-chip" data-price="3" type="button" aria-pressed="false">€€€</button>
+          <button id="surprise-btn" class="fchip surprise-chip" type="button">🎲 Sorpréndeme</button>
+          <button id="saved-toggle" class="fchip" type="button" aria-pressed="false" hidden>★ Guardados</button>
         </div>
         <p id="updated">Cargando…</p>
       </div>
@@ -96,6 +106,14 @@
       </button>
       -->
     </nav>
+
+    <!-- Ficha de sitio (detalle) -->
+    <div id="detail" class="detail" hidden>
+      <div class="detail-card" role="dialog" aria-modal="true" aria-label="Ficha del sitio">
+        <button id="detail-close" class="detail-close" type="button" aria-label="Volver">←</button>
+        <div id="detail-body"></div>
+      </div>
+    </div>
 
     <!-- Modal de cuenta / acceso (enlace mágico) -->
     <div id="auth-modal" class="modal" hidden>

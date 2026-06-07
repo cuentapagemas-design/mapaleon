@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-07T22:06:19.704Z",
+  "generatedAt": "2026-06-07T22:43:58.333Z",
   "items": [
     {
       "rank": 1,
@@ -68,6 +68,22 @@
           9810,
           10110
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 10, 24003 León",
+      "phone": "+34 987 20 0000",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Bicha%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 12:00–16:00, 19:30–00:30",
+        "Martes: 12:00–16:00, 19:30–00:30",
+        "Miércoles: 12:00–16:00, 19:30–00:30",
+        "Jueves: 12:00–16:00, 19:30–00:30",
+        "Viernes: 12:00–16:00, 19:30–00:30",
+        "Sábado: 12:00–16:00, 19:30–00:30",
+        "Domingo: 12:00–16:00, 19:30–00:30"
       ]
     },
     {
@@ -137,6 +153,22 @@
           9750,
           10050
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 11, 24003 León",
+      "phone": "+34 987 20 0001",
+      "web": "https://ejemplo-leon.es/seed-la-competencia",
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Competencia%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 11:30–15:30, 18:30–23:30",
+        "Martes: 11:30–15:30, 18:30–23:30",
+        "Miércoles: 11:30–15:30, 18:30–23:30",
+        "Jueves: 11:30–15:30, 18:30–23:30",
+        "Viernes: 11:30–15:30, 18:30–23:30",
+        "Sábado: 11:30–15:30, 18:30–23:30",
+        "Domingo: 11:30–15:30, 18:30–23:30"
       ]
     },
     {
@@ -154,6 +186,22 @@
           0,
           10080
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 12, 24003 León",
+      "phone": "+34 987 20 0002",
+      "web": "https://ejemplo-leon.es/seed-el-capricho",
+      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Capricho%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: Abierto 24 h",
+        "Martes: Abierto 24 h",
+        "Miércoles: Abierto 24 h",
+        "Jueves: Abierto 24 h",
+        "Viernes: Abierto 24 h",
+        "Sábado: Abierto 24 h",
+        "Domingo: Abierto 24 h"
       ]
     },
     {
@@ -215,6 +263,22 @@
           9840,
           10050
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 13, 24003 León",
+      "phone": "+34 987 20 0003",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Ribera%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 12:00–16:00, 20:00–23:30",
+        "Miércoles: 12:00–16:00, 20:00–23:30",
+        "Jueves: 12:00–16:00, 20:00–23:30",
+        "Viernes: 12:00–16:00, 20:00–23:30",
+        "Sábado: 12:00–16:00, 20:00–23:30",
+        "Domingo: 12:00–16:00, 20:00–23:30"
       ]
     },
     {
@@ -227,7 +291,15 @@
       "reviews": 380,
       "score": 4.4598,
       "tz": 120,
-      "hours": null
+      "hours": null,
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 14, 24003 León",
+      "phone": "+34 987 20 0004",
+      "web": "https://ejemplo-leon.es/seed-honor-",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Honor%C3%A9%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": null
     },
     {
       "rank": 6,
@@ -296,6 +368,22 @@
           9750,
           10050
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 15, 24003 León",
+      "phone": "+34 987 20 0005",
+      "web": "https://ejemplo-leon.es/seed-el-pato",
+      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Pato%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 11:30–15:30, 18:30–23:30",
+        "Martes: 11:30–15:30, 18:30–23:30",
+        "Miércoles: 11:30–15:30, 18:30–23:30",
+        "Jueves: 11:30–15:30, 18:30–23:30",
+        "Viernes: 11:30–15:30, 18:30–23:30",
+        "Sábado: 11:30–15:30, 18:30–23:30",
+        "Domingo: 11:30–15:30, 18:30–23:30"
       ]
     },
     {
@@ -313,6 +401,22 @@
           0,
           10080
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 16, 24003 León",
+      "phone": "+34 987 20 0006",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Los%20Cazurros%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Abierto 24 h",
+        "Martes: Abierto 24 h",
+        "Miércoles: Abierto 24 h",
+        "Jueves: Abierto 24 h",
+        "Viernes: Abierto 24 h",
+        "Sábado: Abierto 24 h",
+        "Domingo: Abierto 24 h"
       ]
     },
     {
@@ -374,6 +478,22 @@
           9840,
           10050
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 17, 24003 León",
+      "phone": "+34 987 20 0007",
+      "web": "https://ejemplo-leon.es/seed-la-trebede",
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Tr%C3%A9bede%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 12:00–16:00, 20:00–23:30",
+        "Miércoles: 12:00–16:00, 20:00–23:30",
+        "Jueves: 12:00–16:00, 20:00–23:30",
+        "Viernes: 12:00–16:00, 20:00–23:30",
+        "Sábado: 12:00–16:00, 20:00–23:30",
+        "Domingo: 12:00–16:00, 20:00–23:30"
       ]
     },
     {
@@ -443,6 +563,22 @@
           9810,
           10110
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 18, 24003 León",
+      "phone": "+34 987 20 0008",
+      "web": "https://ejemplo-leon.es/seed-la-plancha",
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Plancha%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 12:00–16:00, 19:30–00:30",
+        "Martes: 12:00–16:00, 19:30–00:30",
+        "Miércoles: 12:00–16:00, 19:30–00:30",
+        "Jueves: 12:00–16:00, 19:30–00:30",
+        "Viernes: 12:00–16:00, 19:30–00:30",
+        "Sábado: 12:00–16:00, 19:30–00:30",
+        "Domingo: 12:00–16:00, 19:30–00:30"
       ]
     },
     {
@@ -512,6 +648,22 @@
           9750,
           10050
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 19, 24003 León",
+      "phone": "+34 987 20 0009",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Tasca%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 11:30–15:30, 18:30–23:30",
+        "Martes: 11:30–15:30, 18:30–23:30",
+        "Miércoles: 11:30–15:30, 18:30–23:30",
+        "Jueves: 11:30–15:30, 18:30–23:30",
+        "Viernes: 11:30–15:30, 18:30–23:30",
+        "Sábado: 11:30–15:30, 18:30–23:30",
+        "Domingo: 11:30–15:30, 18:30–23:30"
       ]
     },
     {
@@ -529,6 +681,22 @@
           0,
           10080
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 20, 24003 León",
+      "phone": "+34 987 20 0010",
+      "web": "https://ejemplo-leon.es/seed-universal",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Cafe%20Universal%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Abierto 24 h",
+        "Martes: Abierto 24 h",
+        "Miércoles: Abierto 24 h",
+        "Jueves: Abierto 24 h",
+        "Viernes: Abierto 24 h",
+        "Sábado: Abierto 24 h",
+        "Domingo: Abierto 24 h"
       ]
     },
     {
@@ -590,6 +758,22 @@
           9840,
           10050
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 21, 24003 León",
+      "phone": "+34 987 20 0011",
+      "web": "https://ejemplo-leon.es/seed-latino",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Bar%20Latino%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 12:00–16:00, 20:00–23:30",
+        "Miércoles: 12:00–16:00, 20:00–23:30",
+        "Jueves: 12:00–16:00, 20:00–23:30",
+        "Viernes: 12:00–16:00, 20:00–23:30",
+        "Sábado: 12:00–16:00, 20:00–23:30",
+        "Domingo: 12:00–16:00, 20:00–23:30"
       ]
     },
     {
@@ -659,6 +843,22 @@
           9810,
           10110
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 22, 24003 León",
+      "phone": "+34 987 20 0012",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Ezequiel%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 12:00–16:00, 19:30–00:30",
+        "Martes: 12:00–16:00, 19:30–00:30",
+        "Miércoles: 12:00–16:00, 19:30–00:30",
+        "Jueves: 12:00–16:00, 19:30–00:30",
+        "Viernes: 12:00–16:00, 19:30–00:30",
+        "Sábado: 12:00–16:00, 19:30–00:30",
+        "Domingo: 12:00–16:00, 19:30–00:30"
       ]
     },
     {
@@ -728,6 +928,22 @@
           9750,
           10050
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 23, 24003 León",
+      "phone": "+34 987 20 0013",
+      "web": "https://ejemplo-leon.es/seed-el-tizon",
+      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Tiz%C3%B3n%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 11:30–15:30, 18:30–23:30",
+        "Martes: 11:30–15:30, 18:30–23:30",
+        "Miércoles: 11:30–15:30, 18:30–23:30",
+        "Jueves: 11:30–15:30, 18:30–23:30",
+        "Viernes: 11:30–15:30, 18:30–23:30",
+        "Sábado: 11:30–15:30, 18:30–23:30",
+        "Domingo: 11:30–15:30, 18:30–23:30"
       ]
     },
     {
@@ -745,6 +961,22 @@
           0,
           10080
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 24, 24003 León",
+      "phone": "+34 987 20 0014",
+      "web": "https://ejemplo-leon.es/seed-el-llar",
+      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Llar%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Abierto 24 h",
+        "Martes: Abierto 24 h",
+        "Miércoles: Abierto 24 h",
+        "Jueves: Abierto 24 h",
+        "Viernes: Abierto 24 h",
+        "Sábado: Abierto 24 h",
+        "Domingo: Abierto 24 h"
       ]
     },
     {
@@ -806,6 +1038,22 @@
           9840,
           10050
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 25, 24003 León",
+      "phone": "+34 987 20 0015",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Rebote%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 12:00–16:00, 20:00–23:30",
+        "Miércoles: 12:00–16:00, 20:00–23:30",
+        "Jueves: 12:00–16:00, 20:00–23:30",
+        "Viernes: 12:00–16:00, 20:00–23:30",
+        "Sábado: 12:00–16:00, 20:00–23:30",
+        "Domingo: 12:00–16:00, 20:00–23:30"
       ]
     },
     {
@@ -875,6 +1123,22 @@
           9810,
           10110
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 26, 24003 León",
+      "phone": "+34 987 20 0016",
+      "web": "https://ejemplo-leon.es/seed-el-cid",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Bar%20El%20Cid%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: 12:00–16:00, 19:30–00:30",
+        "Martes: 12:00–16:00, 19:30–00:30",
+        "Miércoles: 12:00–16:00, 19:30–00:30",
+        "Jueves: 12:00–16:00, 19:30–00:30",
+        "Viernes: 12:00–16:00, 19:30–00:30",
+        "Sábado: 12:00–16:00, 19:30–00:30",
+        "Domingo: 12:00–16:00, 19:30–00:30"
       ]
     },
     {
@@ -944,6 +1208,22 @@
           9750,
           10050
         ]
+      ],
+      "price": 3,
+      "type": "bar",
+      "address": "Calle de muestra 27, 24003 León",
+      "phone": "+34 987 20 0017",
+      "web": "https://ejemplo-leon.es/seed-mary",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Bar%20Mary%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 11:30–15:30, 18:30–23:30",
+        "Martes: 11:30–15:30, 18:30–23:30",
+        "Miércoles: 11:30–15:30, 18:30–23:30",
+        "Jueves: 11:30–15:30, 18:30–23:30",
+        "Viernes: 11:30–15:30, 18:30–23:30",
+        "Sábado: 11:30–15:30, 18:30–23:30",
+        "Domingo: 11:30–15:30, 18:30–23:30"
       ]
     },
     {
@@ -961,6 +1241,22 @@
           0,
           10080
         ]
+      ],
+      "price": 1,
+      "type": "bar",
+      "address": "Calle de muestra 28, 24003 León",
+      "phone": "+34 987 20 0018",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Jam%C3%B3n%20Jam%C3%B3n%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Abierto 24 h",
+        "Martes: Abierto 24 h",
+        "Miércoles: Abierto 24 h",
+        "Jueves: Abierto 24 h",
+        "Viernes: Abierto 24 h",
+        "Sábado: Abierto 24 h",
+        "Domingo: Abierto 24 h"
       ]
     },
     {
@@ -1022,6 +1318,22 @@
           9840,
           10050
         ]
+      ],
+      "price": 2,
+      "type": "bar",
+      "address": "Calle de muestra 29, 24003 León",
+      "phone": "+34 987 20 0019",
+      "web": "https://ejemplo-leon.es/seed-camarote-madrid",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Camarote%20Madrid%20Le%C3%B3n",
+      "summary": "Ambiente animado para tapear y tomar algo en el centro de León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 12:00–16:00, 20:00–23:30",
+        "Miércoles: 12:00–16:00, 20:00–23:30",
+        "Jueves: 12:00–16:00, 20:00–23:30",
+        "Viernes: 12:00–16:00, 20:00–23:30",
+        "Sábado: 12:00–16:00, 20:00–23:30",
+        "Domingo: 12:00–16:00, 20:00–23:30"
       ]
     }
   ]

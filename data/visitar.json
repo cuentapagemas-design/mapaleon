@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-07T22:06:19.733Z",
+  "generatedAt": "2026-06-07T22:43:58.347Z",
   "items": [
     {
       "rank": 1,
@@ -60,6 +60,22 @@
           9600,
           9840
         ]
+      ],
+      "price": null,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 10, 24003 León",
+      "phone": "+34 987 20 0000",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Catedral%20de%20Le%C3%B3n%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -129,6 +145,22 @@
           9600,
           9780
         ]
+      ],
+      "price": 2,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 11, 24003 León",
+      "phone": "+34 987 20 0001",
+      "web": "https://ejemplo-leon.es/seed-san-isidoro",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Bas%C3%ADlica%20de%20San%20Isidoro%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     },
     {
@@ -170,6 +202,22 @@
           9240,
           9780
         ]
+      ],
+      "price": 3,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 12, 24003 León",
+      "phone": "+34 987 20 0002",
+      "web": "https://ejemplo-leon.es/seed-san-marcos",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Convento%20de%20San%20Marcos%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -231,6 +279,22 @@
           9600,
           9840
         ]
+      ],
+      "price": 1,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 13, 24003 León",
+      "phone": "+34 987 20 0003",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Vidrieras%20de%20la%20Catedral%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -243,7 +307,15 @@
       "reviews": 1800,
       "score": 4.6334,
       "tz": 120,
-      "hours": null
+      "hours": null,
+      "price": null,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 14, 24003 León",
+      "phone": "+34 987 20 0004",
+      "web": "https://ejemplo-leon.es/seed-panteon",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Pante%C3%B3n%20Real%20de%20San%20Isidoro%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": null
     },
     {
       "rank": 6,
@@ -284,6 +356,22 @@
           9240,
           9780
         ]
+      ],
+      "price": 3,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 15, 24003 León",
+      "phone": "+34 987 20 0005",
+      "web": "https://ejemplo-leon.es/seed-real-colegiata",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Real%20Colegiata%20de%20San%20Isidoro%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -345,6 +433,22 @@
           9600,
           9840
         ]
+      ],
+      "price": 1,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 16, 24003 León",
+      "phone": "+34 987 20 0006",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Casa%20Botines%20(Gaud%C3%AD)%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -414,6 +518,22 @@
           9600,
           9780
         ]
+      ],
+      "price": 2,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 17, 24003 León",
+      "phone": "+34 987 20 0007",
+      "web": "https://ejemplo-leon.es/seed-botines-museo",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Museo%20Casa%20Botines%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     },
     {
@@ -455,6 +575,22 @@
           9240,
           9780
         ]
+      ],
+      "price": null,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 18, 24003 León",
+      "phone": "+34 987 20 0008",
+      "web": "https://ejemplo-leon.es/seed-auditorio",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Auditorio%20Ciudad%20de%20Le%C3%B3n%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -516,6 +652,22 @@
           9600,
           9840
         ]
+      ],
+      "price": 1,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 19, 24003 León",
+      "phone": "+34 987 20 0009",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Museo%20Catedralicio%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -585,6 +737,22 @@
           9600,
           9780
         ]
+      ],
+      "price": 2,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 20, 24003 León",
+      "phone": "+34 987 20 0010",
+      "web": "https://ejemplo-leon.es/seed-palacio-guzmanes",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Palacio%20de%20los%20Guzmanes%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     },
     {
@@ -626,6 +794,22 @@
           9240,
           9780
         ]
+      ],
+      "price": 3,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 21, 24003 León",
+      "phone": "+34 987 20 0011",
+      "web": "https://ejemplo-leon.es/seed-muralla",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Muralla%20Romana%20de%20Le%C3%B3n%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -687,6 +871,22 @@
           9600,
           9840
         ]
+      ],
+      "price": null,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 22, 24003 León",
+      "phone": "+34 987 20 0012",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Barrio%20H%C3%BAmedo%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -756,6 +956,22 @@
           9600,
           9780
         ]
+      ],
+      "price": 2,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 23, 24003 León",
+      "phone": "+34 987 20 0013",
+      "web": "https://ejemplo-leon.es/seed-plaza-mayor",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Plaza%20Mayor%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     },
     {
@@ -797,6 +1013,22 @@
           9240,
           9780
         ]
+      ],
+      "price": 3,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 24, 24003 León",
+      "phone": "+34 987 20 0014",
+      "web": "https://ejemplo-leon.es/seed-casa-botines-plaza",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Plaza%20de%20San%20Marcelo%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -858,6 +1090,22 @@
           9600,
           9840
         ]
+      ],
+      "price": 1,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 25, 24003 León",
+      "phone": "+34 987 20 0015",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Puente%20de%20los%20Leones%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -927,6 +1175,22 @@
           9600,
           9780
         ]
+      ],
+      "price": null,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 26, 24003 León",
+      "phone": "+34 987 20 0016",
+      "web": "https://ejemplo-leon.es/seed-jardin-san-francisco",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Jard%C3%ADn%20de%20San%20Francisco%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     },
     {
@@ -968,6 +1232,22 @@
           9240,
           9780
         ]
+      ],
+      "price": 3,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 27, 24003 León",
+      "phone": "+34 987 20 0017",
+      "web": "https://ejemplo-leon.es/seed-caboalles",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Centro%20Leon%C3%A9s%20de%20Arte%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 10:00–19:00",
+        "Martes: 10:00–19:00",
+        "Miércoles: 10:00–19:00",
+        "Jueves: 10:00–19:00",
+        "Viernes: 10:00–19:00",
+        "Sábado: 10:00–19:00",
+        "Domingo: 10:00–19:00"
       ]
     },
     {
@@ -1029,6 +1309,22 @@
           9600,
           9840
         ]
+      ],
+      "price": 1,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 28, 24003 León",
+      "phone": "+34 987 20 0018",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Plaza%20de%20San%20Mart%C3%ADn%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 10:00–14:00, 16:00–20:00",
+        "Miércoles: 10:00–14:00, 16:00–20:00",
+        "Jueves: 10:00–14:00, 16:00–20:00",
+        "Viernes: 10:00–14:00, 16:00–20:00",
+        "Sábado: 10:00–14:00, 16:00–20:00",
+        "Domingo: 10:00–14:00, 16:00–20:00"
       ]
     },
     {
@@ -1098,6 +1394,22 @@
           9600,
           9780
         ]
+      ],
+      "price": 2,
+      "type": "tourist_attraction",
+      "address": "Calle de muestra 29, 24003 León",
+      "phone": "+34 987 20 0019",
+      "web": "https://ejemplo-leon.es/seed-musac",
+      "maps": "https://www.google.com/maps/search/?api=1&query=MUSAC%20Le%C3%B3n",
+      "summary": "Uno de los lugares imprescindibles que ver en León.",
+      "week": [
+        "Lunes: 09:30–13:30, 16:00–19:00",
+        "Martes: 09:30–13:30, 16:00–19:00",
+        "Miércoles: 09:30–13:30, 16:00–19:00",
+        "Jueves: 09:30–13:30, 16:00–19:00",
+        "Viernes: 09:30–13:30, 16:00–19:00",
+        "Sábado: 09:30–13:30, 16:00–19:00",
+        "Domingo: 09:30–13:30, 16:00–19:00"
       ]
     }
   ]

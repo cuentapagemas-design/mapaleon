@@ -142,18 +142,39 @@ html, body {
 #sheet-head h2 { margin: 0; font-size: 1.15rem; }
 #updated { margin: 0.1rem 0 0; font-size: 0.74rem; color: var(--muted); }
 
-.head-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-.open-chip {
-  border: 1px solid var(--line); background: #fff; color: var(--muted);
-  font: inherit; font-size: 0.72rem; font-weight: 600; cursor: pointer;
+.head-top { display: flex; align-items: baseline; gap: 0.5rem; }
+.result-count { font-size: 0.74rem; color: var(--muted); }
+
+/* Buscador + controles */
+.search-input {
+  width: 100%; margin: 0.4rem 0 0.3rem; padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line); border-radius: 999px; font: inherit; font-size: 0.85rem;
+  background: #faf8f4;
+}
+.search-input:focus { outline: 2px solid var(--leon-purple); outline-offset: -1px; }
+.controls-row {
+  display: flex; align-items: center; gap: 0.35rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.controls-row::-webkit-scrollbar { display: none; }
+.sort-select {
+  flex: none; border: 1px solid var(--line); border-radius: 999px;
+  background: #fff; color: var(--ink); font: inherit; font-size: 0.74rem; font-weight: 600;
+  padding: 0.25rem 0.5rem; cursor: pointer;
+}
+.fchip {
+  flex: none; border: 1px solid var(--line); background: #fff; color: var(--muted);
+  font: inherit; font-size: 0.74rem; font-weight: 600; cursor: pointer;
   border-radius: 999px; padding: 0.25rem 0.6rem;
   display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
   touch-action: manipulation;
 }
-.open-chip[hidden] { display: none; }
-.open-chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #bdb7ac; }
-.open-chip.is-on { background: #e3f4e7; color: #1c7a37; border-color: #bfe6c9; }
-.open-chip.is-on .dot { background: #2e9e4d; }
+.fchip[hidden] { display: none; }
+.fchip .dot { width: 8px; height: 8px; border-radius: 50%; background: #bdb7ac; }
+.fchip.is-on { background: #e3f4e7; color: #1c7a37; border-color: #bfe6c9; }
+.fchip.is-on .dot { background: #2e9e4d; }
+.fchip.price-chip.is-on { background: #f4ecd6; color: #8a6d12; border-color: #e6d9ad; }
 
 /* Estado abierto/cerrado */
 .rank-status { font-size: 0.74rem; margin-top: 1px; color: var(--muted); }
@@ -305,3 +326,61 @@ html, body {
 .disc-link { font-size: 0.8rem; color: var(--leon-purple); font-weight: 600; text-decoration: none; }
 .save-btn { border: none; background: none; cursor: pointer; font-size: 1.3rem; line-height: 1; color: #cdc7bc; padding: 0.1rem 0.2rem; flex: none; }
 .save-btn.is-saved { color: var(--tapeo); }
+
+/* Precio en la lista */
+.rank-price { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
+
+/* ===== Chip Sorpréndeme ===== */
+.surprise-chip { background: var(--leon-purple); color: #fff; border-color: var(--leon-purple); }
+
+/* ===== Ficha de sitio (detalle) ===== */
+.detail { position: absolute; inset: 0; z-index: 1800; }
+.detail[hidden] { display: none; }
+.detail-card {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  max-height: 92%; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: #fff; border-radius: 18px 18px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.28);
+  padding: 0.4rem 1.1rem calc(1.2rem + var(--safe-bottom));
+  animation: detail-up 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes detail-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.detail-close {
+  position: sticky; top: 0; float: left; margin: 0.2rem 0 0 -0.2rem;
+  border: none; background: none; font-size: 1.5rem; line-height: 1; color: var(--ink); cursor: pointer;
+}
+.detail-title { font-size: 1.25rem; font-weight: 700; margin: 0.4rem 0 0.1rem; padding-top: 0.5rem; }
+.detail-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+.detail-sub .star { color: var(--fav); }
+.detail-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+.detail-badge { font-size: 0.74rem; font-weight: 700; border-radius: 999px; padding: 0.15rem 0.55rem; background: #f0ece2; color: var(--ink); }
+.detail-badge.rank { background: var(--cat, var(--leon-purple)); color: #fff; }
+.detail-badge.open { background: #e3f4e7; color: #1c7a37; }
+.detail-badge.closed { background: #f7e6e1; color: #c2492f; }
+.detail-summary { font-size: 0.9rem; line-height: 1.45; margin: 0.2rem 0 0.8rem; }
+.detail-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.9rem; }
+.detail-action {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  border: 1px solid var(--line); border-radius: 12px; padding: 0.55rem 0.3rem;
+  text-decoration: none; color: var(--leon-purple); font-size: 0.72rem; font-weight: 600; background: #fff;
+}
+.detail-action svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.detail-action[aria-disabled="true"] { color: #c4bfb5; pointer-events: none; }
+.detail-section-title { font-size: 0.8rem; font-weight: 700; color: var(--ink); margin: 0.6rem 0 0.3rem; }
+.detail-week { list-style: none; margin: 0; padding: 0; }
+.detail-week li { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.82rem; padding: 0.15rem 0; border-bottom: 1px solid #f2efe9; }
+.detail-week li .d { color: var(--muted); }
+.detail-week li.today { font-weight: 700; }
+.detail-addr { font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; }
+.detail-titlerow { display: flex; align-items: flex-start; gap: 0.5rem; }
+.detail-titlerow .fav-btn { margin-left: auto; font-size: 1.4rem; }
+.detail-map-btn {
+  width: 100%; margin: 0.1rem 0 0.4rem; border: 1px solid var(--line); background: #faf8f4;
+  border-radius: 10px; padding: 0.5rem; font: inherit; font-weight: 600; color: var(--leon-purple); cursor: pointer;
+}
+
+/* Botón "Ver ficha" del popup */
+.popup-detail {
+  margin-top: 0.5rem; border: none; background: var(--leon-purple); color: #fff;
+  font: inherit; font-size: 0.78rem; font-weight: 700; border-radius: 8px; padding: 0.3rem 0.6rem; cursor: pointer;
+}

@@ -19,6 +19,9 @@ const state = {
   markers: {},
   favs: loadFavs(),
   openNow: false,      // filtro "abierto ahora"
+  query: '',           // buscador de texto
+  sort: 'ranking',     // ranking | rating | reviews | az
+  prices: new Set(),   // niveles de precio activos (vacío = todos)
   discounts: [],       // ofertas (Supabase o data/descuentos.json)
   saved: new Set(),    // descuentos guardados (en la nube, si hay sesión)
   savedOnly: false,    // filtro "★ Guardados"
@@ -145,11 +148,23 @@ function heartHTML(id) {
 function popupHTML(entry) {
   const it = entry.item;
   const st = statusHTML(it);
+  const price = priceText(it.price);
   return `<div class="popup-head"><div class="popup-name">${escapeHTML(it.name)}</div>${heartHTML(it.id)}</div>` +
-    `<div class="popup-meta">${starsText(it.rating)} · ${it.reviews.toLocaleString('es-ES')} reseñas</div>` +
+    `<div class="popup-meta">${starsText(it.rating)} · ${it.reviews.toLocaleString('es-ES')} reseñas` +
+      (price ? ` · ${price}` : '') + `</div>` +
     (st ? `<div class="popup-status">${st}</div>` : '') +
-    `<div class="popup-rank">Puesto #${it.rank} en ${entry.catLabel}</div>`;
+    `<div class="popup-rank">Puesto #${it.rank} en ${entry.catLabel}</div>` +
+    `<button class="popup-detail" type="button" data-rank="${it.rank}">Ver ficha →</button>`;
 }
+
+// Etiquetas legibles para algunos primaryType de Google.
+const TYPE_LABELS = {
+  bar: 'Bar', pub: 'Pub', restaurant: 'Restaurante', cafe: 'Cafetería',
+  meal_takeaway: 'Para llevar', tapas_restaurant: 'Bar de tapas',
+  tourist_attraction: 'Lugar de interés', museum: 'Museo',
+  church: 'Iglesia', historical_landmark: 'Monumento histórico',
+  art_gallery: 'Galería', park: 'Parque',
+};
 
 function entriesForView(view) {
   if (CATEGORIES[view]) {
@@ -163,6 +178,33 @@ function entriesForView(view) {
     for (const item of items) if (isFav(item.id)) out.push({ item, color: cfg.color, catLabel: cfg.label, cat });
   }
   out.sort((a, b) => b.item.score - a.item.score);
+  return out;
+}
+
+// Quita acentos y pasa a minúsculas (para buscar sin tildes).
+function norm(s) {
+  return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+function priceText(n) {
+  if (typeof n !== 'number' || n <= 0) return '';
+  return '€'.repeat(Math.min(4, n));
+}
+
+// Aplica buscador, filtros (precio, abierto) y orden a las entradas.
+function applyControls(entries) {
+  const q = norm(state.query.trim());
+  let out = entries.filter((e) => {
+    const it = e.item;
+    if (q && !norm(it.name).includes(q) && !norm(it.summary).includes(q)) return false;
+    if (state.openNow && !openInfo(it).open) return false;
+    if (state.prices.size && !state.prices.has(it.price)) return false;
+    return true;
+  });
+  const by = state.sort;
+  if (by === 'rating') out.sort((a, b) => b.item.rating - a.item.rating || b.item.reviews - a.item.reviews);
+  else if (by === 'reviews') out.sort((a, b) => b.item.reviews - a.item.reviews);
+  else if (by === 'az') out.sort((a, b) => a.item.name.localeCompare(b.item.name, 'es'));
+  // 'ranking' = orden tal cual viene (por score/rank).
   return out;
 }
 
@@ -201,34 +243,33 @@ function renderView(view) {
   list.innerHTML = '';
   renderSponsored(view, list);
 
-  let entries = entriesForView(view);
-  const hadEntries = entries.length > 0;
-  if (state.openNow) entries = entries.filter((e) => openInfo(e.item).open);
+  const all = entriesForView(view);
+  const entries = applyControls(all);
+  state.shown = entries;
+  state.byRank = new Map(entries.map((e) => [e.item.rank, e]));
+
+  document.getElementById('result-count').textContent = entries.length ? String(entries.length) : '';
 
   if (entries.length === 0) {
     const li = document.createElement('li');
     li.className = 'empty-state';
-    if (state.openNow && hadEntries) {
-      li.textContent = isFavView
-        ? 'Ninguno de tus favoritos está abierto ahora mismo.'
-        : 'Ningún sitio de esta categoría está abierto ahora mismo.';
-    } else {
+    if (all.length === 0) {
       li.textContent = isFavView
         ? 'No tienes favoritos todavía. Toca el corazón ♡ de un sitio para guardarlo aquí.'
         : 'Sin datos todavía. El ranking se genera a diario mediante GitHub Actions.';
+    } else {
+      li.textContent = 'Sin resultados con esos filtros. Prueba a quitar alguno.';
     }
     list.appendChild(li);
     renderBanner(view);
     return;
   }
 
-  const total = entries.length;
   const latlngs = [];
-
-  entries.forEach((entry, i) => {
-    const pos = i + 1;
+  entries.forEach((entry) => {
     const { item, color, catLabel } = entry;
-    const r = radiusForPos(pos, total);
+    const rank = item.rank;
+    const r = radiusForRank(rank);
     const latlng = [item.lat, item.lng];
     latlngs.push(latlng);
 
@@ -236,37 +277,39 @@ function renderView(view) {
       radius: r, color: '#fff', weight: 2, fillColor: color, fillOpacity: 0.85,
     });
     marker.bindPopup(popupHTML(entry));
-    marker.on('click', () => selectPos(pos, false));
+    marker.on('click', () => selectByRank(rank, false));
     marker.addTo(state.layer);
 
     L.marker(latlng, {
       icon: L.divIcon({
         className: 'bubble-label',
-        html: `<span style="width:${r * 2}px">${pos}</span>`,
+        html: `<span style="width:${r * 2}px">${rank}</span>`,
         iconSize: [r * 2, 0], iconAnchor: [r, 6],
       }),
       interactive: false, keyboard: false,
     }).addTo(state.layer);
 
-    state.markers[pos] = marker;
+    state.markers[rank] = marker;
 
     const li = document.createElement('li');
     li.className = 'rank-item';
     li.style.color = color;
     li.style.setProperty('--cat-color', color);
-    li.dataset.pos = String(pos);
+    li.dataset.rank = String(rank);
     const catTag = isFavView ? `<span class="cat-tag">${catLabel}</span>` : '';
     const st = statusHTML(item);
+    const price = priceText(item.price);
     li.innerHTML =
-      `<div class="rank-num">${pos}</div>` +
+      `<div class="rank-num">${rank}</div>` +
       `<div><div class="rank-name">${escapeHTML(item.name)} ${catTag}</div>` +
-      `<div class="rank-meta">${starsText(item.rating)} · ${item.reviews.toLocaleString('es-ES')} reseñas</div>` +
+      `<div class="rank-meta">${starsText(item.rating)} · ${item.reviews.toLocaleString('es-ES')} reseñas` +
+        (price ? ` · <span class="rank-price">${price}</span>` : '') + `</div>` +
       (st ? `<div class="rank-status">${st}</div>` : '') + `</div>` +
       `<div class="rank-score">${item.score.toFixed(2)}</div>` +
       heartHTML(item.id);
     li.addEventListener('click', (e) => {
       if (e.target.closest('.fav-btn')) return;
-      selectPos(pos, true);
+      openDetail(entry);
     });
     list.appendChild(li);
   });
@@ -281,14 +324,97 @@ function renderView(view) {
   renderBanner(view);
 }
 
-function selectPos(pos, fromList) {
-  const marker = state.markers[pos];
+// El radio escala con el puesto del TOP 20 (nº1 el más grande), no con el orden mostrado.
+function radiusForRank(rank) {
+  const maxR = 24, minR = 9, maxRank = 20;
+  const k = Math.min(Math.max(rank || 1, 1), maxRank);
+  return maxR - ((k - 1) / (maxRank - 1)) * (maxR - minR);
+}
+
+function selectByRank(rank, fromList) {
+  const marker = state.markers[rank];
   if (!marker) return;
-  if (fromList) setSheet('peek');          // baja la hoja para ver el mapa
+  if (fromList) setSheet('peek');
   map.panTo(marker.getLatLng());
   marker.openPopup();
   document.querySelectorAll('.rank-item').forEach((el) =>
-    el.classList.toggle('is-selected', el.dataset.pos === String(pos)));
+    el.classList.toggle('is-selected', el.dataset.rank === String(rank)));
+}
+
+// ---------------------------------------------------------------------------
+// Ficha de sitio (detalle)
+// ---------------------------------------------------------------------------
+const ACTION_ICONS = {
+  map: '<path d="M9 20l-6 3V6l6-3 6 3 6-3v17l-6 3-6-3Zm0 0V3m6 17V6"/>',
+  phone: '<path d="M5 4h4l2 5-3 2a14 14 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+  web: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.7 2.6 15.3 0 18M12 3c-2.6 2.7-2.6 15.3 0 18"/>',
+};
+function actionHTML(href, icon, label) {
+  const svg = `<svg viewBox="0 0 24 24" aria-hidden="true">${ACTION_ICONS[icon]}</svg>`;
+  if (!href) return `<span class="detail-action" aria-disabled="true">${svg}${label}</span>`;
+  const ext = icon !== 'phone';
+  return `<a class="detail-action" href="${escapeHTML(href)}"${ext ? ' target="_blank" rel="noopener"' : ''}>${svg}${label}</a>`;
+}
+function weekHTML(week) {
+  const todayIdx = (new Date().getDay() + 6) % 7; // 0 = lunes
+  return '<ul class="detail-week">' + week.map((line, i) => {
+    const idx = line.indexOf(':');
+    const d = idx >= 0 ? line.slice(0, idx) : line;
+    const h = idx >= 0 ? line.slice(idx + 1).trim() : '';
+    return `<li class="${i === todayIdx ? 'today' : ''}"><span class="d">${escapeHTML(d)}</span><span>${escapeHTML(h)}</span></li>`;
+  }).join('') + '</ul>';
+}
+function openDetail(entry) {
+  const it = entry.item;
+  const info = openInfo(it);
+  const price = priceText(it.price);
+  const typeLabel = TYPE_LABELS[it.type] || '';
+  const badges = [`<span class="detail-badge rank" style="--cat:${entry.color}">#${it.rank} ${escapeHTML(entry.catLabel)}</span>`];
+  if (price) badges.push(`<span class="detail-badge">${price}</span>`);
+  if (typeLabel) badges.push(`<span class="detail-badge">${escapeHTML(typeLabel)}</span>`);
+  if (info.known) {
+    badges.push(info.open
+      ? `<span class="detail-badge open">Abierto${info.closesAt != null ? ` · cierra ${hm(info.closesAt)}` : ''}</span>`
+      : `<span class="detail-badge closed">Cerrado${info.opensAt != null ? ` · abre ${hm(info.opensAt)}` : ''}</span>`);
+  }
+  const phoneHref = it.phone ? `tel:${it.phone.replace(/\s+/g, '')}` : null;
+  const actions = `<div class="detail-actions">` +
+    actionHTML(it.maps, 'map', 'Cómo llegar') +
+    actionHTML(phoneHref, 'phone', 'Llamar') +
+    actionHTML(it.web, 'web', 'Web') + `</div>`;
+  const week = Array.isArray(it.week) && it.week.length
+    ? `<div class="detail-section-title">Horario</div>${weekHTML(it.week)}` : '';
+  const addr = it.address ? `<div class="detail-addr">📍 ${escapeHTML(it.address)}</div>` : '';
+
+  document.getElementById('detail-body').innerHTML =
+    `<div class="detail-titlerow"><div class="detail-title">${escapeHTML(it.name)}</div>${heartHTML(it.id)}</div>` +
+    `<div class="detail-sub">${starsText(it.rating)} · ${it.reviews.toLocaleString('es-ES')} reseñas</div>` +
+    `<div class="detail-badges">${badges.join('')}</div>` +
+    (it.summary ? `<div class="detail-summary">${escapeHTML(it.summary)}</div>` : '') +
+    actions +
+    `<button class="detail-map-btn" type="button" data-rank="${it.rank}">Ver en el mapa</button>` +
+    week + addr;
+  document.getElementById('detail').hidden = false;
+}
+function openDetailByRank(rank) {
+  const entry = state.byRank && state.byRank.get(Number(rank));
+  if (entry) openDetail(entry);
+}
+function closeDetail() { document.getElementById('detail').hidden = true; }
+
+// ---------------------------------------------------------------------------
+// Sorpréndeme (descubrimiento): elige un sitio al azar, ponderado por el score.
+// ---------------------------------------------------------------------------
+function pickWeighted(entries) {
+  const total = entries.reduce((s, e) => s + Math.max(0.01, e.item.score), 0);
+  let r = Math.random() * total;
+  for (const e of entries) { r -= Math.max(0.01, e.item.score); if (r <= 0) return e; }
+  return entries[entries.length - 1];
+}
+function surprise() {
+  const entries = state.shown || [];
+  if (!entries.length) return;
+  openDetail(pickWeighted(entries));
 }
 
 // ---------------------------------------------------------------------------
@@ -549,7 +675,9 @@ function setSheet(s) { sheetState = s; applySheet(true); }
 function toggleSheet() { setSheet(sheetState === 'full' ? 'peek' : 'full'); }
 
 function onPointerDown(e) {
-  if (e.target.closest('.open-chip')) return; // el chip no arrastra la hoja
+  // En la cabecera, no arrastrar al usar controles (buscador, orden, chips…).
+  // El asa (#sheet-handle) siempre arrastra.
+  if (e.currentTarget === sheetHead && e.target.closest('input, select, button, a, .fchip')) return;
   dragging = true;
   startPointerY = e.clientY;
   startY = liveY;
@@ -629,7 +757,12 @@ document.addEventListener('click', (e) => {
     if (navigator.clipboard) navigator.clipboard.writeText(code.dataset.code).catch(() => {});
     const prev = code.textContent; code.textContent = '¡Copiado!';
     setTimeout(() => { code.textContent = prev; }, 1200);
+    return;
   }
+  const pd = e.target.closest('.popup-detail');
+  if (pd) { e.preventDefault(); openDetailByRank(pd.dataset.rank); return; }
+  const dm = e.target.closest('.detail-map-btn');
+  if (dm) { e.preventDefault(); closeDetail(); selectByRank(Number(dm.dataset.rank), true); return; }
 });
 document.querySelectorAll('.tab').forEach((btn) => {
   btn.addEventListener('click', () => renderView(btn.dataset.cat));
@@ -651,6 +784,36 @@ savedToggle.addEventListener('click', () => {
   savedToggle.classList.toggle('is-on', state.savedOnly);
   savedToggle.setAttribute('aria-pressed', String(state.savedOnly));
   renderDiscounts();
+});
+
+// Buscador
+document.getElementById('search-input').addEventListener('input', (e) => {
+  state.query = e.target.value;
+  renderView(state.view);
+});
+// Ordenar
+document.getElementById('sort-select').addEventListener('change', (e) => {
+  state.sort = e.target.value;
+  renderView(state.view);
+});
+// Filtros de precio
+document.querySelectorAll('.price-chip').forEach((chip) => {
+  chip.addEventListener('click', () => {
+    const p = Number(chip.dataset.price);
+    if (state.prices.has(p)) state.prices.delete(p); else state.prices.add(p);
+    chip.classList.toggle('is-on', state.prices.has(p));
+    chip.setAttribute('aria-pressed', String(state.prices.has(p)));
+    renderView(state.view);
+  });
+});
+
+// Sorpréndeme
+document.getElementById('surprise-btn').addEventListener('click', surprise);
+
+// Ficha de sitio
+document.getElementById('detail-close').addEventListener('click', closeDetail);
+document.getElementById('detail').addEventListener('click', (e) => {
+  if (e.target.id === 'detail') closeDetail(); // toca el fondo = cerrar
 });
 
 // Cuenta / acceso (desactivado de momento: los elementos pueden no existir)

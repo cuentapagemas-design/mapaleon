@@ -61,12 +61,30 @@ peticiones por usuario**:
 - En la app: chip **"Abierto ahora"** en la cabecera de la hoja (filtra lista y mapa) y una
   etiqueta **● Abierto · cierra HH:MM** / **● Cerrado · abre HH:MM** en cada sitio y en su popup.
 
-> 💶 **Coste:** pedir el horario sube el `searchText` al SKU *Enterprise* de Places API (New),
-> más caro **por petición**, pero el **número de peticiones no cambia** (sigue siendo el cron
-> diario). Mantén el tope de cuota diaria en Google Cloud.
+## Buscar · ordenar · filtrar · ficha · descubrir (todo sin peticiones extra)
+
+Funciones de descubrimiento, resueltas con **lógica de cliente** o con **campos que el cron
+baja una vez al día** (cero llamadas a Google por usuario):
+
+- **Buscar**: filtro de texto instantáneo por nombre (sin tildes).
+- **Ordenar**: *Ranking* (por defecto), *Mejor valorados*, *Más reseñas*, *A–Z*.
+- **Filtrar**: chips de **precio** (€/€€/€€€) y **Abierto ahora**. El buscador, el orden y los
+  filtros afectan a la **lista y al mapa** a la vez. El nº de la burbuja siempre es el **puesto
+  del TOP 20** (no cambia al reordenar).
+- **Ficha de sitio** (al tocar un sitio o "Ver ficha" en el popup): valoración, precio, tipo,
+  estado abierto/cerrado, descripción, **Cómo llegar / Llamar / Web**, **horario de toda la
+  semana** (con el día de hoy resaltado), dirección y favorito.
+- **🎲 Sorpréndeme**: elige un sitio al azar (ponderado por el score) de lo que estás viendo y
+  abre su ficha.
+
+> 💶 **Coste:** pedir horario + contacto + descripción sube el `searchText` al SKU
+> *Enterprise + Atmosphere* de Places API (New), más caro **por petición**, pero el **número de
+> peticiones no cambia** (sigue siendo el cron diario, ~9/día). Para abaratar, quita
+> `places.editorialSummary` del `FIELD_MASK` (baja a *Enterprise*). Mantén el tope de cuota en
+> Google Cloud.
 
 Esquema de cada item del ranking:
-`{ rank, id, name, lat, lng, rating, reviews, score, tz, hours }`.
+`{ rank, id, name, lat, lng, rating, reviews, score, tz, hours, price, type, address, phone, web, maps, summary, week }`.
 
 ## Identidad visual (León)
 

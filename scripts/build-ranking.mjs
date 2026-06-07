@@ -113,10 +113,41 @@ const FIELD_MASK = [
   'places.userRatingCount',
   'places.formattedAddress',
   'places.primaryType',
-  'places.regularOpeningHours', // horario semanal (para el filtro "abierto ahora")
-  'places.utcOffsetMinutes',    // desfase UTC del sitio (para calcular su hora local)
+  'places.regularOpeningHours', // horario semanal (para "abierto ahora" y la ficha)
+  'places.utcOffsetMinutes',    // desfase UTC del sitio (para su hora local)
+  // ---- Datos para la ficha de sitio (se bajan 1 vez/día, sin coste por usuario) ----
+  'places.nationalPhoneNumber',
+  'places.websiteUri',
+  'places.googleMapsUri',
+  'places.priceLevel',
+  'places.editorialSummary',    // (quítalo para bajar de SKU "Atmosphere" a "Enterprise")
   'nextPageToken',
 ].join(',');
+
+// priceLevel (enum de Google) → número 0..4
+const PRICE_MAP = {
+  PRICE_LEVEL_FREE: 0,
+  PRICE_LEVEL_INEXPENSIVE: 1,
+  PRICE_LEVEL_MODERATE: 2,
+  PRICE_LEVEL_EXPENSIVE: 3,
+  PRICE_LEVEL_VERY_EXPENSIVE: 4,
+};
+
+/** Extrae los datos extra de la ficha de un place. */
+function parseExtras(p) {
+  return {
+    address: p.formattedAddress || null,
+    phone: p.nationalPhoneNumber || null,
+    web: p.websiteUri || null,
+    maps: p.googleMapsUri || null,
+    price: (p.priceLevel && p.priceLevel in PRICE_MAP) ? PRICE_MAP[p.priceLevel] : null,
+    summary: (p.editorialSummary && p.editorialSummary.text) || null,
+    type: p.primaryType || null,
+    // Horario legible de la semana (cadenas localizadas de Google).
+    week: Array.isArray(p.regularOpeningHours && p.regularOpeningHours.weekdayDescriptions)
+      ? p.regularOpeningHours.weekdayDescriptions : null,
+  };
+}
 
 /**
  * Llama a Places API (New) Text Search, paginando con nextPageToken (máx ~60).
@@ -234,6 +265,7 @@ function buildCategory(rawPlaces) {
       reviews,
       tz,
       hours,
+      ...parseExtras(p),
     });
   }
 
@@ -273,6 +305,14 @@ function buildCategory(rawPlaces) {
       score: Number(x.score.toFixed(4)),
       tz: x.tz,
       hours: x.hours,
+      price: x.price,
+      type: x.type,
+      address: x.address,
+      phone: x.phone,
+      web: x.web,
+      maps: x.maps,
+      summary: x.summary,
+      week: x.week,
     }));
 
   return { generatedAt: new Date().toISOString(), items: ranked };
