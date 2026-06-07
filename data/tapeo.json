@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-06-07T18:55:38.758Z",
+  "items": [
+    {
+      "rank": 1,
+      "id": "seed:La Bicha",
+      "name": "La Bicha",
+      "lat": 42.5982,
+      "lng": -5.5731,
+      "rating": 4.6,
+      "reviews": 640,
+      "score": 4.4742
+    },
+    {
+      "rank": 2,
+      "id": "seed:La Competencia",
+      "name": "La Competencia",
+      "lat": 42.5979,
+      "lng": -5.5728,
+      "rating": 4.5,
+      "reviews": 2410,
+      "score": 4.4699
+    },
+    {
+      "rank": 3,
+      "id": "seed:El Capricho",
+      "name": "El Capricho",
+      "lat": 42.5976,
+      "lng": -5.5733,
+      "rating": 4.7,
+      "reviews": 310,
+      "score": 4.4694
+    },
+    {
+      "rank": 4,
+      "id": "seed:La Ribera",
+      "name": "La Ribera",
+      "lat": 42.5993,
+      "lng": -5.5723,
+      "rating": 4.6,
+      "reviews": 420,
+      "score": 4.4623
+    },
+    {
+      "rank": 5,
+      "id": "seed:Honoré",
+      "name": "Honoré",
+      "lat": 42.5994,
+      "lng": -5.5701,
+      "rating": 4.6,
+      "reviews": 380,
+      "score": 4.4598
+    },
+    {
+      "rank": 6,
+      "id": "seed:El Pato",
+      "name": "El Pato",
+      "lat": 42.5985,
+      "lng": -5.5719,
+      "rating": 4.5,
+      "reviews": 980,
+      "score": 4.455
+    },
+    {
+      "rank": 7,
+      "id": "seed:Los Cazurros",
+      "name": "Los Cazurros",
+      "lat": 42.5983,
+      "lng": -5.5702,
+      "rating": 4.5,
+      "reviews": 540,
+      "score": 4.4469
+    },
+    {
+      "rank": 8,
+      "id": "seed:La Trebede",
+      "name": "La Trébede",
+      "lat": 42.5996,
+      "lng": -5.5709,
+      "rating": 4.5,
+      "reviews": 470,
+      "score": 4.4453
+    },
+    {
+      "rank": 9,
+      "id": "seed:La Plancha",
+      "name": "La Plancha",
+      "lat": 42.5971,
+      "lng": -5.5719,
+      "rating": 4.5,
+      "reviews": 290,
+      "score": 4.4408
+    },
+    {
+      "rank": 10,
+      "id": "seed:La Tasca",
+      "name": "La Tasca",
+      "lat": 42.5968,
+      "lng": -5.5723,
+      "rating": 4.5,
+      "reviews": 250,
+      "score": 4.4397
+    },
+    {
+      "rank": 11,
+      "id": "seed:Universal",
+      "name": "Cafe Universal",
+      "lat": 42.5989,
+      "lng": -5.5734,
+      "rating": 4.4,
+      "reviews": 560,
+      "score": 4.4246
+    },
+    {
+      "rank": 12,
+      "id": "seed:Latino",
+      "name": "Bar Latino",
+      "lat": 42.5987,
+      "lng": -5.571,
+      "rating": 4.4,
+      "reviews": 760,
+      "score": 4.4227
+    },
+    {
+      "rank": 13,
+      "id": "seed:Ezequiel",
+      "name": "Ezequiel",
+      "lat": 42.5997,
+      "lng": -5.5727,
+      "rating": 4.4,
+      "reviews": 810,
+      "score": 4.4223
+    },
+    {
+      "rank": 14,
+      "id": "seed:El Tizon",
+      "name": "El Tizón",
+      "lat": 42.5972,
+      "lng": -5.5726,
+      "rating": 4.4,
+      "reviews": 1120,
+      "score": 4.42
+    },
+    {
+      "rank": 15,
+      "id": "seed:El Llar",
+      "name": "El Llar",
+      "lat": 42.5988,
+      "lng": -5.5699,
+      "rating": 4.4,
+      "reviews": 1530,
+      "score": 4.4176
+    },
+    {
+      "rank": 16,
+      "id": "seed:El Rebote",
+      "name": "El Rebote",
+      "lat": 42.5995,
+      "lng": -5.5712,
+      "rating": 4.4,
+      "reviews": 1820,
+      "score": 4.4163
+    },
+    {
+      "rank": 17,
+      "id": "seed:El Cid",
+      "name": "Bar El Cid",
+      "lat": 42.5984,
+      "lng": -5.5742,
+      "rating": 4.3,
+      "reviews": 430,
+      "score": 4.4075
+    },
+    {
+      "rank": 18,
+      "id": "seed:Mary",
+      "name": "Bar Mary",
+      "lat": 42.598,
+      "lng": -5.5737,
+      "rating": 4.3,
+      "reviews": 650,
+      "score": 4.3982
+    },
+    {
+      "rank": 19,
+      "id": "seed:Jamon Jamon",
+      "name": "Jamón Jamón",
+      "lat": 42.5991,
+      "lng": -5.5716,
+      "rating": 4.3,
+      "reviews": 890,
+      "score": 4.3898
+    },
+    {
+      "rank": 20,
+      "id": "seed:Camarote Madrid",
+      "name": "Camarote Madrid",
+      "lat": 42.599,
+      "lng": -5.5705,
+      "rating": 4.3,
+      "reviews": 1190,
+      "score": 4.3811
+    }
+  ]
+}

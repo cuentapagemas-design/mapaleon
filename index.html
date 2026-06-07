@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>León TOP 20 — Tapear · Cenar · Visitar</title>
+  <meta name="description" content="Mapa con el TOP 20 de sitios para tapear, cenar y visitar en León (España), rankeados por valoración y número de reseñas." />
+
+  <!-- Leaflet 1.9 desde CDN -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <h1>León <span class="accent">TOP 20</span></h1>
+      <nav id="layers" aria-label="Categorías">
+        <button class="layer-btn is-active" data-cat="tapeo" type="button">Tapear</button>
+        <button class="layer-btn" data-cat="comida" type="button">Cenar</button>
+        <button class="layer-btn" data-cat="visitar" type="button">Visitar</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <div id="map" role="application" aria-label="Mapa de León"></div>
+
+      <aside id="panel" aria-label="Lista del TOP 20">
+        <div id="panel-head">
+          <h2 id="panel-title">Tapear</h2>
+          <p id="updated">Cargando…</p>
+        </div>
+        <ol id="ranking-list"></ol>
+        <footer id="attribution">
+          Datos de lugares: Google. Mapa base: ©
+          <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>,
+          teselas © <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>.
+        </footer>
+      </aside>
+    </main>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="app.js"></script>
+</body>
+</html>

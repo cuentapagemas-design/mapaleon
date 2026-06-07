@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-06-07T18:55:38.770Z",
+  "items": [
+    {
+      "rank": 1,
+      "id": "seed:Pablo",
+      "name": "Restaurante Pablo",
+      "lat": 42.5942,
+      "lng": -5.5712,
+      "rating": 4.7,
+      "reviews": 560,
+      "score": 4.5485
+    },
+    {
+      "rank": 2,
+      "id": "seed:Cocinandos",
+      "name": "Cocinandos",
+      "lat": 42.595,
+      "lng": -5.566,
+      "rating": 4.6,
+      "reviews": 1280,
+      "score": 4.5402
+    },
+    {
+      "rank": 3,
+      "id": "seed:LAV",
+      "name": "LAV Restaurante",
+      "lat": 42.5938,
+      "lng": -5.5701,
+      "rating": 4.6,
+      "reviews": 640,
+      "score": 4.5169
+    },
+    {
+      "rank": 4,
+      "id": "seed:La Gildaurea",
+      "name": "La Gildaurea",
+      "lat": 42.5963,
+      "lng": -5.5681,
+      "rating": 4.6,
+      "reviews": 340,
+      "score": 4.4982
+    },
+    {
+      "rank": 5,
+      "id": "seed:Vivaldi",
+      "name": "Restaurante Vivaldi",
+      "lat": 42.5936,
+      "lng": -5.5709,
+      "rating": 4.6,
+      "reviews": 250,
+      "score": 4.4909
+    },
+    {
+      "rank": 6,
+      "id": "seed:El Capricho asador",
+      "name": "El Capricho de Jiménez de Jamuz",
+      "lat": 42.5955,
+      "lng": -5.5673,
+      "rating": 4.5,
+      "reviews": 1740,
+      "score": 4.4867
+    },
+    {
+      "rank": 7,
+      "id": "seed:Becook",
+      "name": "Becook",
+      "lat": 42.5961,
+      "lng": -5.5689,
+      "rating": 4.5,
+      "reviews": 910,
+      "score": 4.481
+    },
+    {
+      "rank": 8,
+      "id": "seed:Delirios",
+      "name": "Restaurante Delirios",
+      "lat": 42.5947,
+      "lng": -5.5695,
+      "rating": 4.5,
+      "reviews": 780,
+      "score": 4.4796
+    },
+    {
+      "rank": 9,
+      "id": "seed:Trastienda",
+      "name": "La Trastienda del Mercado",
+      "lat": 42.5984,
+      "lng": -5.571,
+      "rating": 4.5,
+      "reviews": 640,
+      "score": 4.4778
+    },
+    {
+      "rank": 10,
+      "id": "seed:Koctel",
+      "name": "Koctel Bar",
+      "lat": 42.5957,
+      "lng": -5.5704,
+      "rating": 4.5,
+      "reviews": 410,
+      "score": 4.4742
+    },
+    {
+      "rank": 11,
+      "id": "seed:El Farol",
+      "name": "El Farol",
+      "lat": 42.5969,
+      "lng": -5.5698,
+      "rating": 4.5,
+      "reviews": 360,
+      "score": 4.4733
+    },
+    {
+      "rank": 12,
+      "id": "seed:Quitapesares",
+      "name": "Quitapesares",
+      "lat": 42.5946,
+      "lng": -5.5701,
+      "rating": 4.4,
+      "reviews": 280,
+      "score": 4.4497
+    },
+    {
+      "rank": 13,
+      "id": "seed:El Llagar",
+      "name": "El Llagar",
+      "lat": 42.596,
+      "lng": -5.5676,
+      "rating": 4.4,
+      "reviews": 300,
+      "score": 4.449
+    },
+    {
+      "rank": 14,
+      "id": "seed:La Posada",
+      "name": "La Posada del Camino",
+      "lat": 42.5952,
+      "lng": -5.5667,
+      "rating": 4.4,
+      "reviews": 470,
+      "score": 4.4433
+    },
+    {
+      "rank": 15,
+      "id": "seed:Mauro",
+      "name": "Restaurante Mauro",
+      "lat": 42.5944,
+      "lng": -5.5688,
+      "rating": 4.4,
+      "reviews": 530,
+      "score": 4.4416
+    },
+    {
+      "rank": 16,
+      "id": "seed:Nuevo Racimo",
+      "name": "Nuevo Racimo de Oro",
+      "lat": 42.599,
+      "lng": -5.5702,
+      "rating": 4.4,
+      "reviews": 690,
+      "score": 4.4377
+    },
+    {
+      "rank": 17,
+      "id": "seed:Asador El Llar",
+      "name": "Asador El Llar",
+      "lat": 42.5988,
+      "lng": -5.5697,
+      "rating": 4.4,
+      "reviews": 920,
+      "score": 4.4331
+    },
+    {
+      "rank": 18,
+      "id": "seed:Bodega Regia",
+      "name": "Bodega Regia",
+      "lat": 42.5979,
+      "lng": -5.5712,
+      "rating": 4.4,
+      "reviews": 1620,
+      "score": 4.4243
+    },
+    {
+      "rank": 19,
+      "id": "seed:Casa Mando",
+      "name": "Casa Mando",
+      "lat": 42.5985,
+      "lng": -5.5708,
+      "rating": 4.4,
+      "reviews": 2030,
+      "score": 4.421
+    },
+    {
+      "rank": 20,
+      "id": "seed:Alfonso V",
+      "name": "Restaurante Alfonso V",
+      "lat": 42.5973,
+      "lng": -5.5723,
+      "rating": 4.3,
+      "reviews": 820,
+      "score": 4.3899
+    }
+  ]
+}

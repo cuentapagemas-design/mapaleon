@@ -1,0 +1,205 @@
+{
+  "generatedAt": "2026-06-07T18:55:38.772Z",
+  "items": [
+    {
+      "rank": 1,
+      "id": "seed:Catedral",
+      "name": "Catedral de León",
+      "lat": 42.599,
+      "lng": -5.5664,
+      "rating": 4.8,
+      "reviews": 28400,
+      "score": 4.7903
+    },
+    {
+      "rank": 2,
+      "id": "seed:San Isidoro",
+      "name": "Basílica de San Isidoro",
+      "lat": 42.6,
+      "lng": -5.5701,
+      "rating": 4.7,
+      "reviews": 9800,
+      "score": 4.6827
+    },
+    {
+      "rank": 3,
+      "id": "seed:San Marcos",
+      "name": "Convento de San Marcos",
+      "lat": 42.601,
+      "lng": -5.574,
+      "rating": 4.7,
+      "reviews": 8600,
+      "score": 4.6806
+    },
+    {
+      "rank": 4,
+      "id": "seed:Vidrieras",
+      "name": "Vidrieras de la Catedral",
+      "lat": 42.5991,
+      "lng": -5.5663,
+      "rating": 4.8,
+      "reviews": 1200,
+      "score": 4.6698
+    },
+    {
+      "rank": 5,
+      "id": "seed:Panteon",
+      "name": "Panteón Real de San Isidoro",
+      "lat": 42.6001,
+      "lng": -5.5704,
+      "rating": 4.7,
+      "reviews": 1800,
+      "score": 4.6334
+    },
+    {
+      "rank": 6,
+      "id": "seed:Real Colegiata",
+      "name": "Real Colegiata de San Isidoro",
+      "lat": 42.5999,
+      "lng": -5.5703,
+      "rating": 4.7,
+      "reviews": 950,
+      "score": 4.6044
+    },
+    {
+      "rank": 7,
+      "id": "seed:Botines",
+      "name": "Casa Botines (Gaudí)",
+      "lat": 42.5979,
+      "lng": -5.5683,
+      "rating": 4.6,
+      "reviews": 7200,
+      "score": 4.5895
+    },
+    {
+      "rank": 8,
+      "id": "seed:Botines museo",
+      "name": "Museo Casa Botines",
+      "lat": 42.5978,
+      "lng": -5.5684,
+      "rating": 4.6,
+      "reviews": 2100,
+      "score": 4.5721
+    },
+    {
+      "rank": 9,
+      "id": "seed:Auditorio",
+      "name": "Auditorio Ciudad de León",
+      "lat": 42.6058,
+      "lng": -5.5694,
+      "rating": 4.5,
+      "reviews": 520,
+      "score": 4.509
+    },
+    {
+      "rank": 10,
+      "id": "seed:Catedral museo",
+      "name": "Museo Catedralicio",
+      "lat": 42.5992,
+      "lng": -5.5661,
+      "rating": 4.5,
+      "reviews": 640,
+      "score": 4.5083
+    },
+    {
+      "rank": 11,
+      "id": "seed:Palacio Guzmanes",
+      "name": "Palacio de los Guzmanes",
+      "lat": 42.5981,
+      "lng": -5.5681,
+      "rating": 4.5,
+      "reviews": 1600,
+      "score": 4.5052
+    },
+    {
+      "rank": 12,
+      "id": "seed:Muralla",
+      "name": "Muralla Romana de León",
+      "lat": 42.5996,
+      "lng": -5.5688,
+      "rating": 4.5,
+      "reviews": 1900,
+      "score": 4.5047
+    },
+    {
+      "rank": 13,
+      "id": "seed:Barrio Humedo",
+      "name": "Barrio Húmedo",
+      "lat": 42.5984,
+      "lng": -5.5719,
+      "rating": 4.5,
+      "reviews": 2600,
+      "score": 4.5038
+    },
+    {
+      "rank": 14,
+      "id": "seed:Plaza Mayor",
+      "name": "Plaza Mayor",
+      "lat": 42.5972,
+      "lng": -5.5703,
+      "rating": 4.5,
+      "reviews": 3400,
+      "score": 4.5031
+    },
+    {
+      "rank": 15,
+      "id": "seed:Casa Botines plaza",
+      "name": "Plaza de San Marcelo",
+      "lat": 42.598,
+      "lng": -5.5685,
+      "rating": 4.4,
+      "reviews": 430,
+      "score": 4.4795
+    },
+    {
+      "rank": 16,
+      "id": "seed:Puente Castro",
+      "name": "Puente de los Leones",
+      "lat": 42.5933,
+      "lng": -5.5611,
+      "rating": 4.3,
+      "reviews": 280,
+      "score": 4.4669
+    },
+    {
+      "rank": 17,
+      "id": "seed:Jardin San Francisco",
+      "name": "Jardín de San Francisco",
+      "lat": 42.5956,
+      "lng": -5.5667,
+      "rating": 4.4,
+      "reviews": 890,
+      "score": 4.4601
+    },
+    {
+      "rank": 18,
+      "id": "seed:Caboalles",
+      "name": "Centro Leonés de Arte",
+      "lat": 42.5982,
+      "lng": -5.5712,
+      "rating": 4.2,
+      "reviews": 260,
+      "score": 4.4489
+    },
+    {
+      "rank": 19,
+      "id": "seed:Plaza San Martin",
+      "name": "Plaza de San Martín",
+      "lat": 42.598,
+      "lng": -5.5723,
+      "rating": 4.4,
+      "reviews": 1500,
+      "score": 4.4455
+    },
+    {
+      "rank": 20,
+      "id": "seed:MUSAC",
+      "name": "MUSAC",
+      "lat": 42.606,
+      "lng": -5.5681,
+      "rating": 4.4,
+      "reviews": 4100,
+      "score": 4.4223
+    }
+  ]
+}

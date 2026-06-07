@@ -1,0 +1,38 @@
+name: Build ranking
+
+on:
+  schedule:
+    - cron: "0 4 * * *"   # cada día a las 04:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generar ranking
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: node scripts/build-ranking.mjs
+
+      - name: Commit si /data cambió
+        run: |
+          if [[ -n "$(git status --porcelain data)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data
+            git commit -m "data: actualiza ranking TOP 20 [skip ci]"
+            git push
+          else
+            echo "Sin cambios en /data."
+          fi
