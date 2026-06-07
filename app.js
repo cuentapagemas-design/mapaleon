@@ -5,7 +5,7 @@
 const CATEGORIES = {
   tapeo:   { label: 'Tapear',  file: 'data/tapeo.json',   color: '#d4a017' },
   comida:  { label: 'Cenar',   file: 'data/comida.json',  color: '#b3123b' },
-  visitar: { label: 'Visitar', file: 'data/visitar.json', color: '#1aa7a0' },
+  visitar: { label: 'Visitar', file: 'data/visitar.json', color: '#6b2c8f' },
 };
 
 const FAVS_KEY = 'leon-favs-v1';

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>León TOP 20 — Tapear · Cenar · Visitar</title>
   <meta name="description" content="Mapa con el TOP 20 de sitios para tapear, cenar y visitar en León (España), rankeados por valoración y número de reseñas." />
+  <meta name="theme-color" content="#6b2c8f" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <!-- Leaflet 1.9 desde CDN -->
   <link
@@ -18,7 +20,16 @@
 <body>
   <div id="app">
     <header id="topbar">
-      <h1>León <span class="accent">TOP 20</span></h1>
+      <div class="brand">
+        <!-- León rampante (arma del antiguo Reino de León) -->
+        <svg class="logo" viewBox="0 0 100 120" fill="currentColor" fill-rule="evenodd" aria-hidden="true">
+          <path d="M6 42 L15 36 C12 27 19 19 28 21 L31 11 L37 19 L43 10 L47 19 L55 14 L54 26 C61 31 62 41 56 47 C64 50 67 60 62 68 C70 64 74 51 70 45 C75 47 78 55 73 63 C83 61 85 46 76 40 C80 33 78 23 69 23 C73 32 70 39 63 40 C66 33 60 28 53 31 C57 38 55 47 48 50 C57 53 62 64 61 78 L67 80 L62 102 L71 104 L60 108 L57 88 C55 82 49 79 45 80 L46 98 L38 100 L41 82 C36 78 33 71 33 63 C29 68 22 69 18 64 L27 62 C21 58 20 49 26 45 C20 46 13 42 15 36 Z M27 30 a2.1 2.1 0 1 1 0.1 0 Z"/>
+        </svg>
+        <div class="brand-text">
+          <h1>León <span class="accent">TOP&nbsp;20</span></h1>
+          <p class="tagline">Dónde tapear, cenar y visitar</p>
+        </div>
+      </div>
       <nav id="layers" aria-label="Categorías">
         <button class="layer-btn is-active" data-cat="tapeo" type="button">Tapear</button>
         <button class="layer-btn" data-cat="comida" type="button">Cenar</button>

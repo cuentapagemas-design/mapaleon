@@ -1,9 +1,13 @@
 :root {
-  --tapeo: #d4a017;   /* dorado */
-  --comida: #b3123b;  /* carmesí */
-  --visitar: #1aa7a0; /* teal */
+  /* Paleta de León: las tres categorías son los colores del blasón
+     (oro de la corona, carmesí del pendón, púrpura del león rampante). */
+  --tapeo: #d4a017;   /* oro */
+  --comida: #b3123b;  /* carmesí (pendón) */
+  --visitar: #6b2c8f; /* púrpura leonesa (el león) */
   --fav: #e6a700;     /* dorado favoritos */
-  --bg: #f6f4ef;
+  --leon-purple: #6b2c8f;
+  --ink-btn: #3a3531; /* charcoal para el botón de favoritos activo */
+  --bg: #f6f4ef;      /* piedra/marfil */
   --ink: #25221d;
   --muted: #6c6760;
   --panel-bg: #ffffff;
@@ -32,24 +36,50 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.6rem 1rem;
+  gap: 1rem 1.5rem;
+  padding: 0.55rem 1rem;
   background: var(--panel-bg);
   box-shadow: var(--shadow);
+  /* Filete tricolor del blasón (oro · carmesí · púrpura) como guiño sutil */
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, var(--tapeo) 0%, var(--comida) 50%, var(--leon-purple) 100%) 1;
   z-index: 1000;
   flex-wrap: wrap;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+.brand .logo {
+  width: 38px;
+  height: 46px;
+  color: var(--leon-purple);
+  flex: none;
+}
+.brand-text { line-height: 1.05; }
 #topbar h1 {
   margin: 0;
-  font-size: 1.25rem;
-  letter-spacing: 0.5px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--leon-purple);
 }
-#topbar h1 .accent { color: var(--comida); }
+#topbar h1 .accent { color: var(--comida); font-style: italic; }
+.tagline {
+  margin: 0.1rem 0 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.2px;
+}
 
 #layers {
   display: flex;
   gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
 .layer-btn {
@@ -65,10 +95,12 @@ html, body {
 }
 .layer-btn:hover { background: #e2ddd2; }
 
-.layer-btn[data-cat="tapeo"].is-active     { background: var(--tapeo);  color: #fff; }
-.layer-btn[data-cat="comida"].is-active    { background: var(--comida); color: #fff; }
-.layer-btn[data-cat="visitar"].is-active   { background: var(--visitar); color: #fff; }
-.layer-btn[data-cat="favoritos"].is-active { background: var(--fav);    color: #fff; }
+.layer-btn:focus-visible { outline: 2px solid var(--leon-purple); outline-offset: 2px; }
+.layer-btn[data-cat="tapeo"].is-active     { background: var(--tapeo);    color: #fff; }
+.layer-btn[data-cat="comida"].is-active    { background: var(--comida);   color: #fff; }
+.layer-btn[data-cat="visitar"].is-active   { background: var(--visitar);  color: #fff; }
+.layer-btn[data-cat="favoritos"].is-active { background: var(--ink-btn);  color: #fff; }
+.layer-btn[data-cat="favoritos"].is-active::first-letter { color: var(--fav); }
 
 /* ---------- Layout ---------- */
 #main {
@@ -101,6 +133,11 @@ html, body {
 #panel-head {
   padding: 0.8rem 1rem 0.4rem;
   border-bottom: 1px solid #eee;
+  /* Marca de agua del león muy sutil (guiño, no decoración pesada) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120' fill='%23f0e9f6' fill-rule='evenodd'%3E%3Cpath d='M6 42 L15 36 C12 27 19 19 28 21 L31 11 L37 19 L43 10 L47 19 L55 14 L54 26 C61 31 62 41 56 47 C64 50 67 60 62 68 C70 64 74 51 70 45 C75 47 78 55 73 63 C83 61 85 46 76 40 C80 33 78 23 69 23 C73 32 70 39 63 40 C66 33 60 28 53 31 C57 38 55 47 48 50 C57 53 62 64 61 78 L67 80 L62 102 L71 104 L60 108 L57 88 C55 82 49 79 45 80 L46 98 L38 100 L41 82 C36 78 33 71 33 63 C29 68 22 69 18 64 L27 62 C21 58 20 49 26 45 C20 46 13 42 15 36 Z M27 30 a2.1 2.1 0 1 1 0.1 0 Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: auto 78%;
 }
 #panel-head h2 { margin: 0 0 0.2rem; font-size: 1.1rem; }
 #updated { margin: 0; font-size: 0.78rem; color: var(--muted); }
@@ -261,4 +298,12 @@ html, body {
     box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.12);
   }
   #map { height: 58vh; }
+}
+
+@media (max-width: 560px) {
+  #topbar { gap: 0.5rem 0.8rem; padding: 0.5rem 0.7rem; }
+  .brand .logo { width: 32px; height: 38px; }
+  #topbar h1 { font-size: 1.2rem; }
+  .tagline { display: none; }            /* menos ruido en pantallas pequeñas */
+  .layer-btn { padding: 0.35rem 0.7rem; font-size: 0.88rem; }
 }

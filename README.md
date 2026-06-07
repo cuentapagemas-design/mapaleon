@@ -48,6 +48,17 @@ concreta de una categoría aún no cumple el test. Puedes validar la matemática
 node scripts/build-ranking.mjs --selftest
 ```
 
+## Identidad visual (León)
+
+La estética es moderna pero con guiños a la ciudad, sin recargar:
+- **León rampante** (el del blasón del antiguo Reino de León) como logo SVG y favicon, más una
+  marca de agua muy sutil en el panel.
+- Las **tres categorías usan los colores del blasón**: **oro** (corona) para *Tapear*,
+  **carmesí** (pendón) para *Cenar* y **púrpura** (el león) para *Visitar*. Un fino **filete
+  tricolor** bajo la cabecera remata el guiño.
+- Wordmark "León" en serif (aire de heritage) sobre fondo piedra/marfil. Navegación con
+  pastillas de categoría de alto contraste para que sea intuitiva.
+
 ## Front-end
 
 - Teselas **CARTO Voyager** (sin key), Leaflet 1.9 desde CDN.
