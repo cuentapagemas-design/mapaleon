@@ -6,7 +6,12 @@ const CATEGORIES = {
   tapeo:   { label: 'Tapear',  file: 'data/tapeo.json',   color: '#d4a017' },
   comida:  { label: 'Cenar',   file: 'data/comida.json',  color: '#b3123b' },
   visitar: { label: 'Visitar', file: 'data/visitar.json', color: '#6b2c8f' },
+  dulce:   { label: 'Dulce',   file: 'data/dulce.json',   color: '#d6488f' },
 };
+
+// Temporada de heladerías (≈ verano): in-season de abril a octubre. Configurable.
+const SEASON_MONTHS = new Set([3, 4, 5, 6, 7, 8, 9]); // 0=ene … 9=oct
+function inSeason() { return SEASON_MONTHS.has(new Date().getMonth()); }
 
 const FAVS_KEY = 'leon-favs-v1';
 const LEON_CENTER = [42.5987, -5.5671];
@@ -43,6 +48,8 @@ function nowWeekMin(tz) {
   return d.getUTCDay() * 1440 + d.getUTCHours() * 60 + d.getUTCMinutes();
 }
 function openInfo(item) {
+  // Sitios de temporada (heladerías): fuera de verano se consideran cerrados.
+  if (item.seasonal && !inSeason()) return { known: true, open: false, seasonal: true };
   const hours = item.hours;
   if (!Array.isArray(hours) || hours.length === 0) return { known: false, open: false };
   const w = nowWeekMin(item.tz);
@@ -64,6 +71,7 @@ function hm(min) {
 }
 function statusHTML(item) {
   const info = openInfo(item);
+  if (info.seasonal && !info.open) return `<span class="st st-season">🍦 Solo en verano</span>`;
   if (!info.known) return '';
   if (info.open) {
     return `<span class="st st-open">● Abierto</span>` +
@@ -372,7 +380,9 @@ function openDetail(entry) {
   const badges = [`<span class="detail-badge rank" style="--cat:${entry.color}">#${it.rank} ${escapeHTML(entry.catLabel)}</span>`];
   if (price) badges.push(`<span class="detail-badge">${price}</span>`);
   if (typeLabel) badges.push(`<span class="detail-badge">${escapeHTML(typeLabel)}</span>`);
-  if (info.known) {
+  if (info.seasonal && !info.open) {
+    badges.push(`<span class="detail-badge season">🍦 Solo en verano · puede estar cerrado</span>`);
+  } else if (info.known) {
     badges.push(info.open
       ? `<span class="detail-badge open">Abierto${info.closesAt != null ? ` · cierra ${hm(info.closesAt)}` : ''}</span>`
       : `<span class="detail-badge closed">Cerrado${info.opensAt != null ? ` · abre ${hm(info.opensAt)}` : ''}</span>`);

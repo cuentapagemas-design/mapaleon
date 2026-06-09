@@ -3,6 +3,7 @@
   --tapeo: #d4a017;
   --comida: #b3123b;
   --visitar: #6b2c8f;
+  --dulce: #d6488f;
   --fav: #e6a700;
   --leon-purple: #6b2c8f;
   --bg: #f6f4ef;
@@ -182,6 +183,8 @@ html, body {
 .st { font-weight: 700; }
 .st-open { color: #2e9e4d; }
 .st-closed { color: #c2492f; }
+.st-season { color: #c77f1a; font-weight: 700; }
+.detail-badge.season { background: #fbeed7; color: #9a6a12; }
 
 #ranking-list {
   list-style: none;
@@ -246,13 +249,14 @@ html, body {
   border: none; background: transparent; cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   color: var(--muted);
-  font-size: 0.66rem; font-weight: 600;
-  padding: 6px 2px;
+  font-size: 0.62rem; font-weight: 600;
+  padding: 6px 1px;
 }
 .tab svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .tab.is-active[data-cat="tapeo"]     { color: var(--tapeo); }
 .tab.is-active[data-cat="comida"]    { color: var(--comida); }
 .tab.is-active[data-cat="visitar"]   { color: var(--visitar); }
+.tab.is-active[data-cat="dulce"]     { color: var(--dulce); }
 .tab.is-active[data-cat="favoritos"] { color: var(--fav); }
 .tab.is-active[data-cat="favoritos"] svg { fill: currentColor; }
 .tab:focus-visible { outline: 2px solid var(--leon-purple); outline-offset: -2px; }

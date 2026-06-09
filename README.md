@@ -22,6 +22,15 @@ La web **solo LEE** `data/*.json`. Resultado:
 /.github/workflows/ranking.yml        cron diario + commit de /data
 ```
 
+## Dulce (con heladerías de temporada)
+
+Categoría **Dulce** = confiterías, pastelerías y heladerías (consultas propias en el cron →
+`data/dulce.json`). Como **las heladerías suelen abrir solo en verano**, cada sitio lleva un
+flag `seasonal` (lo detecta el cron por tipo/nombre, p. ej. `ice_cream_shop` o "heladería").
+**Fuera de temporada** (configurable: meses de abril a octubre, `SEASON_MONTHS` en `app.js`)
+esos sitios se tratan como **cerrados**: muestran **"🍦 Solo en verano"** y el filtro "Abierto
+ahora" (y el Sorpréndeme con ese filtro) los oculta. Las confiterías/pastelerías van todo el año.
+
 ## Solo CIUDAD de León (no provincia)
 
 La búsqueda se acota con un rectángulo en la API y, **además**, en código se descarta todo lo
@@ -113,7 +122,7 @@ Está diseñada como **app móvil**, con patrón tipo mapa nativo:
 - **Mapa a pantalla completa** (teselas CARTO Voyager sin key, Leaflet 1.9).
 - **Hoja inferior deslizable** (bottom sheet) con la lista del TOP 20: arrástrala o toca el
   asa para desplegar/contraer. Al tocar un sitio, baja la hoja y centra su burbuja.
-- **Barra de categorías inferior** (al alcance del pulgar): Tapear · Cenar · Visitar · Favoritos.
+- **Barra de categorías inferior** (al alcance del pulgar): Tapear · Cenar · Visitar · **Dulce** · Favoritos.
 - En **escritorio** se muestra centrada como un teléfono (no hay versión de escritorio aparte).
 
 **Instalable (PWA):** incluye `manifest.webmanifest`, iconos e `sw.js` (service worker).
