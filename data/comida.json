@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-07T22:43:58.344Z",
+  "generatedAt": "2026-06-09T11:15:28.151Z",
   "items": [
     {
       "rank": 1,
@@ -347,8 +347,8 @@
     },
     {
       "rank": 6,
-      "id": "seed:El Capricho asador",
-      "name": "El Capricho de Jiménez de Jamuz",
+      "id": "seed:Asador Catedral",
+      "name": "Asador de la Catedral",
       "lat": 42.5955,
       "lng": -5.5673,
       "rating": 4.5,
@@ -417,8 +417,8 @@
       "type": "restaurant",
       "address": "Calle de muestra 15, 24003 León",
       "phone": "+34 987 20 0005",
-      "web": "https://ejemplo-leon.es/seed-el-capricho-asador",
-      "maps": "https://www.google.com/maps/search/?api=1&query=El%20Capricho%20de%20Jim%C3%A9nez%20de%20Jamuz%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-asador-catedral",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Asador%20de%20la%20Catedral%20Le%C3%B3n",
       "summary": "Cocina leonesa para sentarse a cenar con calma.",
       "week": [
         "Lunes: 13:00–16:30, 19:30–23:30",

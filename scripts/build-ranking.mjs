@@ -23,12 +23,26 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = resolve(__dirname, '..', 'data');
 
 // ---------------------------------------------------------------------------
-// Configuración geográfica: bounding box de la ciudad de León.
+// Configuración geográfica: CIUDAD de León (no la provincia).
+// El rectángulo (BBOX) acota la búsqueda en la API; además, en código exigimos
+// que el sitio esté a <= MAX_RADIUS_KM del centro, para dejar fuera pueblos de
+// la provincia (p. ej. asadores en Jiménez de Jamuz, a ~30 km).
 // ---------------------------------------------------------------------------
 const BBOX = {
   low: { latitude: 42.560, longitude: -5.610 },
   high: { latitude: 42.625, longitude: -5.535 },
 };
+const CITY_CENTER = { lat: 42.5987, lng: -5.5671 };
+export const MAX_RADIUS_KM = 3.5; // radio aprox. de la ciudad de León
+
+/** Distancia en km entre dos coordenadas (Haversine). */
+export function haversineKm(aLat, aLng, bLat, bLng) {
+  const R = 6371, toRad = (x) => (x * Math.PI) / 180;
+  const dLat = toRad(bLat - aLat), dLng = toRad(bLng - aLng);
+  const s = Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(aLat)) * Math.cos(toRad(bLat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
 
 const MIN_REVIEWS = 20;     // descartamos sitios con < 20 reseñas (ruido)
 const TOP_N = 20;           // TOP 20 por categoría
@@ -255,6 +269,8 @@ function buildCategory(rawPlaces) {
     if (typeof rating !== 'number' || typeof reviews !== 'number') continue;
     if (reviews < MIN_REVIEWS) continue;
     if (!inBBox(lat, lng)) continue;
+    // Solo ciudad: dentro del radio del centro (descarta provincia).
+    if (haversineKm(CITY_CENTER.lat, CITY_CENTER.lng, lat, lng) > MAX_RADIUS_KM) continue;
     const { tz, hours } = parseHours(p);
     pool.push({
       id: p.id,

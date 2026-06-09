@@ -22,6 +22,13 @@ La web **solo LEE** `data/*.json`. Resultado:
 /.github/workflows/ranking.yml        cron diario + commit de /data
 ```
 
+## Solo CIUDAD de León (no provincia)
+
+La búsqueda se acota con un rectángulo en la API y, **además**, en código se descarta todo lo
+que esté a más de **`MAX_RADIUS_KM` (3,5 km) del centro** de la ciudad (Haversine). Así se
+evita colar sitios de la **provincia** (p. ej. asadores famosos en pueblos a 30–40 km que se
+anuncian "en León"). Ajusta el radio en `scripts/build-ranking.mjs`.
+
 ## El ranking (bayesiano)
 
 Para cada categoría se calcula una **media ponderada** estilo IMDb:
@@ -76,7 +83,9 @@ baja una vez al día** (cero llamadas a Google por usuario):
   semana** (con el día de hoy resaltado), dirección y favorito.
 - **🎲 Sorpréndeme**: ruleta **totalmente aleatoria** entre **todas las categorías** (uniforme,
   no sesgada al nº1 → salen sitios inesperados). Anima pasando nombres, se frena en uno y abre
-  su ficha. Toca la ruleta para parar antes. Si "Abierto ahora" está activo, solo sortea abiertos.
+  su ficha. Toca la ruleta para parar antes. **Respeta el presupuesto**: si has marcado chips de
+  precio (€/€€/€€€) solo sortea en ese rango, y si "Abierto ahora" está activo, solo abiertos
+  (avisa si no hay nada en ese presupuesto).
 
 > 💶 **Coste:** pedir horario + contacto + descripción sube el `searchText` al SKU
 > *Enterprise + Atmosphere* de Places API (New), más caro **por petición**, pero el **número de

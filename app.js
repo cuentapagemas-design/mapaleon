@@ -416,14 +416,26 @@ function allEntries() {
 }
 
 let rouletteRunning = false;
+function flashRoulette(msg) {
+  const overlay = document.getElementById('roulette');
+  document.getElementById('roulette-name').textContent = msg;
+  document.getElementById('roulette-name').style.color = 'var(--ink)';
+  document.getElementById('roulette-cat').textContent = '';
+  overlay.classList.add('settled');
+  overlay.hidden = false;
+  overlay.onclick = () => { overlay.hidden = true; };
+  setTimeout(() => { overlay.hidden = true; }, 1700);
+}
 function surprise() {
   if (rouletteRunning) return;
   let pool = allEntries();
-  if (state.openNow) {            // si el filtro "abierto" está activo, respétalo
-    const open = pool.filter((e) => openInfo(e.item).open);
-    if (open.length) pool = open;
+  // Respeta el presupuesto (chips de precio) y "abierto ahora" si están activos.
+  if (state.openNow) pool = pool.filter((e) => openInfo(e.item).open);
+  if (state.prices.size) pool = pool.filter((e) => state.prices.has(e.item.price));
+  if (!pool.length) {
+    flashRoulette(state.prices.size ? 'Nada en ese presupuesto ahora mismo' : 'Nada que sortear con esos filtros');
+    return;
   }
-  if (!pool.length) return;
 
   const overlay = document.getElementById('roulette');
   const nameEl = document.getElementById('roulette-name');
