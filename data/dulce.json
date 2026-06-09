@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-09T12:04:41.892Z",
+  "generatedAt": "2026-06-09T12:13:47.121Z",
   "items": [
     {
       "rank": 1,
@@ -9,7 +9,7 @@
       "lng": -5.5715,
       "rating": 4.7,
       "reviews": 520,
-      "score": 4.559,
+      "score": 4.5607,
       "tz": 120,
       "hours": [
         [
@@ -57,7 +57,7 @@
         "Sábado: 10:00–21:00",
         "Domingo: 10:00–21:00"
       ],
-      "seasonal": true
+      "season": "summer"
     },
     {
       "rank": 2,
@@ -67,7 +67,7 @@
       "lng": -5.5689,
       "rating": 4.6,
       "reviews": 1320,
-      "score": 4.5507,
+      "score": 4.5518,
       "tz": 120,
       "hours": [
         [
@@ -138,13 +138,71 @@
     },
     {
       "rank": 3,
+      "id": "seed:Chocolateria Leonesa",
+      "name": "Chocolatería Leonesa",
+      "lat": 42.5978,
+      "lng": -5.5709,
+      "rating": 4.6,
+      "reviews": 470,
+      "score": 4.524,
+      "tz": 120,
+      "hours": [
+        [
+          600,
+          1260
+        ],
+        [
+          2040,
+          2700
+        ],
+        [
+          3480,
+          4140
+        ],
+        [
+          4920,
+          5580
+        ],
+        [
+          6360,
+          7020
+        ],
+        [
+          7800,
+          8460
+        ],
+        [
+          9240,
+          9900
+        ]
+      ],
+      "price": 1,
+      "type": "cafe",
+      "address": "Calle de muestra 12, 24003 León",
+      "phone": "+34 987 20 0002",
+      "web": "https://ejemplo-leon.es/seed-chocolateria-leonesa",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Chocolater%C3%ADa%20Leonesa%20Le%C3%B3n",
+      "summary": null,
+      "week": [
+        "Lunes: 10:00–21:00",
+        "Martes: 10:00–21:00",
+        "Miércoles: 10:00–21:00",
+        "Jueves: 10:00–21:00",
+        "Viernes: 10:00–21:00",
+        "Sábado: 10:00–21:00",
+        "Domingo: 10:00–21:00"
+      ],
+      "season": "winter"
+    },
+    {
+      "rank": 4,
       "id": "seed:Heladeria Italia",
       "name": "Heladería Italiana del Húmedo",
       "lat": 42.5986,
       "lng": -5.5719,
       "rating": 4.6,
       "reviews": 440,
-      "score": 4.5206,
+      "score": 4.5224,
       "tz": 120,
       "hours": [
         [
@@ -178,11 +236,11 @@
       ],
       "price": 1,
       "type": "ice_cream_shop",
-      "address": "Calle de muestra 12, 24003 León",
-      "phone": "+34 987 20 0002",
-      "web": "https://ejemplo-leon.es/seed-heladeria-italia",
+      "address": "Calle de muestra 13, 24003 León",
+      "phone": "+34 987 20 0003",
+      "web": null,
       "maps": "https://www.google.com/maps/search/?api=1&query=Helader%C3%ADa%20Italiana%20del%20H%C3%BAmedo%20Le%C3%B3n",
-      "summary": null,
+      "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 10:00–21:00",
         "Martes: 10:00–21:00",
@@ -192,122 +250,37 @@
         "Sábado: 10:00–21:00",
         "Domingo: 10:00–21:00"
       ],
-      "seasonal": true
+      "season": "summer"
     },
     {
-      "rank": 4,
+      "rank": 5,
       "id": "seed:Dulce Real",
       "name": "Obrador Dulce Real",
       "lat": 42.5976,
       "lng": -5.5698,
       "rating": 4.6,
       "reviews": 260,
-      "score": 4.5093,
-      "tz": 120,
-      "hours": [
-        [
-          540,
-          840
-        ],
-        [
-          1020,
-          1230
-        ],
-        [
-          1980,
-          2280
-        ],
-        [
-          2460,
-          2670
-        ],
-        [
-          3420,
-          3720
-        ],
-        [
-          3900,
-          4110
-        ],
-        [
-          4860,
-          5160
-        ],
-        [
-          5340,
-          5550
-        ],
-        [
-          6300,
-          6600
-        ],
-        [
-          6780,
-          6990
-        ],
-        [
-          7740,
-          8040
-        ],
-        [
-          8220,
-          8430
-        ],
-        [
-          9180,
-          9480
-        ],
-        [
-          9660,
-          9870
-        ]
-      ],
-      "price": 1,
-      "type": "bakery",
-      "address": "Calle de muestra 13, 24003 León",
-      "phone": "+34 987 20 0003",
-      "web": null,
-      "maps": "https://www.google.com/maps/search/?api=1&query=Obrador%20Dulce%20Real%20Le%C3%B3n",
-      "summary": "Dulces, repostería y bollería artesana en el centro de León.",
-      "week": [
-        "Lunes: 09:00–14:00, 17:00–20:30",
-        "Martes: 09:00–14:00, 17:00–20:30",
-        "Miércoles: 09:00–14:00, 17:00–20:30",
-        "Jueves: 09:00–14:00, 17:00–20:30",
-        "Viernes: 09:00–14:00, 17:00–20:30",
-        "Sábado: 09:00–14:00, 17:00–20:30",
-        "Domingo: 09:00–14:00, 17:00–20:30"
-      ]
-    },
-    {
-      "rank": 5,
-      "id": "seed:Polo",
-      "name": "Confitería Polo",
-      "lat": 42.5972,
-      "lng": -5.5707,
-      "rating": 4.5,
-      "reviews": 690,
-      "score": 4.4915,
+      "score": 4.5113,
       "tz": 120,
       "hours": null,
       "price": 1,
       "type": "bakery",
       "address": "Calle de muestra 14, 24003 León",
       "phone": "+34 987 20 0004",
-      "web": "https://ejemplo-leon.es/seed-polo",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Confiter%C3%ADa%20Polo%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-dulce-real",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Obrador%20Dulce%20Real%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": null
     },
     {
       "rank": 6,
-      "id": "seed:Conde",
-      "name": "Pastelería del Conde",
-      "lat": 42.5985,
-      "lng": -5.5702,
+      "id": "seed:Polo",
+      "name": "Confitería Polo",
+      "lat": 42.5972,
+      "lng": -5.5707,
       "rating": 4.5,
-      "reviews": 560,
-      "score": 4.4908,
+      "reviews": 690,
+      "score": 4.493,
       "tz": 120,
       "hours": [
         [
@@ -343,8 +316,8 @@
       "type": "bakery",
       "address": "Calle de muestra 15, 24003 León",
       "phone": "+34 987 20 0005",
-      "web": "https://ejemplo-leon.es/seed-conde",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa%20del%20Conde%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-polo",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Confiter%C3%ADa%20Polo%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 10:00–21:00",
@@ -358,13 +331,13 @@
     },
     {
       "rank": 7,
-      "id": "seed:Tahona",
-      "name": "La Tahona del Centro",
-      "lat": 42.5983,
-      "lng": -5.5723,
+      "id": "seed:Churreria Catedral",
+      "name": "Churrería La Catedral",
+      "lat": 42.5984,
+      "lng": -5.5681,
       "rating": 4.5,
-      "reviews": 330,
-      "score": 4.4893,
+      "reviews": 610,
+      "score": 4.4927,
       "tz": 120,
       "hours": [
         [
@@ -425,11 +398,11 @@
         ]
       ],
       "price": 1,
-      "type": "bakery",
+      "type": "cafe",
       "address": "Calle de muestra 16, 24003 León",
       "phone": "+34 987 20 0006",
       "web": null,
-      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Tahona%20del%20Centro%20Le%C3%B3n",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Churrer%C3%ADa%20La%20Catedral%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 09:00–14:00, 17:00–20:30",
@@ -439,75 +412,95 @@
         "Viernes: 09:00–14:00, 17:00–20:30",
         "Sábado: 09:00–14:00, 17:00–20:30",
         "Domingo: 09:00–14:00, 17:00–20:30"
-      ]
+      ],
+      "season": "winter"
     },
     {
       "rank": 8,
-      "id": "seed:Heladeria Capricho",
-      "name": "Heladería El Capricho Helado",
-      "lat": 42.5969,
-      "lng": -5.5712,
+      "id": "seed:Conde",
+      "name": "Pastelería del Conde",
+      "lat": 42.5985,
+      "lng": -5.5702,
       "rating": 4.5,
-      "reviews": 300,
-      "score": 4.489,
+      "reviews": 560,
+      "score": 4.4925,
       "tz": 120,
       "hours": [
         [
-          600,
-          1260
+          570,
+          840
         ],
         [
-          2040,
-          2700
+          1050,
+          1230
         ],
         [
-          3480,
-          4140
+          3450,
+          3720
         ],
         [
-          4920,
-          5580
+          3930,
+          4110
         ],
         [
-          6360,
-          7020
+          4890,
+          5160
         ],
         [
-          7800,
-          8460
+          5370,
+          5550
         ],
         [
-          9240,
-          9900
+          6330,
+          6600
+        ],
+        [
+          6810,
+          6990
+        ],
+        [
+          7770,
+          8040
+        ],
+        [
+          8250,
+          8430
+        ],
+        [
+          9210,
+          9480
+        ],
+        [
+          9690,
+          9870
         ]
       ],
       "price": 1,
-      "type": "ice_cream_shop",
+      "type": "bakery",
       "address": "Calle de muestra 17, 24003 León",
       "phone": "+34 987 20 0007",
-      "web": "https://ejemplo-leon.es/seed-heladeria-capricho",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Helader%C3%ADa%20El%20Capricho%20Helado%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-conde",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa%20del%20Conde%20Le%C3%B3n",
       "summary": null,
       "week": [
-        "Lunes: 10:00–21:00",
-        "Martes: 10:00–21:00",
-        "Miércoles: 10:00–21:00",
-        "Jueves: 10:00–21:00",
-        "Viernes: 10:00–21:00",
-        "Sábado: 10:00–21:00",
-        "Domingo: 10:00–21:00"
-      ],
-      "seasonal": true
+        "Lunes: Cerrado",
+        "Martes: 09:30–14:00, 17:30–20:30",
+        "Miércoles: 09:30–14:00, 17:30–20:30",
+        "Jueves: 09:30–14:00, 17:30–20:30",
+        "Viernes: 09:30–14:00, 17:30–20:30",
+        "Sábado: 09:30–14:00, 17:30–20:30",
+        "Domingo: 09:30–14:00, 17:30–20:30"
+      ]
     },
     {
       "rank": 9,
-      "id": "seed:Pasteleria Nicanor",
-      "name": "Obrador Nicanores",
-      "lat": 42.5974,
-      "lng": -5.5715,
+      "id": "seed:Tahona",
+      "name": "La Tahona del Centro",
+      "lat": 42.5983,
+      "lng": -5.5723,
       "rating": 4.5,
-      "reviews": 240,
-      "score": 4.4885,
+      "reviews": 330,
+      "score": 4.4912,
       "tz": 120,
       "hours": [
         [
@@ -543,8 +536,8 @@
       "type": "bakery",
       "address": "Calle de muestra 18, 24003 León",
       "phone": "+34 987 20 0008",
-      "web": "https://ejemplo-leon.es/seed-pasteleria-nicanor",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Obrador%20Nicanores%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-tahona",
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Tahona%20del%20Centro%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 10:00–21:00",
@@ -558,13 +551,13 @@
     },
     {
       "rank": 10,
-      "id": "seed:Heladeria Jijonenca",
-      "name": "Heladería La Jijonenca",
-      "lat": 42.5994,
-      "lng": -5.5701,
-      "rating": 4.4,
-      "reviews": 280,
-      "score": 4.467,
+      "id": "seed:Heladeria Capricho",
+      "name": "Heladería El Capricho Helado",
+      "lat": 42.5969,
+      "lng": -5.5712,
+      "rating": 4.5,
+      "reviews": 300,
+      "score": 4.491,
       "tz": 120,
       "hours": [
         [
@@ -601,7 +594,7 @@
       "address": "Calle de muestra 19, 24003 León",
       "phone": "+34 987 20 0009",
       "web": null,
-      "maps": "https://www.google.com/maps/search/?api=1&query=Helader%C3%ADa%20La%20Jijonenca%20Le%C3%B3n",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Helader%C3%ADa%20El%20Capricho%20Helado%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 10:00–21:00",
@@ -612,17 +605,17 @@
         "Sábado: 10:00–21:00",
         "Domingo: 10:00–21:00"
       ],
-      "seasonal": true
+      "season": "summer"
     },
     {
       "rank": 11,
-      "id": "seed:Confiteria Asturias",
-      "name": "Confitería Asturias",
-      "lat": 42.5988,
-      "lng": -5.5693,
-      "rating": 4.4,
-      "reviews": 350,
-      "score": 4.4635,
+      "id": "seed:Pasteleria Nicanor",
+      "name": "Obrador Nicanores",
+      "lat": 42.5974,
+      "lng": -5.5715,
+      "rating": 4.5,
+      "reviews": 240,
+      "score": 4.4905,
       "tz": 120,
       "hours": [
         [
@@ -678,8 +671,8 @@
       "type": "bakery",
       "address": "Calle de muestra 20, 24003 León",
       "phone": "+34 987 20 0010",
-      "web": "https://ejemplo-leon.es/seed-confiteria-asturias",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Confiter%C3%ADa%20Asturias%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-pasteleria-nicanor",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Obrador%20Nicanores%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: Cerrado",
@@ -693,13 +686,13 @@
     },
     {
       "rank": 12,
-      "id": "seed:Mallorca",
-      "name": "Pastelería Mallorca León",
-      "lat": 42.599,
-      "lng": -5.5711,
+      "id": "seed:Heladeria Jijonenca",
+      "name": "Heladería La Jijonenca",
+      "lat": 42.5994,
+      "lng": -5.5701,
       "rating": 4.4,
-      "reviews": 480,
-      "score": 4.4579,
+      "reviews": 280,
+      "score": 4.4689,
       "tz": 120,
       "hours": [
         [
@@ -732,11 +725,11 @@
         ]
       ],
       "price": 1,
-      "type": "bakery",
+      "type": "ice_cream_shop",
       "address": "Calle de muestra 21, 24003 León",
       "phone": "+34 987 20 0011",
-      "web": "https://ejemplo-leon.es/seed-mallorca",
-      "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa%20Mallorca%20Le%C3%B3n%20Le%C3%B3n",
+      "web": "https://ejemplo-leon.es/seed-heladeria-jijonenca",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Helader%C3%ADa%20La%20Jijonenca%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",
       "week": [
         "Lunes: 10:00–21:00",
@@ -746,17 +739,18 @@
         "Viernes: 10:00–21:00",
         "Sábado: 10:00–21:00",
         "Domingo: 10:00–21:00"
-      ]
+      ],
+      "season": "summer"
     },
     {
       "rank": 13,
-      "id": "seed:Croissant",
-      "name": "La Esquina del Croissant",
-      "lat": 42.5991,
-      "lng": -5.5697,
-      "rating": 4.3,
-      "reviews": 300,
-      "score": 4.4429,
+      "id": "seed:Confiteria Asturias",
+      "name": "Confitería Asturias",
+      "lat": 42.5988,
+      "lng": -5.5693,
+      "rating": 4.4,
+      "reviews": 350,
+      "score": 4.4654,
       "tz": 120,
       "hours": [
         [
@@ -821,7 +815,7 @@
       "address": "Calle de muestra 22, 24003 León",
       "phone": "+34 987 20 0012",
       "web": null,
-      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Esquina%20del%20Croissant%20Le%C3%B3n",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Confiter%C3%ADa%20Asturias%20Le%C3%B3n",
       "summary": null,
       "week": [
         "Lunes: 09:00–14:00, 17:00–20:30",
@@ -835,13 +829,13 @@
     },
     {
       "rank": 14,
-      "id": "seed:San Marcelo",
-      "name": "Pastelería San Marcelo",
-      "lat": 42.5981,
-      "lng": -5.5686,
-      "rating": 4.3,
-      "reviews": 410,
-      "score": 4.4317,
+      "id": "seed:Mallorca",
+      "name": "Pastelería Mallorca León",
+      "lat": 42.599,
+      "lng": -5.5711,
+      "rating": 4.4,
+      "reviews": 480,
+      "score": 4.4596,
       "tz": 120,
       "hours": [
         [
@@ -897,6 +891,226 @@
       "type": "bakery",
       "address": "Calle de muestra 23, 24003 León",
       "phone": "+34 987 20 0013",
+      "web": "https://ejemplo-leon.es/seed-mallorca",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa%20Mallorca%20Le%C3%B3n%20Le%C3%B3n",
+      "summary": "Dulces, repostería y bollería artesana en el centro de León.",
+      "week": [
+        "Lunes: Cerrado",
+        "Martes: 09:30–14:00, 17:30–20:30",
+        "Miércoles: 09:30–14:00, 17:30–20:30",
+        "Jueves: 09:30–14:00, 17:30–20:30",
+        "Viernes: 09:30–14:00, 17:30–20:30",
+        "Sábado: 09:30–14:00, 17:30–20:30",
+        "Domingo: 09:30–14:00, 17:30–20:30"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "seed:Churreria Plaza",
+      "name": "Churrería de la Plaza Mayor",
+      "lat": 42.5972,
+      "lng": -5.5704,
+      "rating": 4.4,
+      "reviews": 520,
+      "score": 4.458,
+      "tz": 120,
+      "hours": [
+        [
+          600,
+          1260
+        ],
+        [
+          2040,
+          2700
+        ],
+        [
+          3480,
+          4140
+        ],
+        [
+          4920,
+          5580
+        ],
+        [
+          6360,
+          7020
+        ],
+        [
+          7800,
+          8460
+        ],
+        [
+          9240,
+          9900
+        ]
+      ],
+      "price": 1,
+      "type": "cafe",
+      "address": "Calle de muestra 24, 24003 León",
+      "phone": "+34 987 20 0014",
+      "web": "https://ejemplo-leon.es/seed-churreria-plaza",
+      "maps": "https://www.google.com/maps/search/?api=1&query=Churrer%C3%ADa%20de%20la%20Plaza%20Mayor%20Le%C3%B3n",
+      "summary": "Dulces, repostería y bollería artesana en el centro de León.",
+      "week": [
+        "Lunes: 10:00–21:00",
+        "Martes: 10:00–21:00",
+        "Miércoles: 10:00–21:00",
+        "Jueves: 10:00–21:00",
+        "Viernes: 10:00–21:00",
+        "Sábado: 10:00–21:00",
+        "Domingo: 10:00–21:00"
+      ],
+      "season": "winter"
+    },
+    {
+      "rank": 16,
+      "id": "seed:Croissant",
+      "name": "La Esquina del Croissant",
+      "lat": 42.5991,
+      "lng": -5.5697,
+      "rating": 4.3,
+      "reviews": 300,
+      "score": 4.4448,
+      "tz": 120,
+      "hours": [
+        [
+          540,
+          840
+        ],
+        [
+          1020,
+          1230
+        ],
+        [
+          1980,
+          2280
+        ],
+        [
+          2460,
+          2670
+        ],
+        [
+          3420,
+          3720
+        ],
+        [
+          3900,
+          4110
+        ],
+        [
+          4860,
+          5160
+        ],
+        [
+          5340,
+          5550
+        ],
+        [
+          6300,
+          6600
+        ],
+        [
+          6780,
+          6990
+        ],
+        [
+          7740,
+          8040
+        ],
+        [
+          8220,
+          8430
+        ],
+        [
+          9180,
+          9480
+        ],
+        [
+          9660,
+          9870
+        ]
+      ],
+      "price": 1,
+      "type": "bakery",
+      "address": "Calle de muestra 25, 24003 León",
+      "phone": "+34 987 20 0015",
+      "web": null,
+      "maps": "https://www.google.com/maps/search/?api=1&query=La%20Esquina%20del%20Croissant%20Le%C3%B3n",
+      "summary": "Dulces, repostería y bollería artesana en el centro de León.",
+      "week": [
+        "Lunes: 09:00–14:00, 17:00–20:30",
+        "Martes: 09:00–14:00, 17:00–20:30",
+        "Miércoles: 09:00–14:00, 17:00–20:30",
+        "Jueves: 09:00–14:00, 17:00–20:30",
+        "Viernes: 09:00–14:00, 17:00–20:30",
+        "Sábado: 09:00–14:00, 17:00–20:30",
+        "Domingo: 09:00–14:00, 17:00–20:30"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "seed:San Marcelo",
+      "name": "Pastelería San Marcelo",
+      "lat": 42.5981,
+      "lng": -5.5686,
+      "rating": 4.3,
+      "reviews": 410,
+      "score": 4.4335,
+      "tz": 120,
+      "hours": [
+        [
+          570,
+          840
+        ],
+        [
+          1050,
+          1230
+        ],
+        [
+          3450,
+          3720
+        ],
+        [
+          3930,
+          4110
+        ],
+        [
+          4890,
+          5160
+        ],
+        [
+          5370,
+          5550
+        ],
+        [
+          6330,
+          6600
+        ],
+        [
+          6810,
+          6990
+        ],
+        [
+          7770,
+          8040
+        ],
+        [
+          8250,
+          8430
+        ],
+        [
+          9210,
+          9480
+        ],
+        [
+          9690,
+          9870
+        ]
+      ],
+      "price": 1,
+      "type": "bakery",
+      "address": "Calle de muestra 26, 24003 León",
+      "phone": "+34 987 20 0016",
       "web": "https://ejemplo-leon.es/seed-san-marcelo",
       "maps": "https://www.google.com/maps/search/?api=1&query=Pasteler%C3%ADa%20San%20Marcelo%20Le%C3%B3n",
       "summary": "Dulces, repostería y bollería artesana en el centro de León.",

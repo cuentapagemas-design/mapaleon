@@ -2,7 +2,7 @@
    Sube CACHE_VERSION cuando cambien los assets para forzar actualización. */
 'use strict';
 
-const CACHE = 'leon-top20-v7';
+const CACHE = 'leon-top20-v8';
 const SHELL = [
   './',
   './index.html',

@@ -184,7 +184,11 @@ html, body {
 .st-open { color: #2e9e4d; }
 .st-closed { color: #c2492f; }
 .st-season { color: #c77f1a; font-weight: 700; }
+.st-summer { color: #c77f1a; font-weight: 700; }
+.st-winter { color: #8a5a2b; font-weight: 700; }
 .detail-badge.season { background: #fbeed7; color: #9a6a12; }
+.detail-badge.summer { background: #fbeed7; color: #9a6a12; }
+.detail-badge.winter { background: #efe1d3; color: #7a4a1f; }
 
 #ranking-list {
   list-style: none;

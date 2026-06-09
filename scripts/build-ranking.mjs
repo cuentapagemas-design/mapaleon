@@ -117,12 +117,20 @@ const QUERIES = {
   tapeo: ['bares de tapas en León', 'tabernas León', 'bar de pinchos León'],
   comida: ['restaurantes para cenar en León', 'asador León', 'cocina leonesa restaurante'],
   visitar: ['qué visitar en León', 'monumentos León', 'museos León'],
-  dulce: ['pastelerías León', 'confiterías León', 'heladerías León'],
+  dulce: [
+    'pastelerías León', 'confiterías León', 'heladerías León',
+    'churrería León', 'chocolatería churros León',
+  ],
 };
 
-// Detecta si un sitio es "de temporada" (heladerías ≈ solo verano).
-function isSeasonal(type, name) {
-  return /ice_cream|gelato/i.test(type || '') || /helad|gelat/i.test(name || '');
+// Temporada de un sitio:
+//   'summer' = heladerías (≈ solo verano)
+//   'winter' = churrerías / chocolaterías (ideales en invierno, abiertas todo el año)
+function seasonOf(type, name) {
+  const t = type || '', n = name || '';
+  if (/ice_cream|gelato/i.test(t) || /helad|gelat/i.test(n)) return 'summer';
+  if (/chocolate_shop/i.test(t) || /churr|chocolater/i.test(n)) return 'winter';
+  return undefined;
 }
 
 const FIELD_MASK = [
@@ -163,7 +171,7 @@ function parseExtras(p) {
     price: (p.priceLevel && p.priceLevel in PRICE_MAP) ? PRICE_MAP[p.priceLevel] : null,
     summary: (p.editorialSummary && p.editorialSummary.text) || null,
     type: p.primaryType || null,
-    seasonal: isSeasonal(p.primaryType, p.displayName && p.displayName.text) || undefined,
+    season: seasonOf(p.primaryType, p.displayName && p.displayName.text),
     // Horario legible de la semana (cadenas localizadas de Google).
     week: Array.isArray(p.regularOpeningHours && p.regularOpeningHours.weekdayDescriptions)
       ? p.regularOpeningHours.weekdayDescriptions : null,
@@ -336,7 +344,7 @@ function buildCategory(rawPlaces) {
       maps: x.maps,
       summary: x.summary,
       week: x.week,
-      seasonal: x.seasonal,
+      season: x.season,
     }));
 
   return { generatedAt: new Date().toISOString(), items: ranked };

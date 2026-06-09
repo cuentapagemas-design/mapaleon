@@ -22,14 +22,19 @@ La web **solo LEE** `data/*.json`. Resultado:
 /.github/workflows/ranking.yml        cron diario + commit de /data
 ```
 
-## Dulce (con heladerías de temporada)
+## Dulce (con temporada)
 
-Categoría **Dulce** = confiterías, pastelerías y heladerías (consultas propias en el cron →
-`data/dulce.json`). Como **las heladerías suelen abrir solo en verano**, cada sitio lleva un
-flag `seasonal` (lo detecta el cron por tipo/nombre, p. ej. `ice_cream_shop` o "heladería").
-**Fuera de temporada** (configurable: meses de abril a octubre, `SEASON_MONTHS` en `app.js`)
-esos sitios se tratan como **cerrados**: muestran **"🍦 Solo en verano"** y el filtro "Abierto
-ahora" (y el Sorpréndeme con ese filtro) los oculta. Las confiterías/pastelerías van todo el año.
+Categoría **Dulce** = confiterías, pastelerías, **heladerías** y **churrerías/chocolaterías**
+(consultas propias en el cron → `data/dulce.json`). Cada sitio lleva un campo `season` que el
+cron deduce por tipo/nombre:
+
+- **`season: 'summer'`** (heladerías, `ice_cream_shop`): **fuera de verano** (configurable:
+  abril–octubre, `SEASON_MONTHS` en `app.js`) se tratan como **cerradas** → muestran
+  **"🍦 Solo en verano"** y el filtro "Abierto ahora" (y el Sorpréndeme con ese filtro) las
+  oculta. En verano salen como **"🍦 De temporada"**.
+- **`season: 'winter'`** (churrerías/chocolaterías, `chocolate_shop`/"churrería"): **abiertas
+  todo el año**, pero en **invierno** (nov–mar) se destacan con **"🍫 Ideal en invierno"**.
+- Confiterías y pastelerías: sin temporada, todo el año.
 
 ## Solo CIUDAD de León (no provincia)
 

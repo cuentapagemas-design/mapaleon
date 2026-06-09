@@ -48,8 +48,8 @@ function nowWeekMin(tz) {
   return d.getUTCDay() * 1440 + d.getUTCHours() * 60 + d.getUTCMinutes();
 }
 function openInfo(item) {
-  // Sitios de temporada (heladerías): fuera de verano se consideran cerrados.
-  if (item.seasonal && !inSeason()) return { known: true, open: false, seasonal: true };
+  // Heladerías (season 'summer'): fuera de verano se consideran cerradas.
+  if (item.season === 'summer' && !inSeason()) return { known: true, open: false, seasonal: true };
   const hours = item.hours;
   if (!Array.isArray(hours) || hours.length === 0) return { known: false, open: false };
   const w = nowWeekMin(item.tz);
@@ -69,6 +69,15 @@ function hm(min) {
   const h = Math.floor(min / 60) % 24, m = min % 60;
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }
+// Empujón estacional: heladerías en verano / churros y chocolate en invierno.
+function seasonNudgeHTML(item) {
+  if (!item.season) return '';
+  const summerNow = inSeason();
+  if (item.season === 'winter' && !summerNow) return `<span class="st st-winter">🍫 Ideal en invierno</span>`;
+  if (item.season === 'summer' && summerNow) return `<span class="st st-summer">🍦 De temporada</span>`;
+  return '';
+}
+
 function statusHTML(item) {
   const info = openInfo(item);
   if (info.seasonal && !info.open) return `<span class="st st-season">🍦 Solo en verano</span>`;
@@ -306,13 +315,15 @@ function renderView(view) {
     li.dataset.rank = String(rank);
     const catTag = isFavView ? `<span class="cat-tag">${catLabel}</span>` : '';
     const st = statusHTML(item);
+    const nudge = seasonNudgeHTML(item);
+    const statusLine = [st, nudge].filter(Boolean).join(' ');
     const price = priceText(item.price);
     li.innerHTML =
       `<div class="rank-num">${rank}</div>` +
       `<div><div class="rank-name">${escapeHTML(item.name)} ${catTag}</div>` +
       `<div class="rank-meta">${starsText(item.rating)} · ${item.reviews.toLocaleString('es-ES')} reseñas` +
         (price ? ` · <span class="rank-price">${price}</span>` : '') + `</div>` +
-      (st ? `<div class="rank-status">${st}</div>` : '') + `</div>` +
+      (statusLine ? `<div class="rank-status">${statusLine}</div>` : '') + `</div>` +
       `<div class="rank-score">${item.score.toFixed(2)}</div>` +
       heartHTML(item.id);
     li.addEventListener('click', (e) => {
@@ -387,6 +398,8 @@ function openDetail(entry) {
       ? `<span class="detail-badge open">Abierto${info.closesAt != null ? ` · cierra ${hm(info.closesAt)}` : ''}</span>`
       : `<span class="detail-badge closed">Cerrado${info.opensAt != null ? ` · abre ${hm(info.opensAt)}` : ''}</span>`);
   }
+  if (it.season === 'winter' && !inSeason()) badges.push(`<span class="detail-badge winter">🍫 Ideal en invierno</span>`);
+  else if (it.season === 'summer' && inSeason()) badges.push(`<span class="detail-badge summer">🍦 De temporada</span>`);
   const phoneHref = it.phone ? `tel:${it.phone.replace(/\s+/g, '')}` : null;
   const actions = `<div class="detail-actions">` +
     actionHTML(it.maps, 'map', 'Cómo llegar') +
