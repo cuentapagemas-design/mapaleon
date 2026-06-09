@@ -333,6 +333,33 @@ html, body {
 /* ===== Chip Sorpréndeme ===== */
 .surprise-chip { background: var(--leon-purple); color: #fff; border-color: var(--leon-purple); }
 
+/* ===== Ruleta sorpresa ===== */
+.roulette {
+  position: absolute; inset: 0; z-index: 1900;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(20, 16, 24, 0.62); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  padding: 24px;
+}
+.roulette[hidden] { display: none; }
+.roulette-card {
+  background: #fff; border-radius: 18px; width: 100%; max-width: 320px;
+  padding: 1.6rem 1.2rem; text-align: center; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+.roulette-dice { font-size: 2.4rem; animation: dice-shake 0.5s ease-in-out infinite; }
+@keyframes dice-shake {
+  0%, 100% { transform: rotate(-12deg) scale(1); }
+  50% { transform: rotate(12deg) scale(1.12); }
+}
+.roulette.settled .roulette-dice { animation: none; transform: scale(1.15); }
+.roulette-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.4rem; }
+.roulette-name {
+  font-family: Georgia, "Times New Roman", serif; font-weight: 700;
+  font-size: 1.5rem; line-height: 1.15; margin-top: 0.4rem; min-height: 1.7em;
+  display: flex; align-items: center; justify-content: center;
+}
+.roulette-cat { font-size: 0.85rem; font-weight: 700; color: var(--muted); margin-top: 0.3rem; min-height: 1.2em; }
+.roulette.settled .roulette-name { transform: scale(1.06); transition: transform 0.2s; }
+
 /* ===== Ficha de sitio (detalle) ===== */
 .detail { position: absolute; inset: 0; z-index: 1800; }
 .detail[hidden] { display: none; }

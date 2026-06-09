@@ -74,8 +74,9 @@ baja una vez al día** (cero llamadas a Google por usuario):
 - **Ficha de sitio** (al tocar un sitio o "Ver ficha" en el popup): valoración, precio, tipo,
   estado abierto/cerrado, descripción, **Cómo llegar / Llamar / Web**, **horario de toda la
   semana** (con el día de hoy resaltado), dirección y favorito.
-- **🎲 Sorpréndeme**: elige un sitio al azar (ponderado por el score) de lo que estás viendo y
-  abre su ficha.
+- **🎲 Sorpréndeme**: ruleta **totalmente aleatoria** entre **todas las categorías** (uniforme,
+  no sesgada al nº1 → salen sitios inesperados). Anima pasando nombres, se frena en uno y abre
+  su ficha. Toca la ruleta para parar antes. Si "Abierto ahora" está activo, solo sortea abiertos.
 
 > 💶 **Coste:** pedir horario + contacto + descripción sube el `searchText` al SKU
 > *Enterprise + Atmosphere* de Places API (New), más caro **por petición**, pero el **número de

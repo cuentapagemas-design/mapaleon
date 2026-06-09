@@ -403,18 +403,58 @@ function openDetailByRank(rank) {
 function closeDetail() { document.getElementById('detail').hidden = true; }
 
 // ---------------------------------------------------------------------------
-// Sorpréndeme (descubrimiento): elige un sitio al azar, ponderado por el score.
+// Sorpréndeme: ruleta totalmente aleatoria entre TODAS las categorías.
+// (Uniforme, no sesgada al nº1 → salen sitios inesperados.)
 // ---------------------------------------------------------------------------
-function pickWeighted(entries) {
-  const total = entries.reduce((s, e) => s + Math.max(0.01, e.item.score), 0);
-  let r = Math.random() * total;
-  for (const e of entries) { r -= Math.max(0.01, e.item.score); if (r <= 0) return e; }
-  return entries[entries.length - 1];
+function allEntries() {
+  const out = [];
+  for (const [cat, cfg] of Object.entries(CATEGORIES)) {
+    const items = (state.data[cat] && state.data[cat].items) || [];
+    for (const item of items) out.push({ item, color: cfg.color, catLabel: cfg.label, cat });
+  }
+  return out;
 }
+
+let rouletteRunning = false;
 function surprise() {
-  const entries = state.shown || [];
-  if (!entries.length) return;
-  openDetail(pickWeighted(entries));
+  if (rouletteRunning) return;
+  let pool = allEntries();
+  if (state.openNow) {            // si el filtro "abierto" está activo, respétalo
+    const open = pool.filter((e) => openInfo(e.item).open);
+    if (open.length) pool = open;
+  }
+  if (!pool.length) return;
+
+  const overlay = document.getElementById('roulette');
+  const nameEl = document.getElementById('roulette-name');
+  const catEl = document.getElementById('roulette-cat');
+  overlay.hidden = false;
+  overlay.classList.remove('settled');
+  rouletteRunning = true;
+
+  const final = pool[Math.floor(Math.random() * pool.length)]; // elección uniforme
+  const t0 = Date.now();
+  const DUR = 1500;
+  let timer = null, done = false;
+
+  const paint = (e) => { nameEl.textContent = e.item.name; nameEl.style.color = e.color; catEl.textContent = e.catLabel; catEl.style.color = e.color; };
+
+  function settle() {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    paint(final);
+    overlay.classList.add('settled');
+    setTimeout(() => { overlay.hidden = true; rouletteRunning = false; openDetail(final); }, 650);
+  }
+  function tick() {
+    paint(pool[Math.floor(Math.random() * pool.length)]);
+    const elapsed = Date.now() - t0;
+    if (elapsed >= DUR) { settle(); return; }
+    timer = setTimeout(tick, 55 + Math.pow(elapsed / DUR, 2) * 230); // va frenando
+  }
+  overlay.onclick = settle; // tocar = parar ya
+  tick();
 }
 
 // ---------------------------------------------------------------------------
